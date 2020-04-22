@@ -1,0 +1,27 @@
+.Preview {
+  background-color: black;
+  width: "100%";
+  height: '200px';
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+.Sidebar {
+  /* background-color: grey; */
+}
+
+.Modens {
+  height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  /* border: 1px solid black; */
+}
+
+.SimpleConfig {
+  width: 100%;
+  background-color: #1A2B6D;
+  height: 200px;
+  overflow-y: auto;
+  padding: 10px;
+  color: white;
+  /* border: 1px solid black; */
+}

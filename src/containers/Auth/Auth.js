@@ -144,7 +144,7 @@ class Auth extends Component {
       <div className={classes.Auth}>
         {authRedirect}
         {errorMessage}
-        <h1>LIVECAST CENTRAL</h1>
+        <h1>Marmify Login</h1>
         <form onSubmit={this.submitHandler}>
           {form}
           <Button btnType="Success">SUBMIT</Button>
