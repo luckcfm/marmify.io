@@ -10,9 +10,7 @@ export const authStart = () => {
 export const authSuccess = (token, user) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    token: token,
-    user: user
-  };
+    token: token  };
 };
 
 export const logout = () => {
@@ -48,14 +46,14 @@ export const auth = (email, password, isSignup) => {
       password: password,
       returnSecureToken: true
     };
-    const url = "/users/login";
+    const url = "/User/login";
     axios
       .post(url, authData)
       .then(response => {
         console.log(response);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        dispatch(authSuccess(response.data.token, response.data.user));
+        localStorage.setItem("token", response.data);
+        // localStorage.setItem("user", JSON.stringify(response.data.user));
+        dispatch(authSuccess(response.data));
       })
       .catch(error => {
         dispatch(authFail(error));
