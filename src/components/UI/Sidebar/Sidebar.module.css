@@ -8,7 +8,14 @@
 .Sidebar {
   /* background-color: grey; */
 }
-
+.Avatar {
+  vertical-align: middle;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
 .Modens {
   height: 400px;
   overflow-y: auto;

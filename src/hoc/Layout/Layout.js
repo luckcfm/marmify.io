@@ -4,7 +4,7 @@ import Aux from "../Aux/Aux";
 import classes from "./Layout.module.css";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
-
+import Sidebar from '../../components/UI/Sidebar/Sidebar';
 class Layout extends Component {
   state = {
     showSideDrawer: false,
@@ -23,6 +23,7 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
+        <Sidebar></Sidebar>
         <Toolbar user={this.props.user} isAuth={this.props.isAuth} drawerToggleClicked={this.sideDrawerToggleHandler} />
         <SideDrawer
           open={this.state.showSideDrawer}

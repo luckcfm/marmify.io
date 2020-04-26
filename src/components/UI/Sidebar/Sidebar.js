@@ -1,53 +1,44 @@
-import React from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import React, { useState } from "react";
+import classes from './Sidebar.module.css'
+import { Sidebar } from "primereact/sidebar";
+import { Button } from "primereact/button";
 
-import Modens from "../../../containers/Central/Modens/Modens";
-import Configuration from "../../Central/Configuration/Configuration";
-import Stat from "../../Central/Stat/Stat";
-import classes from "./Sidebar.module.css";
-import AddForm from '../../../containers/Central/AddForm/AddForm'
-export default function Sidebar(props) {
+export default function Side(props) {
+  const [state, setState] = useState({ visible: true });
   return (
-    <div className={classes.Sidebar}>
-      {props.livecast.name}
-      <div className={classes.Preview}></div>
-      <div className={classes.SimpleConfig}>
-        <div
-          style={{
-            backgroundColor: "#6E92B2",
-            width: "300px",
-            margin: "0 auto",
-            display: "inline-block",
-            boxSizing: "border-box",
-          }}
-        >
-          <h3>
-            BITRATE{" "}
-            <select style={{marginTop: '5px'}}>
-              <option>1000</option>
-              <option>2000</option>
-              <option>3000</option>
-              <option>4000</option>
-            </select>
-          </h3>
+    <>
+      <Sidebar
+      style={{backgroundColor: '#594994', color: 'white', border: '0px'}}
+        visible={state.visible}
+        onHide={(e) => setState({ visible: false })}
+      >
+        <div className="p-grid p-dir-col">
+          <div className="p-col">
+            <img className={classes.Avatar} src="https://www.w3schools.com/howto/img_avatar.png"></img>
+          </div>
         </div>
-      </div>
-      <div className={classes.Modens}>
-        <Tabs>
-          <Tab eventKey="modems" title="Modens">
-            <Modens livecast={props.livecast}></Modens>
-          </Tab>
-          <Tab eventKey="config" title="Config">
-            <Configuration livecast={props.livecast}></Configuration>
-          </Tab>
-          <Tab eventKey="Stat" title="Estatistics">
-            <Stat livecast={props.livecast}></Stat>
-          </Tab>
-          <Tab eventKey="Add" title="ADD LC">
-            <AddForm></AddForm>
-          </Tab>
-        </Tabs>
-      </div>
-    </div>
+        <div className="p-grid">
+          <div className="p-col">
+            <h3>Bem vindo, Restaurante</h3>
+          </div>
+        </div>
+        <hr style={{border: '1px solid white', padding: 0, margin: 0}}></hr>
+        <div className="p-grid">
+          <div className="p-col">
+            <h3>Pedidos</h3>
+          </div>
+        </div>
+        <div className="p-grid">
+          <div className="p-col">
+            <h3>Pratos</h3>
+          </div>
+        </div>
+      </Sidebar>
+      <Button
+        style={{ zIndex: 99 }}
+        icon="pi pi-arrow-right"
+        onClick={(e) => setState({ visible: true })}
+      />
+    </>
   );
 }
