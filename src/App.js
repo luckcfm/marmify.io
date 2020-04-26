@@ -6,6 +6,7 @@ import * as actions from "./store/actions/index";
 import Layout from "./hoc/Layout/Layout";
 import Auth from "./containers/Auth/Auth";
 import Homepage from './containers/Homepage/Homepage'
+import Restaurante from './containers/Restaurante/Restaurante';
 import Logout from "./containers/Auth/Logout/Logout";
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -19,6 +20,7 @@ class App extends Component {
       <Switch>
         <Route path="/auth" component={Auth}></Route>
         <Route path="/home" component={Homepage}></Route>
+        <Route path="/restaurante" component={Restaurante}></Route>
         <Route path="/about" component={Auth}></Route>
       </Switch>
     );
