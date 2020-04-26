@@ -16,6 +16,12 @@
   margin-left: auto;
   margin-right: auto;
 }
+.menuItem {
+  cursor: pointer;
+}
+.menuItem:hover{
+  background-color: #7F4894;
+}
 .Modens {
   height: 400px;
   overflow-y: auto;

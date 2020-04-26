@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 
 export default function Side(props) {
   const [state, setState] = useState({ visible: true });
+  const classNames = [classes.menuItem, "p-col"];
   return (
     <>
       <Sidebar
@@ -19,17 +20,17 @@ export default function Side(props) {
         </div>
         <div className="p-grid">
           <div className="p-col">
-            <h3>Bem vindo, Restaurante</h3>
+            <h2>Bem vindo, Restaurante</h2>
           </div>
         </div>
-        <hr style={{border: '1px solid white', padding: 0, margin: 0}}></hr>
+        {/* <hr style={{border: '1px solid white', padding: 0, margin: 0}}></hr> */}
         <div className="p-grid">
-          <div className="p-col">
+          <div className={classNames.join(' ')}>
             <h3>Pedidos</h3>
           </div>
         </div>
         <div className="p-grid">
-          <div className="p-col">
+        <div className={classNames.join(' ')}>
             <h3>Pratos</h3>
           </div>
         </div>

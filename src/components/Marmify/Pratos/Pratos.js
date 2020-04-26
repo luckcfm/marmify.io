@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'primereact/card';
 import {Rating} from 'primereact/rating';
-import {Button} from 'primereact/button';
+
 function Pratos(props) {
   const header = <img alt="Card" src={props.img} />;
   const footer = <span>
