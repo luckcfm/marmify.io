@@ -8,9 +8,11 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth'
+import pratosReducer from './store/reducers/pratosRestaurante'
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  pratos: pratosReducer
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
