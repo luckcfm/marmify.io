@@ -2,5 +2,7 @@ export {
   auth,
   logout,
   setAuthRedirectPath,
-  authCheckState
+  authCheckState,
+  signin,
+  signup
 } from './auth'

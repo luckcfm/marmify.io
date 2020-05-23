@@ -166,7 +166,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (email, password, isSignup) =>
-      dispatch(action.auth(email, password, isSignup)),
+      dispatch(action.signin(email, password, isSignup)),
     setAuthRedirectPath: () => dispatch(action.setAuthRedirectPath("/")),
   };
 };

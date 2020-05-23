@@ -1,4 +1,4 @@
-import app from 'firebase/app';
+import * as firebase from 'firebase/app';
 import 'firebase/auth';
 const config = {
   apiKey: "AIzaSyAc4tA5otkmlLiyU8nxGQ-eYhqUSS6B0Ic",
@@ -11,27 +11,6 @@ const config = {
   measurementId: "G-3J1935TXW0"
 }
 
-class Firebase {
-  constructor() {
-    app.initializeApp(config);
- 
-    this.auth = app.auth();
-  }
- 
-  // *** Auth API ***
- 
-  doCreateUserWithEmailAndPassword = (email, password) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
- 
-  doSignInWithEmailAndPassword = (email, password) =>
-    this.auth.signInWithEmailAndPassword(email, password);
- 
-  doSignOut = () => this.auth.signOut();
- 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
- 
-  doPasswordUpdate = password =>
-    this.auth.currentUser.updatePassword(password);
-}
+firebase.initializeApp(config);
 
-export default Firebase;
+export default firebase;
