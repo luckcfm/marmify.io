@@ -1,6 +1,60 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../axios-marmify";
+import firebase from '../firebase'
 
+
+export const signup = (email, password) => async dispatch => {
+  try{
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email,password)
+      .then(dataBeforeEmail => {
+        firebase.auth().onAuthStateChanged(user => {
+          user.sendEmailVerification();
+        })
+      })
+      .then(dataAfterEmail => {
+        firebase.auth().onAuthStateChanged(user => {
+          if(user.emailVerified) {
+            dispatch({
+              type: actionTypes.SIGNUP_SUCCESS,
+              msg: 'Sua conta foi criada com sucesso! Agora voce precisa verificar seu email!'
+            });
+          } else {
+            dispatch({
+              type: actionTypes.SIGNUP_ERROR,
+              msg: 'Alguma coisa nao deu certo, por favor tente novamente em alguns instantes!'
+            })
+          }
+        })
+      })
+  } catch (err) {
+    dispatch({
+      type: actionTypes.SIGNUP_ERROR,
+      msg: 'Alguma coisa deu errado e nao conseguimos criar sua conta, por favor tente novamente!'
+    })
+  }
+}
+
+export const signin = (email,password,callback) => async dispatch => {
+  try {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        dispatch({type: actionTypes.SIGNIN_SUCCESS});
+        callback();
+      })
+      .catch(() => {
+        dispatch({
+          type: actionTypes.SIGNIN_ERROR,
+          msg: 'Credenciais de login invalidas.'
+        })
+      })
+  }catch (err) {
+    dispatch({type: actionTypes.SIGNIN_ERROR, msg: 'Credenciais de login invalidas.'})
+  }
+}
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START

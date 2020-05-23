@@ -10,10 +10,18 @@ import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth'
 import pratosReducer from './store/reducers/pratosRestaurante'
 
+//Firebase related
+import { reactReduxFirebase } from 'react-redux-firebase';
+import firebase from './store/firebase';
+
+
 const rootReducer = combineReducers({
   auth: authReducer,
   pratos: pratosReducer
 });
+const createStoreWithFirebase = compose(reactReduxFirebase(firebase))(
+  createStore
+);
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancer(
