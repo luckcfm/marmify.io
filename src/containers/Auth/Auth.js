@@ -105,7 +105,7 @@ class Auth extends Component {
   };
   render() {
     if (this.props.isAuthenticated) {
-      this.props.history.push("/central");
+      this.props.history.push("/landing");
     }
     const formElementsArray = [];
     for (let key in this.state.controls) {
