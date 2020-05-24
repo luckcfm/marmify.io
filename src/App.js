@@ -19,11 +19,16 @@ class App extends Component {
   state = {
     authenticated: false
   }
+  componentDidMount() {
+    this.props.onLogout();
+    this.props.onTryAutoSignUp();
+  }
   render() {
     let enabledRoutes = (
       <Switch>
         <Route exact path="/" component={Homepage}></Route>
         <PrivateRoute path="/restaurante" authenticated={this.state.authenticated} component={Restaurante}></PrivateRoute>
+        <PrivateRoute path="/logout" authenticated={this.state.authenticated} component={Logout}></PrivateRoute>
         {/* <PublicRoute path="/signup" authenticated={this.state.authenticated} component={Register}></PublicRoute> */}
         <PublicRoute path="/login" authenticated={this.state.authenticated} component={Auth}></PublicRoute>
         {/* <Route path="/auth" component={Auth}></Route>
@@ -55,6 +60,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTryAutoSignUp: () => dispatch(actions.authCheckState()),
+    onLogout: () => dispatch(actions.logout())
   };
 };
 

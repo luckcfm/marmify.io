@@ -42,7 +42,6 @@ class Auth extends Component {
         touched: false,
       },
     },
-    isSignUp: true,
   };
 
   componentDidMount() {
@@ -51,17 +50,13 @@ class Auth extends Component {
     }
   }
   submitHandler = (event) => {
+    console.log('hello')
     event.preventDefault();
     this.props.onAuth(
       this.state.controls.email.value,
       this.state.controls.password.value,
       this.state.isSignUp
     );
-  };
-  switchAuthModeHandler = () => {
-    this.setState((prevState) => {
-      return { isSignUp: !prevState.isSignUp };
-    });
   };
   checkValidity(value, rules) {
     let isValid = true;
@@ -146,8 +141,6 @@ class Auth extends Component {
       authRedirect = <Redirect to={this.props.authRedirectPath}></Redirect>;
     }
 
-    const validClasses = [];
-    validClasses.push(classes.input_container);
     return (
         <>
           <div className={classes.LoginForm}>
@@ -155,11 +148,12 @@ class Auth extends Component {
               <img src={LoginIcon}></img>
             </div>
             <div className={classes.FormRight}>
-            <h1>Bem vindo ao Marmify</h1>
+            <h1>Bem vindo ao <i style={{color: '#BE63FF'}}>Marmify.io</i></h1>
                 {form}
                 <input 
                   type="submit" 
                   value="Login"
+                  onClick={this.submitHandler}
                   className={`${classes.input_field} ${classes.input_submit}`} />
                 <span>Forgot <a href="#"> Username / Password ?</a></span>
                 <span className={classes.create_account}>

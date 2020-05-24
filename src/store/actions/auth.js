@@ -1,150 +1,158 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../axios-marmify";
-import firebase from '../firebase'
+import firebase from "../firebase";
 
-
-export const signup = (email, password) => async dispatch => {
-  try{
+export const signup = (email, password) => async (dispatch) => {
+  try {
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email,password)
-      .then(dataBeforeEmail => {
-        firebase.auth().onAuthStateChanged(user => {
+      .createUserWithEmailAndPassword(email, password)
+      .then((dataBeforeEmail) => {
+        firebase.auth().onAuthStateChanged((user) => {
           user.sendEmailVerification();
-        })
+        });
       })
-      .then(dataAfterEmail => {
-        firebase.auth().onAuthStateChanged(user => {
-          if(user.emailVerified) {
+      .then((dataAfterEmail) => {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user.emailVerified) {
             dispatch({
               type: actionTypes.SIGNUP_SUCCESS,
-              msg: 'Sua conta foi criada com sucesso! Agora voce precisa verificar seu email!'
+              msg:
+                "Sua conta foi criada com sucesso! Agora voce precisa verificar seu email!",
             });
           } else {
             dispatch({
               type: actionTypes.SIGNUP_ERROR,
-              msg: 'Alguma coisa nao deu certo, por favor tente novamente em alguns instantes!'
-            })
+              msg:
+                "Alguma coisa nao deu certo, por favor tente novamente em alguns instantes!",
+            });
           }
-        })
-      })
+        });
+      });
   } catch (err) {
     dispatch({
       type: actionTypes.SIGNUP_ERROR,
-      msg: 'Alguma coisa deu errado e nao conseguimos criar sua conta, por favor tente novamente!'
-    })
+      msg:
+        "Alguma coisa deu errado e nao conseguimos criar sua conta, por favor tente novamente!",
+    });
   }
-}
+};
 
-export const signin = (email,password,callback) => async dispatch => {
-  try {
-    firebase
+export const signin = (email, password, callback) => {
+  return dispatch => {
+    dispatch(authStart())
+    try {
+      // dispatch(actionTypes.AUTH_START);
+      firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        dispatch({type: actionTypes.SIGNIN_SUCCESS});
-        callback();
+      .then((user) => {
+        console.log("here", user);
+        dispatch({ type: actionTypes.SIGNIN_SUCCESS });
       })
       .catch(() => {
         dispatch({
           type: actionTypes.SIGNIN_ERROR,
-          msg: 'Credenciais de login invalidas.'
-        })
-      })
-  }catch (err) {
-    dispatch({type: actionTypes.SIGNIN_ERROR, msg: 'Credenciais de login invalidas.'})
+          msg: "Credenciais de login invalidas.",
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
-}
+  
+};
 export const authStart = () => {
   return {
-    type: actionTypes.AUTH_START
+    type: actionTypes.AUTH_START,
   };
 };
 
 export const authSuccess = (token, user) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    token: token  };
+    user: user,
+    token: token,
+  };
 };
 
 export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expirationData");
   localStorage.removeItem("user");
-  setAuthRedirectPath("/auth");
-  return {
-    type: actionTypes.AUTH_LOGOUT
+  return (dispatch) => {
+    dispatch(() => {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log('loggin out!')
+          setAuthRedirectPath("/auth");
+          return {
+            type: actionTypes.AUTH_LOGOUT,
+          };
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    });
   };
+  console.log("here");
 };
 
-export const checkAuthTimeout = expirationTime => {
-  return dispatch => {
+export const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {
     setTimeout(() => {
       dispatch(logout());
     }, expirationTime * 1000);
   };
 };
 
-export const authFail = error => {
+export const authFail = (error) => {
   return {
     type: actionTypes.AUTH_FAIL,
-    error: error
+    error: error,
   };
 };
 
 export const auth = (email, password, isSignup) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(authStart());
     const authData = {
       email: email,
       password: password,
-      returnSecureToken: true
+      returnSecureToken: true,
     };
     const url = "/User/login";
     axios
       .post(url, authData)
-      .then(response => {
+      .then((response) => {
         console.log(response);
         localStorage.setItem("token", response.data);
         // localStorage.setItem("user", JSON.stringify(response.data.user));
         dispatch(authSuccess(response.data));
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(authFail(error));
       });
   };
 };
-export const setAuthRedirectPath = path => {
+export const setAuthRedirectPath = (path) => {
   return {
     type: actionTypes.SET_AUTH_REDIRECT_PATH,
-    path: path
+    path: path,
   };
 };
 
 export const authCheckState = () => {
   console.log("checkin state");
-  return dispatch => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.log('loggin out..')
-      dispatch(logout());
-    } else {
-      // const expirationTime = new Date(localStorage.getItem('expirationData'));
-      if (true == false) {
-        dispatch(logout());
+  return (dispatch) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(authSuccess(user.uid, user));
       } else {
-        if (
-          localStorage.getItem("user") !== undefined &&
-          localStorage.getItem("user") !== "undefined"
-        ) {
-          const userId = localStorage.getItem("user");
-          dispatch(authSuccess(token, userId));
-        } else {
-          dispatch(authFail({ error: "Not authorrized" }));
-        }
-
-        // dispatch(checkAuthTimeout((expirationTime.getTime() - new Date().getTime()) / 1000 ));
+        dispatch(authFail({ error: "Not authorrized" }));
       }
-    }
+    });
   };
 };
