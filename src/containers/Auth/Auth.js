@@ -17,6 +17,7 @@ class Auth extends Component {
           type: "email",
           placeholder: "Endereço de E-mail",
         },
+        ico: "pi pi-envelope",
         value: "",
         validation: {
           required: true,
@@ -27,6 +28,7 @@ class Auth extends Component {
       },
       password: {
         elementType: "input",
+        ico: "pi pi-lock",
         elementConfig: {
           type: "password",
           placeholder: "Senha",
@@ -124,6 +126,7 @@ class Auth extends Component {
           elementType={formElement.config.elementType}
           elementConfig={formElement.config.elementConfig}
           value={formElement.config.value}
+          ico={formElement.config.ico}
           invalid={!formElement.config.valid}
           shouldValidate={formElement.config.validation}
           touched={formElement.config.touched}
@@ -142,6 +145,9 @@ class Auth extends Component {
     if (this.props.isAuthenticated) {
       authRedirect = <Redirect to={this.props.authRedirectPath}></Redirect>;
     }
+
+    const validClasses = [];
+    validClasses.push(classes.input_container);
     return (
         <>
           <div className={classes.LoginForm}>
@@ -150,23 +156,7 @@ class Auth extends Component {
             </div>
             <div className={classes.FormRight}>
             <h1>Bem vindo ao Marmify</h1>
-           
-                <div className={classes.input_container}>
-                    <i className="pi pi-envelope"></i>
-                    <input 
-                      placeholder="Email" 
-                      type="email" 
-                      name="Email" 
-                      className={classes.input_field} />
-                </div>
-                <div className={classes.input_container}>
-                    <i className="pi pi-lock"></i>
-                    <input  
-                      placeholder="Senha" 
-                      type="password" 
-                      name="Password" 
-                      className={classes.input_field} />
-                </div>
+                {form}
                 <input 
                   type="submit" 
                   value="Login"
@@ -177,28 +167,6 @@ class Auth extends Component {
                 </span>
             </div>
           </div>
-        
-        {/* <div id="form_wrapper">
-            <div id="form_left">
-                <img src="icon.png" alt="computer icon" />
-            </div>
-            <div id="form_right">
-                <h1>Member Login</h1>
-                <div class="input_container">
-                    <i class="fas fa-envelope"></i>
-                    <input placeholder="Email" type="email" name="Email" id="field_email" class='input_field' />
-                </div>
-                <div class="input_container">
-                    <i class="fas fa-lock"></i>
-                    <input  placeholder="Password" type="password" name="Password" id="field_password" class='input_field' />
-                </div>
-                <input type="submit" value="Login" id='input_submit' class='input_field' />
-                <span>Forgot <a href="#"> Username / Password ?</a></span>
-                <span id='create_account'>
-                    <a href="#">Create your account ➡ </a>
-                </span>
-            </div>
-        </div> */}
         </>
     );
   }
