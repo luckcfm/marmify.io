@@ -5,6 +5,8 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 import classes from "./Auth.module.css";
+import "./Auth.css"
+import LoginIcon from '../../assets/login.svg'
 import * as action from "../../store/actions/index";
 class Auth extends Component {
   state = {
@@ -141,15 +143,63 @@ class Auth extends Component {
       authRedirect = <Redirect to={this.props.authRedirectPath}></Redirect>;
     }
     return (
-      <div className={classes.Auth}>
-        {authRedirect}
-        {errorMessage}
-        <h1>Marmify Login</h1>
-        <form onSubmit={this.submitHandler}>
-          {form}
-          <Button btnType="Success">SUBMIT</Button>
-        </form>
-      </div>
+        <>
+          <div className={classes.LoginForm}>
+            <div className={classes.ImageLeft}>
+              <img src={LoginIcon}></img>
+            </div>
+            <div className={classes.FormRight}>
+            <h1>Bem vindo ao Marmify</h1>
+           
+                <div className={classes.input_container}>
+                    <i className="pi pi-envelope"></i>
+                    <input 
+                      placeholder="Email" 
+                      type="email" 
+                      name="Email" 
+                      className={classes.input_field} />
+                </div>
+                <div className={classes.input_container}>
+                    <i className="pi pi-lock"></i>
+                    <input  
+                      placeholder="Senha" 
+                      type="password" 
+                      name="Password" 
+                      className={classes.input_field} />
+                </div>
+                <input 
+                  type="submit" 
+                  value="Login"
+                  className={`${classes.input_field} ${classes.input_submit}`} />
+                <span>Forgot <a href="#"> Username / Password ?</a></span>
+                <span className={classes.create_account}>
+                    <a href="#">Create your account ➡ </a>
+                </span>
+            </div>
+          </div>
+        
+        {/* <div id="form_wrapper">
+            <div id="form_left">
+                <img src="icon.png" alt="computer icon" />
+            </div>
+            <div id="form_right">
+                <h1>Member Login</h1>
+                <div class="input_container">
+                    <i class="fas fa-envelope"></i>
+                    <input placeholder="Email" type="email" name="Email" id="field_email" class='input_field' />
+                </div>
+                <div class="input_container">
+                    <i class="fas fa-lock"></i>
+                    <input  placeholder="Password" type="password" name="Password" id="field_password" class='input_field' />
+                </div>
+                <input type="submit" value="Login" id='input_submit' class='input_field' />
+                <span>Forgot <a href="#"> Username / Password ?</a></span>
+                <span id='create_account'>
+                    <a href="#">Create your account ➡ </a>
+                </span>
+            </div>
+        </div> */}
+        </>
     );
   }
 }

@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database'
 const config = {
   apiKey: "AIzaSyAc4tA5otkmlLiyU8nxGQ-eYhqUSS6B0Ic",
   authDomain: "marmify-a9390.firebaseapp.com",
@@ -14,3 +15,4 @@ const config = {
 firebase.initializeApp(config);
 
 export default firebase;
+export const db = firebase.database();
