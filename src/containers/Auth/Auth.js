@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect,withRouter } from "react-router-dom";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
@@ -48,6 +48,9 @@ class Auth extends Component {
     if (this.props.authRedirectPath !== "/") {
       this.props.setAuthRedirectPath();
     }
+  }
+  goToRegister = () => {
+    this.props.history.push('/registro')
   }
   submitHandler = (event) => {
     console.log('hello')
@@ -157,7 +160,7 @@ class Auth extends Component {
                   className={`${classes.input_field} ${classes.input_submit}`} />
                 <span>Forgot <a href="#"> Username / Password ?</a></span>
                 <span className={classes.create_account}>
-                    <a href="#">Create your account ➡ </a>
+                    <a href="#" onClick={this.goToRegister}>Create your account ➡ </a>
                 </span>
             </div>
           </div>
@@ -182,4 +185,4 @@ const mapDispatchToProps = (dispatch) => {
     setAuthRedirectPath: () => dispatch(action.setAuthRedirectPath("/")),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));

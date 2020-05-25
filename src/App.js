@@ -8,6 +8,7 @@ import Auth from "./containers/Auth/Auth";
 import Homepage from './containers/Homepage/Homepage'
 import Restaurante from './containers/Restaurante/Restaurante';
 import PratosRestaurante from './containers/Restaurante/Pratos/PratosRestaurante';
+import Registro from './containers/Auth/Register/Register';
 import Logout from "./containers/Auth/Logout/Logout";
 import {PublicRoute, PrivateRoute} from './hoc/PrivateRoute/PrivateRoute';
 import 'primereact/resources/themes/nova-light/theme.css';
@@ -31,6 +32,7 @@ class App extends Component {
         <PrivateRoute path="/logout" authenticated={this.state.authenticated} component={Logout}></PrivateRoute>
         {/* <PublicRoute path="/signup" authenticated={this.state.authenticated} component={Register}></PublicRoute> */}
         <PublicRoute path="/login" authenticated={this.state.authenticated} component={Auth}></PublicRoute>
+        <PublicRoute path="/registro" authenticated={this.state.authenticated} component={Registro}></PublicRoute>
         {/* <Route path="/auth" component={Auth}></Route>
         <Route path="/home" component={Homepage}></Route>
         <Route path="/restaurante" component={Restaurante}></Route>
