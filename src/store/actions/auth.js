@@ -3,14 +3,35 @@ import axios from "../../axios-marmify";
 import firebase from "../firebase";
 
 export const signup = (userData) => async (dispatch) => {
-  console.log(userData);
   try {
+    dispatch(actionTypes.SIGNUP_START)
     firebase
       .auth()
       .createUserWithEmailAndPassword(userData.email, userData.password)
       .then((dataBeforeEmail) => {
         firebase.auth().onAuthStateChanged((user) => {
-          user.sendEmailVerification();
+          firebase.database().ref('users/' + user.uid)
+          .set( {
+            address: userData.street,
+            city: userData.country,
+            zipCode: userData.zipCode,
+            role: userData.role
+          })
+          .then(res => {
+            user.sendEmailVerification();
+            dispatch(actionTypes.SIGNUP_SUCCESS);
+          })
+          .catch(e => {
+            console.log(e);
+          })
+          // firebase.database().child("marmify").child(user.getUid()).setValue(user)
+          // .then(user => {
+          //   user.sendEmailVerification();
+          // })
+          // .catch(e => {
+          //   console.log(e);
+          // })
+          
         });
       })
       .then((dataAfterEmail) => {

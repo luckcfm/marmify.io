@@ -1,5 +1,9 @@
-export const SIGNUP_ERROR   = 'SIGNUP_ERROR';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+//REGISTRO DE USUARIOS
+export const SIGNUP_START         = 'REGISTRAR_USER_START';
+export const SIGNUP_ERROR         = 'SIGNUP_ERROR';
+export const SIGNUP_SUCCESS       = 'SIGNUP_SUCCESS';
+
+//LOGIN
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNIN_ERROR   = 'SIGNIN_ERROR';
 export const AUTH_START     = 'AUTH_START'
