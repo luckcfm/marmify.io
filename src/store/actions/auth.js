@@ -1,6 +1,14 @@
 import * as actionTypes from "./actionTypes";
-import axios from "../../axios-marmify";
 import firebase from "../firebase";
+
+
+const addUserInfo = (data) => {
+  console.log(data);
+  return {
+    type: actionTypes.ADD_USER_INFO
+  }
+}
+
 
 export const signup = (userData) => async (dispatch) => {
   try {
@@ -50,7 +58,12 @@ export const signin = (email, password, callback) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        console.log("here", user);
+        const uid = user.user.uid;
+        firebase.database().ref(`users/${uid}`).on('value', snapshot => {
+          console.log('here');
+          const userData = snapshot.val();
+          dispatch(addUserInfo(userData))
+        })
         dispatch(authSuccess());
       })
       .catch((e) => {
@@ -118,7 +131,6 @@ export const logout = () => {
         });
     });
   };
-  console.log("here");
 };
 
 export const checkAuthTimeout = (expirationTime) => {
@@ -133,29 +145,6 @@ export const authFail = (error) => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error,
-  };
-};
-
-export const auth = (email, password, isSignup) => {
-  return (dispatch) => {
-    dispatch(authStart());
-    const authData = {
-      email: email,
-      password: password,
-      returnSecureToken: true,
-    };
-    const url = "/User/login";
-    axios
-      .post(url, authData)
-      .then((response) => {
-        console.log(response);
-        localStorage.setItem("token", response.data);
-        // localStorage.setItem("user", JSON.stringify(response.data.user));
-        dispatch(authSuccess(response.data));
-      })
-      .catch((error) => {
-        dispatch(authFail(error));
-      });
   };
 };
 export const setAuthRedirectPath = (path) => {
