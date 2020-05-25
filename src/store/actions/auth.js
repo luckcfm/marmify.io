@@ -2,11 +2,12 @@ import * as actionTypes from "./actionTypes";
 import axios from "../../axios-marmify";
 import firebase from "../firebase";
 
-export const signup = (email, password) => async (dispatch) => {
+export const signup = (userData) => async (dispatch) => {
+  console.log(userData);
   try {
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(userData.email, userData.password)
       .then((dataBeforeEmail) => {
         firebase.auth().onAuthStateChanged((user) => {
           user.sendEmailVerification();
@@ -30,6 +31,7 @@ export const signup = (email, password) => async (dispatch) => {
         });
       });
   } catch (err) {
+    console.log(err);
     dispatch({
       type: actionTypes.SIGNUP_ERROR,
       msg:

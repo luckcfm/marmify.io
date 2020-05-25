@@ -64,5 +64,6 @@
 }
 
 .input_field_invalid {
-  background-color: lightcoral;
+  background-color: #BE63FF;
+  color: white;
 }

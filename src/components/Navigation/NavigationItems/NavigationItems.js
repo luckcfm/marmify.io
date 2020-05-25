@@ -3,10 +3,9 @@ import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
 
 const navigationItems = (props) => {
-  console.log(props);
   let itemsToShow = (
     <ul className={classes.NavigationItems}>
-      <NavigationItem link="/auth">Login</NavigationItem>
+      <NavigationItem link="/login">Login</NavigationItem>
     </ul>
   );
   if (
@@ -16,7 +15,7 @@ const navigationItems = (props) => {
   ) {
     itemsToShow = (
       <ul className={classes.NavigationItems}>
-        <NavigationItem link="/central">Central</NavigationItem>
+        <NavigationItem link="/restaurante">Restaurante</NavigationItem>
         <NavigationItem link="/decoders">My Decoders</NavigationItem>
         <NavigationItem link="/logout">Logout</NavigationItem>
       </ul>

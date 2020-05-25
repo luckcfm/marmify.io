@@ -24,6 +24,19 @@ const input = (props) => {
         </div>
       );
       break;
+      case "password":
+      inputElement = (
+        <div className={inputClasses.join(' ')}>
+          <i className={props.ico}></i>
+          <input
+            onChange={props.changed}
+            {...props.elementConfig}
+            value={props.value}
+            className={classes.input_field}
+          />
+        </div>
+      );
+      break;
     case "textarea":
       inputElement = (
         <textarea

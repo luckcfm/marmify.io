@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import { connect } from "react-redux";
 import RegisterIcon from "../../../assets/RegisterIcon.svg";
 import * as classes from "./Register.module.css";
+import * as actions from "../../../store/actions/index";
 import Input from "../../../components/UI/Input/RegisterInput";
-import { updateObject } from '../../../shared/utility';
-export default function Register() {
+import { updateObject } from "../../../shared/utility";
+const Register = function (props) {
   const initialState = {
     controls: {
       name: {
         elementType: "input",
         elementConfig: {
           type: "text",
+          name: "name",
           placeholder: "Seu nome",
         },
         value: "",
@@ -24,6 +27,7 @@ export default function Register() {
         elementType: "input",
         elementConfig: {
           type: "text",
+          name: "street",
           placeholder: "Endereco",
         },
         value: "",
@@ -35,8 +39,10 @@ export default function Register() {
       },
       zipCode: {
         elementType: "input",
+
         elementConfig: {
           type: "text",
+          name: "zipCode",
           placeholder: "Codigo postal",
         },
         value: "",
@@ -53,6 +59,7 @@ export default function Register() {
         elementType: "input",
         elementConfig: {
           type: "text",
+          name: "country",
           placeholder: "Cidade",
         },
         value: "",
@@ -65,6 +72,7 @@ export default function Register() {
       email: {
         elementType: "input",
         elementConfig: {
+          name: "email",
           type: "email",
           placeholder: "Seu email",
         },
@@ -75,6 +83,31 @@ export default function Register() {
         },
         valid: false,
         touched: false,
+      },
+      password: {
+        elementType: "password",
+        elementConfig: {
+          type: "password",
+          name: "password",
+          placeholder: "Digite a sua senha",
+        },
+        value: "",
+        validation: {
+          required: true,
+          isPassword: true,
+        },
+      },
+      secondPassword: {
+        elementType: "password",
+        elementConfig: {
+          type: "password",
+          placeholder: "Confirme sua senha",
+        },
+        value: "",
+        validation: {
+          required: true,
+          isSecondPassword: true,
+        },
       },
       role: {
         elementType: "select",
@@ -92,8 +125,16 @@ export default function Register() {
     },
   };
   const [registro, setRegistro] = useState(initialState);
-  const submitHandler = () => {
-    console.log("fakiiie");
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    const formData = {};
+    for (let formElementIdentifier in registro.controls) {
+      formData[formElementIdentifier] =
+        registro.controls[formElementIdentifier].value;
+    }
+
+    props.onRegister(formData);
   };
   const checkValidity = (value, rules) => {
     let isValid = true;
@@ -185,6 +226,14 @@ export default function Register() {
             onClick={submitHandler}
             className={`${classes.input_field} ${classes.input_submit}`}
           />
+          <span>
+            Ja e registrado ?{" "}
+            <a onClick={() => props.history.push("/login")} href="#">
+              {" "}
+              Clique aqui
+            </a>{" "}
+            para entrar.
+          </span>
         </div>
         <div className={classes.ImageLeft}>
           <img src={RegisterIcon}></img>
@@ -192,4 +241,12 @@ export default function Register() {
       </div>
     </>
   );
-}
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRegister: (formData) => dispatch(actions.signup(formData)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Register);
