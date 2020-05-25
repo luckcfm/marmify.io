@@ -9,6 +9,14 @@ export const LOADING        = 'LOADING'
 export const ERROR          = 'ERROR'
 export const AUTH_LOGOUT    = 'AUTH_LOGOUT';
 
+//
+export const HIDE_TOOLBAR   = 'HIDE_TOOLBAR';
+export const SHOW_TOOLBAR   = 'SHOW_TOOLBAR';
+export const HIDE_SIDEBAR   = 'HIDE_SIDEBAR';
+export const SHOW_SIDEBAR   = 'SHOW_SIDEBAR';
+
+
+
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH'
 export const MUDAR_STATUS_PEDIDO = 'MUDAR_STATUS_PEDIDO'
 export const REGISTRAR_PEDIDO_SUCCESS = 'REGISTRAR_PEDIDO_SUCCESS'

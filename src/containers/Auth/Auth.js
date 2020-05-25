@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Redirect,withRouter } from "react-router-dom";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Input from "../../components/UI/Input/Input";
-import Button from "../../components/UI/Button/Button";
 import classes from "./Auth.module.css";
 import "./Auth.css"
 import LoginIcon from '../../assets/login.svg'
@@ -45,6 +44,7 @@ class Auth extends Component {
   };
 
   componentDidMount() {
+    this.props.onHideToolbar();
     if (this.props.authRedirectPath !== "/") {
       this.props.setAuthRedirectPath();
     }
@@ -158,9 +158,9 @@ class Auth extends Component {
                   value="Login"
                   onClick={this.submitHandler}
                   className={`${classes.input_field} ${classes.input_submit}`} />
-                <span>Forgot <a href="#"> Username / Password ?</a></span>
+                <span>Esqueceu seu <a href="#"> Usuario / Senha ?</a></span>
                 <span className={classes.create_account}>
-                    <a href="#" onClick={this.goToRegister}>Create your account ➡ </a>
+                    <a href="#" onClick={this.goToRegister}>Crie agora sua conta ➡ </a>
                 </span>
             </div>
           </div>
@@ -183,6 +183,7 @@ const mapDispatchToProps = (dispatch) => {
     onAuth: (email, password, isSignup) =>
       dispatch(action.signin(email, password, isSignup)),
     setAuthRedirectPath: () => dispatch(action.setAuthRedirectPath("/")),
+    onHideToolbar: () => dispatch(action.hideToolbar())
   };
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));

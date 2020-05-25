@@ -9,15 +9,12 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import authReducer from './store/reducers/auth'
 import pratosReducer from './store/reducers/pratosRestaurante'
-
-const rrfConfig = {
-  userProfile: "users",
-  useFirestoreForProfile: true,
-};
+import layoutReducer from './store/reducers/layout'
 
 const rootReducer = combineReducers({
   auth: authReducer,
   pratos: pratosReducer,
+  layout: layoutReducer
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

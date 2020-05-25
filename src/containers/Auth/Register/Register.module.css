@@ -27,98 +27,98 @@
 }
 
 .ImageLeft {
-  /* center the image */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ /* center the image */
+ display: flex;
+ justify-content: center;
+ align-items: center;
 }
 
 .ImageLeft img {
-  width: 350px;
-  height: 350px;
+ width: 350px;
+ height: 350px;
 }
 .FormRight {
-  display: grid;
-  /* single column layout */
-  grid-template-columns: 1fr;
-  /* have some gap in between elements*/
-  grid-gap: 20px;
-  padding: 10% 5%;
+ display: grid;
+ /* single column layout */
+ grid-template-columns: 1fr;
+ /* have some gap in between elements*/
+ grid-gap: 20px;
+ padding: 10% 5%;
 }
 
 .input_container {
-  background-color: var(--input_bg);
-  /* vertically align icon and text inside the div*/
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
+ background-color: var(--input_bg);
+ /* vertically align icon and text inside the div*/
+ display: flex;
+ align-items: center;
+ padding-left: 20px;
 }
 .input_field {
-  /* customize the input tag with lighter font and some padding*/
-  color: var(--icon_color);
-  background-color: inherit;
-  width: 90%;
-  border: none;
-  font-size: 1.3rem;
-  font-weight: 400;
-  padding-left: 30px;
+ /* customize the input tag with lighter font and some padding*/
+ color: var(--icon_color);
+ background-color: inherit;
+ width: 90%;
+ border: none;
+ font-size: 1.3rem;
+ font-weight: 400;
+ padding-left: 30px;
 }
 
 .input_field:hover,
 .input_field:focus {
-  /* remove the outline */
-  outline: none;
+ /* remove the outline */
+ outline: none;
 }
 
 .input_submit {
-  background-color: var(--submit_bg);
-  padding-left: 0;
-  font-weight: bold;
-  color: white;
-  text-transform: uppercase;
+ background-color: var(--submit_bg);
+ padding-left: 0;
+ font-weight: bold;
+ color: white;
+ text-transform: uppercase;
 }
 .input_submit:hover {
-  background-color: var(--submit_hover);
-  /* simple color transition on hover */
-  transition: background-color, 1s;
-  cursor: pointer;
+ background-color: var(--submit_hover);
+ /* simple color transition on hover */
+ transition: background-color, 1s;
+ cursor: pointer;
 }
 .input_container,
 .input_submit {
-  height: 60px;
-  /* make the borders more round */
-  border-radius: 30px;
-  width: 100%;
+ height: 60px;
+ /* make the borders more round */
+ border-radius: 30px;
+ width: 100%;
 }
-.create_account {
-  display: block;
-  position: relative;
-  top: 30px;
+.create_account { 
+ display: block;
+ position: relative;
+ top: 30px;
 }
 
 .LoginForm a {
-  /* remove default underline */
-  text-decoration: none;
-  color: var(--submit_bg);
-  font-weight: bold;
+   /* remove default underline */
+   text-decoration: none;
+   color: var(--submit_bg);
+   font-weight: bold;
 }
 .LoginForm a:hover {
-  color: var(--submit_hover);
+ color: var(--submit_hover);
 }
 .LoginForm i {
-  color: var(--icon_color);
+ color: var(--icon_color);
 }
 
 /* make it responsive */
 @media screen and (max-width: 768px) {
-  /* make the layout  a single column and add some margin to the wrapper */
-  .LoginForm {
-    grid-template-columns: 1fr;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  /* on small screen we don't display the image */
-  .ImageLeft {
-    display: none;
-  }
+ /* make the layout  a single column and add some margin to the wrapper */
+ .LoginForm {
+   grid-template-columns: 1fr;
+   margin-left: 10px;
+   margin-right: 10px;
+ }
+ /* on small screen we don't display the image */
+ .ImageLeft {
+   display: none;
+ }
 }

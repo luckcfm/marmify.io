@@ -5,8 +5,9 @@ import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
-const toolbar = ( props ) => (
-    <header className={classes.Toolbar}>
+const toolbar = ( props ) => {
+    if(props.showToolbar){
+        return <header className={classes.Toolbar}>
         <DrawerToggle clicked={props.drawerToggleClicked} />
         <div className={classes.Logo}>
             <Logo />
@@ -15,6 +16,10 @@ const toolbar = ( props ) => (
             <NavigationItems user={props.user} isAuth={props.isAuth} />
         </nav>
     </header>
-);
+    }else{
+        return null;
+    }
+    
+};
 
 export default toolbar;

@@ -6,3 +6,10 @@ export {
   signin,
   signup
 } from './auth'
+
+export {
+  hideSidebar,
+  hideToolbar,
+  showSidebar,
+  showToolbar
+} from './layout'

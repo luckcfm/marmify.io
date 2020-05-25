@@ -24,7 +24,7 @@ const Side = function (props) {
     }
   };
   return (
-    <>
+    props.showSidebar  ? <>
       <Sidebar
         style={{ backgroundColor: "#594994", color: "white", border: "0px" }}
         visible={state.visible}
@@ -43,7 +43,6 @@ const Side = function (props) {
             <h2>Bem vindo, Restaurante</h2>
           </div>
         </div>
-        {/* <hr style={{border: '1px solid white', padding: 0, margin: 0}}></hr> */}
         <div className="p-grid">
           <div
             onClick={() => clickHandler("pedidos")}
@@ -66,7 +65,7 @@ const Side = function (props) {
         icon="pi pi-arrow-right"
         onClick={(e) => setState({ visible: true })}
       />
-    </>
+    </> : null
   );
 };
 
