@@ -4,7 +4,7 @@ import firebase from "../firebase";
 
 export const signup = (userData) => async (dispatch) => {
   try {
-    dispatch(actionTypes.SIGNUP_START)
+    dispatch(signUpStart())
     firebase
       .auth()
       .createUserWithEmailAndPassword(userData.email, userData.password)
@@ -19,45 +19,25 @@ export const signup = (userData) => async (dispatch) => {
           })
           .then(res => {
             user.sendEmailVerification();
-            dispatch(actionTypes.SIGNUP_SUCCESS);
+            dispatch(signUpSuccess());
           })
           .catch(e => {
             console.log(e);
           })
-          // firebase.database().child("marmify").child(user.getUid()).setValue(user)
-          // .then(user => {
-          //   user.sendEmailVerification();
-          // })
-          // .catch(e => {
-          //   console.log(e);
-          // })
-          
         });
       })
       .then((dataAfterEmail) => {
         firebase.auth().onAuthStateChanged((user) => {
           if (user.emailVerified) {
-            dispatch({
-              type: actionTypes.SIGNUP_SUCCESS,
-              msg:
-                "Sua conta foi criada com sucesso! Agora voce precisa verificar seu email!",
-            });
+            dispatch(signUpSuccess());
           } else {
-            dispatch({
-              type: actionTypes.SIGNUP_ERROR,
-              msg:
-                "Alguma coisa nao deu certo, por favor tente novamente em alguns instantes!",
-            });
+            dispatch(signUpError());
           }
         });
       });
   } catch (err) {
     console.log(err);
-    dispatch({
-      type: actionTypes.SIGNUP_ERROR,
-      msg:
-        "Alguma coisa deu errado e nao conseguimos criar sua conta, por favor tente novamente!",
-    });
+    dispatch(signUpError());
   }
 };
 
@@ -71,13 +51,11 @@ export const signin = (email, password, callback) => {
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
         console.log("here", user);
-        dispatch({ type: actionTypes.SIGNIN_SUCCESS });
+        dispatch(authSuccess());
       })
-      .catch(() => {
-        dispatch({
-          type: actionTypes.SIGNIN_ERROR,
-          msg: "Credenciais de login invalidas.",
-        });
+      .catch((e) => {
+        console.log(e);
+        dispatch(authFail(e.message));
       });
     } catch (err) {
       console.log(err);
@@ -85,6 +63,26 @@ export const signin = (email, password, callback) => {
   }
   
 };
+
+const signUpSuccess = () => {
+  return {
+    type: actionTypes.SIGNUP_SUCCESS
+  }
+}
+
+const signUpError = (errMsg) => {
+  return {
+    type: actionTypes.SIGNUP_ERROR,
+    msg: errMsg
+  }
+}
+
+const signUpStart = () => {
+  return {
+    type: actionTypes.SIGNUP_START
+  }
+}
+
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START,

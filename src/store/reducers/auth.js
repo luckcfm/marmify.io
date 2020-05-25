@@ -6,7 +6,10 @@ const initialState = {
   userId: null,
   error: null,
   authRedirectPath: '/home',
-  loading: false
+  loading: false,
+  loadingSignUp: false,
+  loadingSignUpErr: null,
+  loadingSignUpMsg: null
 }
 
 
@@ -32,12 +35,27 @@ const setAuthRedirectPath = (state, action) => {
   return updateObject(state, { authRedirectPath: action.path })
 }
 
+const signUpStart = (state,action) => {
+  return updateObject(state, {loadingSignUpErr: null, loadingSignUp: true, loadingSignUpMsg: null});
+}
+
+const signUpSuccess = (state,action) => {
+  return updateObject(state, {loadingSignUpErr: null, loadingSignUp: false, loadingSignUpMsg: 'Usuario registrado, por favor cheque seu email para concluir o cadastro.'})
+}
+
+const signUpError = (state, action) => {
+  return updateObject(state, {loadingSignUpErr: {err: action.msg}, loadingSignUp: false, loadingSignUpMsg: null});
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.AUTH_START: return authStart(state, action);
-    case actionTypes.AUTH_SUCCESS: return authSuccess(state, action);
-    case actionTypes.AUTH_FAIL: return authFail(state, action);
-    case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state,action);
+    case actionTypes.AUTH_START:              return authStart(state, action);
+    case actionTypes.AUTH_SUCCESS:            return authSuccess(state, action);
+    case actionTypes.AUTH_FAIL:               return authFail(state, action);
+    case actionTypes.SIGNUP_START:            return signUpStart(state,action);
+    case actionTypes.SIGNUP_SUCCESS:          return signUpSuccess(state,action);
+    case actionTypes.SIGNUP_ERROR:            return signUpError(state,action);
+    case actionTypes.SET_AUTH_REDIRECT_PATH:  return setAuthRedirectPath(state,action);
     default: return state;
   }
 }

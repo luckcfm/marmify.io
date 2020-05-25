@@ -6,6 +6,7 @@ import * as classes from "./Register.module.css";
 import * as actions from "../../../store/actions/index";
 import Input from "../../../components/UI/Input/RegisterInput";
 import { updateObject } from "../../../shared/utility";
+import Spinner from "../../../components/UI/Spinner/Spinner";
 const Register = function (props) {
   const initialState = {
     controls: {
@@ -212,8 +213,17 @@ const Register = function (props) {
       );
     }
   });
+  if (props.loading) {
+    form = <Spinner></Spinner>;
+  }
+  let msg = <></>
+  if( props.successMsg !== null) {
+    msg = <p> {props.successMsg} </p>
+  }
+
   return (
     <>
+    {msg}
       <div className={classes.LoginForm}>
         <div className={classes.FormRight}>
           {/* <h1>
@@ -243,10 +253,17 @@ const Register = function (props) {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loadingSignUp,
+    successMsg: state.auth.loadingSignUpMsg
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onRegister: (formData) => dispatch(actions.signup(formData)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

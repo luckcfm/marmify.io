@@ -137,7 +137,7 @@ class Auth extends Component {
     }
     let errorMessage = null;
     if (this.props.error) {
-      errorMessage = <p>{this.props.error.message}</p>;
+      errorMessage = <p>{this.props.error.error}</p>;
     }
     let authRedirect = null;
     if (this.props.isAuthenticated) {
@@ -151,6 +151,7 @@ class Auth extends Component {
               <img src={LoginIcon}></img>
             </div>
             <div className={classes.FormRight}>
+              {errorMessage}
             <h1>Bem vindo ao <i style={{color: '#BE63FF'}}>Marmify.io</i></h1>
                 {form}
                 <input 
