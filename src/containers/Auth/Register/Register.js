@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import {Form} from 'react-bootstrap';
+import { Form } from "react-bootstrap";
 import RegisterIcon from "../../../assets/RegisterIcon.svg";
 import * as classes from "./Register.module.css";
 import Input from "../../../components/UI/Input/RegisterInput";
+import { updateObject } from '../../../shared/utility';
 export default function Register() {
   const initialState = {
     controls: {
@@ -94,6 +95,57 @@ export default function Register() {
   const submitHandler = () => {
     console.log("fakiiie");
   };
+  const checkValidity = (value, rules) => {
+    let isValid = true;
+    if (!rules) {
+      return true;
+    }
+
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid;
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    return isValid;
+  };
+  const inputChangedHandler = (event, inputIdentifier) => {
+    const updatedFormElement = updateObject(
+      registro.controls[inputIdentifier],
+      {
+        value: event.target.value,
+        valid: checkValidity(
+          event.target.value,
+          registro.controls[inputIdentifier].validation
+        ),
+        touched: true,
+      }
+    );
+    const updatedOrderForm = updateObject(registro.controls, {
+      [inputIdentifier]: updatedFormElement,
+    });
+    let formIsValid = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
+    setRegistro({ controls: updatedOrderForm, formIsValid: formIsValid });
+  };
   const formElementsArray = [];
   for (let key in registro.controls) {
     formElementsArray.push({
@@ -101,35 +153,32 @@ export default function Register() {
       config: registro.controls[key],
     });
   }
+
   let form = formElementsArray.map((formElement) => {
-   if(formElement.id !== 'formIsValid')
-   {
-    return (
-      <Input
-        key={formElement.id}
-        elementType={formElement.config.elementType}
-        elementConfig={formElement.config.elementConfig}
-        value={formElement.config.value}
-        ico={formElement.config.ico}
-        invalid={!formElement.config.valid}
-        shouldValidate={formElement.config.validation}
-        touched={formElement.config.touched}
-        changed={(event) => this.inputChangedHandler(event, formElement.id)}
-      ></Input>
-    );
-   }
-    
+    if (formElement.id !== "formIsValid") {
+      return (
+        <Input
+          key={formElement.id}
+          elementType={formElement.config.elementType}
+          elementConfig={formElement.config.elementConfig}
+          value={formElement.config.value}
+          ico={formElement.config.ico}
+          invalid={!formElement.config.valid}
+          shouldValidate={formElement.config.validation}
+          touched={formElement.config.touched}
+          changed={(event) => inputChangedHandler(event, formElement.id)}
+        ></Input>
+      );
+    }
   });
   return (
     <>
       <div className={classes.LoginForm}>
-      <div className={classes.FormRight}>
+        <div className={classes.FormRight}>
           {/* <h1>
             Bem vindo ao <i style={{ color: "#BE63FF" }}>Marmify.io</i>
           </h1> */}
-          <Form>
-            {form}
-          </Form>
+          <Form>{form}</Form>
           <input
             type="submit"
             value="Registrar"
@@ -140,7 +189,6 @@ export default function Register() {
         <div className={classes.ImageLeft}>
           <img src={RegisterIcon}></img>
         </div>
-       
       </div>
     </>
   );
