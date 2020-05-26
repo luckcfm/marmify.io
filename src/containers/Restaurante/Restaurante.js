@@ -3,9 +3,13 @@ import { connect } from "react-redux";
 import { Column } from "primereact/column";
 import { Card } from "primereact/card";
 import { DataTable } from "primereact/datatable";
+import * as actions from '../../store/actions/index'
 import "primeflex/primeflex.css";
 
 export class Restaurante extends Component {
+  componentDidMount() {
+    this.props.onShowSideBar();
+  }
   render() {
     const cars = [
       { brand: "VW", year: 2012, color: "Orange", vin: "dsad231ff" },
@@ -77,6 +81,11 @@ export class Restaurante extends Component {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => {
+  return {
+    onShowToolbar: () => {dispatch(actions.showToolbar())},
+    onShowSideBar: () => {dispatch(actions.showSidebar())}
+  }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Restaurante);

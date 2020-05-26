@@ -10,14 +10,14 @@ const hideToolbar = (state,action) => {
   return updateObject(state, {showToolbar: false});
 }
 const hideSidebar = (state,action) => {
-  return updateObject(state, {hideSidebar: false})
+  return updateObject(state, {showSidebar: false})
 }
 
 const showToolbar = (state,action) => {
   return updateObject(state, {showToolbar: true});
 }
 const showSidebar = (state,action) => {
-  return updateObject(state, {hideSidebar: true})
+  return updateObject(state, {showSidebar: true})
 }
 
 

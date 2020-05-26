@@ -5,9 +5,8 @@ import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import Layout from "./hoc/Layout/Layout";
 import Auth from "./containers/Auth/Auth";
-import Homepage from './containers/Homepage/Homepage'
 import Restaurante from './containers/Restaurante/Restaurante';
-// import PratosRestaurante from './containers/Restaurante/Pratos/PratosRestaurante';
+import PratosRestaurante from './containers/Restaurante/Pratos/PratosRestaurante';
 import Registro from './containers/Auth/Register/Register';
 import Logout from "./containers/Auth/Logout/Logout";
 import {PublicRoute, PrivateRoute, PrivateRouteUser, PrivateRouteRestaurante} from './hoc/PrivateRoute/PrivateRoute';
@@ -23,16 +22,21 @@ class App extends Component {
     this.props.onTryAutoSignUp();
   }
   render() {
-    console.log(this.props.user.role);
-    console.log(this.props.isAuthenticated);
     let enabledRoutes = (
       <Switch>
-        <Route exact path="/" component={Homepage}></Route>
+        <Route exact path="/" component={Auth}></Route>
         <PrivateRouteRestaurante 
           path="/restaurante" 
           role={this.props.user.role} 
           authenticated={this.props.isAuthenticated} 
           component={Restaurante}>
+
+          </PrivateRouteRestaurante>
+          <PrivateRouteRestaurante 
+          path="/pratos" 
+          role={this.props.user.role} 
+          authenticated={this.props.isAuthenticated} 
+          component={PratosRestaurante}>
 
           </PrivateRouteRestaurante>
         <PrivateRoute path="/logout" authenticated={this.props.isAuthenticated} component={Logout}></PrivateRoute>

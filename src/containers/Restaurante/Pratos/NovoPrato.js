@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
 
 export default function NovoPrato() {
-  const [state, setState] = useState({ nome: "", descricao: "" });
+  const [state, setState] = useState({ nome: "", descricao: "", itens: [], precoBase: 0.0 });
 
   return (
     <div>
@@ -23,7 +23,9 @@ export default function NovoPrato() {
         value={state.descricao}
         placeholder="Preco"
         onChange={(e) => setState({ name: e.target.value })}
+
       />
+      <button>Salvar Prato</button>
     </div>
   );
 }
