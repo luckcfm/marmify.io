@@ -26,7 +26,7 @@ export const PrivateRouteUser = ({component: component,authenticated,...rest}) =
     />
   )
 }
-export const PrivateRouteRestaurante = ({component: component, role, authenticated, ...rest}) => {
+export const PrivateRouteRestaurante = ({component: Component, role, authenticated, ...rest}) => {
   console.log(role);
   return (
     <Route
@@ -34,7 +34,6 @@ export const PrivateRouteRestaurante = ({component: component, role, authenticat
       render = {props => authenticated === true && role === "restaurante" ? 
       <Component {...props} /> : 
       <Redirect to={{pathname:"/homepage", state:{from: props.location}}}>
-
       </Redirect>}
     
     />

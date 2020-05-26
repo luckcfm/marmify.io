@@ -24,20 +24,21 @@ class App extends Component {
   }
   render() {
     console.log(this.props.user.role);
+    console.log(this.props.isAuthenticated);
     let enabledRoutes = (
       <Switch>
         <Route exact path="/" component={Homepage}></Route>
         <PrivateRouteRestaurante 
           path="/restaurante" 
           role={this.props.user.role} 
-          authenticated={this.props.authenticated} 
+          authenticated={this.props.isAuthenticated} 
           component={Restaurante}>
 
           </PrivateRouteRestaurante>
-        <PrivateRoute path="/logout" authenticated={this.props.authenticated} component={Logout}></PrivateRoute>
+        <PrivateRoute path="/logout" authenticated={this.props.isAuthenticated} component={Logout}></PrivateRoute>
         {/* <PublicRoute path="/signup" authenticated={this.state.authenticated} component={Register}></PublicRoute> */}
-        <PublicRoute path="/login" authenticated={this.props.authenticated} component={Auth}></PublicRoute>
-        <PublicRoute path="/registro" authenticated={this.props.authenticated} component={Registro}></PublicRoute>
+        <PublicRoute path="/login" authenticated={this.props.isAuthenticated} component={Auth}></PublicRoute>
+        <PublicRoute path="/registro" authenticated={this.props.isAuthenticated} component={Registro}></PublicRoute>
         {/* <Route path="/auth" component={Auth}></Route>
         <Route path="/home" component={Homepage}></Route>
         <Route path="/restaurante" component={Restaurante}></Route>
