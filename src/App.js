@@ -7,32 +7,37 @@ import Layout from "./hoc/Layout/Layout";
 import Auth from "./containers/Auth/Auth";
 import Homepage from './containers/Homepage/Homepage'
 import Restaurante from './containers/Restaurante/Restaurante';
-import PratosRestaurante from './containers/Restaurante/Pratos/PratosRestaurante';
+// import PratosRestaurante from './containers/Restaurante/Pratos/PratosRestaurante';
 import Registro from './containers/Auth/Register/Register';
 import Logout from "./containers/Auth/Logout/Logout";
-import {PublicRoute, PrivateRoute} from './hoc/PrivateRoute/PrivateRoute';
+import {PublicRoute, PrivateRoute, PrivateRouteUser, PrivateRouteRestaurante} from './hoc/PrivateRoute/PrivateRoute';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 
 class App extends Component {
-  state = {
-    authenticated: false
-  }
+
   componentDidMount() {
-    this.props.onLogout();
+    // this.props.onLogout();
     this.props.onTryAutoSignUp();
   }
   render() {
+    console.log(this.props.user.role);
     let enabledRoutes = (
       <Switch>
         <Route exact path="/" component={Homepage}></Route>
-        <PrivateRoute path="/restaurante" authenticated={this.state.authenticated} component={Restaurante}></PrivateRoute>
-        <PrivateRoute path="/logout" authenticated={this.state.authenticated} component={Logout}></PrivateRoute>
+        <PrivateRouteRestaurante 
+          path="/restaurante" 
+          role={this.props.user.role} 
+          authenticated={this.props.authenticated} 
+          component={Restaurante}>
+
+          </PrivateRouteRestaurante>
+        <PrivateRoute path="/logout" authenticated={this.props.authenticated} component={Logout}></PrivateRoute>
         {/* <PublicRoute path="/signup" authenticated={this.state.authenticated} component={Register}></PublicRoute> */}
-        <PublicRoute path="/login" authenticated={this.state.authenticated} component={Auth}></PublicRoute>
-        <PublicRoute path="/registro" authenticated={this.state.authenticated} component={Registro}></PublicRoute>
+        <PublicRoute path="/login" authenticated={this.props.authenticated} component={Auth}></PublicRoute>
+        <PublicRoute path="/registro" authenticated={this.props.authenticated} component={Registro}></PublicRoute>
         {/* <Route path="/auth" component={Auth}></Route>
         <Route path="/home" component={Homepage}></Route>
         <Route path="/restaurante" component={Restaurante}></Route>
@@ -56,6 +61,7 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated:
       state.auth.token !== null && state.auth.token !== undefined,
+    user: state.auth.user
   };
 };
 

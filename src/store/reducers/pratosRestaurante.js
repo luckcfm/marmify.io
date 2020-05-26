@@ -9,7 +9,7 @@ const registrarPrato = (state,prato) => {
     return  updateObject(state, {pratos: state.pratos.concat(prato)});
 }
 const deletaPrato = (state,prato) => {
-    const pratos = state.pratos;
+    let pratos = state.pratos;
     pratos = [...pratos];
     pratos.splice(pratos.indexOf(prato),1);
     return updateObject(state,{pratos: pratos});

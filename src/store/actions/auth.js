@@ -2,10 +2,12 @@ import * as actionTypes from "./actionTypes";
 import firebase from "../firebase";
 
 
-const addUserInfo = (data) => {
+const addUserInfo = (data,user) => {
   console.log(data);
   return {
-    type: actionTypes.ADD_USER_INFO
+    type: actionTypes.ADD_USER_INFO,
+    user: user,
+    extraInfo: data
   }
 }
 
@@ -53,18 +55,17 @@ export const signin = (email, password, callback) => {
   return dispatch => {
     dispatch(authStart())
     try {
-      // dispatch(actionTypes.AUTH_START);
       firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
+        
         const uid = user.user.uid;
         firebase.database().ref(`users/${uid}`).on('value', snapshot => {
-          console.log('here');
           const userData = snapshot.val();
-          dispatch(addUserInfo(userData))
+          // dispatch(addUserInfo(userData,user))
+          dispatch(authSuccess(user.user.refreshToken,user.user,{...userData}))
         })
-        dispatch(authSuccess());
       })
       .catch((e) => {
         console.log(e);
@@ -102,11 +103,12 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (token, user) => {
+export const authSuccess = (token, user,extra) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     user: user,
     token: token,
+    extra:extra
   };
 };
 
@@ -121,7 +123,7 @@ export const logout = () => {
         .signOut()
         .then(() => {
           console.log('loggin out!')
-          setAuthRedirectPath("/auth");
+          setAuthRedirectPath("/login");
           return {
             type: actionTypes.AUTH_LOGOUT,
           };
@@ -155,12 +157,21 @@ export const setAuthRedirectPath = (path) => {
 };
 
 export const authCheckState = () => {
-  console.log("checkin state");
   return (dispatch) => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch(authSuccess(user.uid, user));
+        console.log(user);
+        const uid = user.uid;
+        firebase.database().ref(`users/${uid}`).on('value', snapshot => {
+          const userData = snapshot.val();
+          dispatch(authSuccess(user.refreshToken,user,{...userData}))
+        }).catch(e => {
+          console.log(e);
+        })
+        
       } else {
+        console.log('hey')
+        dispatch(logout())
         dispatch(authFail({ error: "Not authorrized" }));
       }
     });

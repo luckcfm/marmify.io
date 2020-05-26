@@ -7,13 +7,6 @@ import "primeflex/primeflex.css";
 
 export class Restaurante extends Component {
   render() {
-    let cols = [
-      { field: "nome", header: "Nome" },
-      { field: "itens", header: "itens" },
-      { field: "preco", header: "Preco" },
-      { field: "qtd", header: "Quantidade" },
-      { field: "disponivel", header: "Disponivel" },
-    ];
     const cars = [
       { brand: "VW", year: 2012, color: "Orange", vin: "dsad231ff" },
       { brand: "Audi", year: 2011, color: "Black", vin: "gwregre345" },

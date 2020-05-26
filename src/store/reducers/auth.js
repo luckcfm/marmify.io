@@ -4,6 +4,7 @@ import { updateObject } from '../../helpers/utility'
 const initialState = {
   token: null,
   userId: null,
+  user: {},
   error: null,
   authRedirectPath: '/home',
   loading: false,
@@ -19,11 +20,13 @@ const authStart = (state, action) => {
 }
 
 const authSuccess = (state, action) => {
+  console.log(action);
   return updateObject(state, {
     token: action.token,
     user: action.user,
     error: null,
-    authRedirectPath: '/home',
+    user: {...action.extra},
+    // authRedirectPath: '/home',
     loading: false
   })
 }
@@ -47,11 +50,17 @@ const signUpError = (state, action) => {
   return updateObject(state, {loadingSignUpErr: {err: action.msg}, loadingSignUp: false, loadingSignUpMsg: null});
 }
 
+const addUserInfo = (state,action) => {
+  console.log(action);
+  return updateObject(state, {user: {...action.extraInfo}})
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:              return authStart(state, action);
     case actionTypes.AUTH_SUCCESS:            return authSuccess(state, action);
     case actionTypes.AUTH_FAIL:               return authFail(state, action);
+    case actionTypes.ADD_USER_INFO:            return addUserInfo(state,action);
     case actionTypes.SIGNUP_START:            return signUpStart(state,action);
     case actionTypes.SIGNUP_SUCCESS:          return signUpSuccess(state,action);
     case actionTypes.SIGNUP_ERROR:            return signUpError(state,action);

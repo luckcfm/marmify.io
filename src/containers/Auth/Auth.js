@@ -15,6 +15,7 @@ class Auth extends Component {
         elementConfig: {
           type: "email",
           placeholder: "Endereço de E-mail",
+          name: 'email'
         },
         ico: "pi pi-envelope",
         value: "",
@@ -31,6 +32,7 @@ class Auth extends Component {
         elementConfig: {
           type: "password",
           placeholder: "Senha",
+          name: 'password'
         },
         value: "",
         validation: {
@@ -108,7 +110,7 @@ class Auth extends Component {
   };
   render() {
     if (this.props.isAuthenticated) {
-      this.props.history.push("/landing");
+      this.props.history.push("/restaurante");
     }
     const formElementsArray = [];
     for (let key in this.state.controls) {
@@ -146,9 +148,10 @@ class Auth extends Component {
 
     return (
         <>
+        {authRedirect}
           <div className={classes.LoginForm}>
             <div className={classes.ImageLeft}>
-              <img src={LoginIcon}></img>
+              <img src={LoginIcon} alt="Food"></img>
             </div>
             <div className={classes.FormRight}>
               {errorMessage}
@@ -174,7 +177,7 @@ const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    isAuthenticated: state.auth.token !== null && state.auth.token !== undefined,
+    isAuthenticated: state.auth.token !== null,
     authRedirectPath: state.auth.authRedirectPath
   };
 };
