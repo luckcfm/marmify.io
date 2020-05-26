@@ -27,7 +27,6 @@ export const PrivateRouteUser = ({component: component,authenticated,...rest}) =
   )
 }
 export const PrivateRouteRestaurante = ({component: Component, role, authenticated, ...rest}) => {
-  console.log(role);
   return (
     <Route
       {...rest}

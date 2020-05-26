@@ -1,17 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import firebase from "../firebase";
 
-
-const addUserInfo = (data,user) => {
-  console.log(data);
-  return {
-    type: actionTypes.ADD_USER_INFO,
-    user: user,
-    extraInfo: data
-  }
-}
-
-
 export const signup = (userData) => async (dispatch) => {
   try {
     dispatch(signUpStart())
@@ -158,9 +147,10 @@ export const setAuthRedirectPath = (path) => {
 
 export const authCheckState = () => {
   return (dispatch) => {
+    dispatch(authStart());
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
+        
         const uid = user.uid;
         firebase.database().ref(`users/${uid}`).on('value', snapshot => {
           const userData = snapshot.val();

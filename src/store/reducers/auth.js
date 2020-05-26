@@ -7,7 +7,7 @@ const initialState = {
   user: {},
   error: null,
   authRedirectPath: '/home',
-  loading: false,
+  loading: true,
   loadingSignUp: false,
   loadingSignUpErr: null,
   loadingSignUpMsg: null

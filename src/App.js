@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 import Layout from "./hoc/Layout/Layout";
+import Spinner from './components/UI/Spinner/Spinner'
 import Auth from "./containers/Auth/Auth";
 import Restaurante from './containers/Restaurante/Restaurante';
 import PratosRestaurante from './containers/Restaurante/Pratos/PratosRestaurante';
@@ -19,6 +20,7 @@ class App extends Component {
 
   componentDidMount() {
     // this.props.onLogout();
+    console.log('[MOUNTING] APP')
     this.props.onTryAutoSignUp();
   }
   render() {
@@ -54,7 +56,7 @@ class App extends Component {
     return (
       <div>
           <Layout>
-            <Container fluid>{enabledRoutes}</Container>
+            {this.props.loading ? <Spinner></Spinner> : <Container fluid>{enabledRoutes}</Container>}
           </Layout>
         </div>
     );
@@ -66,7 +68,8 @@ const mapStateToProps = (state) => {
   return {
     isAuthenticated:
       state.auth.token !== null && state.auth.token !== undefined,
-    user: state.auth.user
+    user: state.auth.user,
+    loading: state.auth.loading
   };
 };
 
