@@ -1,15 +1,8 @@
 
 import * as actionTypes from "./actionTypes";
-import axios from "../../axios-marmify";
+import firebase from "../firebase";
 
 
-
-const deletaPrato = (prato) => {
-    return {
-        type: actionTypes.DELETA_PRATO_SUCCESS,
-        prato: prato
-    }
-}
 const registrarPratoSuccess = (prato) => {
     return {
         type: actionTypes.REGISTRAR_PRATO_SUCCESS,
@@ -24,8 +17,14 @@ export const deletaPrato = (prato) => {
     }
 }
 
-export const registrarPrato = (prato) => {
+export const registrarPrato = (prato,user) => {
     return dispatch => {
-        dispatch(registrarPratoSuccess(prato));
+        // dispatch(registrarPratoSuccess(prato));
+        firebase.database().ref(`pratos/${user.uid}`)
+        .push(prato)
+        .then(res => {
+            console.log(res);
+        })
+
     }
 }
