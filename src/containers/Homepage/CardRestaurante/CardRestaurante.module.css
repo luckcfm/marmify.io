@@ -1,0 +1,14 @@
+.Card {
+  width: 300px;
+  float: left;
+  padding: 10px;
+}
+
+.Card:hover{
+  background-color: grey;
+}
+
+.p-card:hover {
+  background-color:#F5F5F5;
+  cursor: pointer;
+}

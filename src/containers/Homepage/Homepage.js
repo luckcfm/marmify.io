@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index';
+import CardRestaurante from './CardRestaurante/CardRestaurante'
+import {ScrollPanel} from 'primereact/scrollpanel';
 const Homepage = (props) => {
   useEffect(() => {
     props.onFechRestaurantes();
@@ -12,13 +14,19 @@ const Homepage = (props) => {
   })
   const restaurantesToShow = restaurantes.map(restaurante => {
     if(restaurante.name !== undefined){
-      return <p>{restaurante.name}</p>
+      return <CardRestaurante restaurante={restaurante}></CardRestaurante>
     }
   })
   return (
     <div>
       { 
-      props.auth.token !== null && props.auth.token !== undefined ? restaurantesToShow : 
+      props.auth.token !== null && props.auth.token !== undefined ? 
+      
+      <ScrollPanel>
+        {restaurantesToShow }
+      </ScrollPanel>
+      
+      : 
       
       
       <p>Please <a onClick={() => {props.history.push('/login')}}>login</a> to continue</p>}
