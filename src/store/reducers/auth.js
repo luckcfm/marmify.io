@@ -6,7 +6,7 @@ const initialState = {
   userId: null,
   user: {},
   error: null,
-  authRedirectPath: '/home',
+  authRedirectPath: '/pratos',
   loading: false,
   loadingSignUp: false,
   loadingSignUpErr: null,

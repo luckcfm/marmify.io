@@ -1,17 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import firebase from "../firebase";
 
-
-const addUserInfo = (data,user) => {
-  console.log(data);
-  return {
-    type: actionTypes.ADD_USER_INFO,
-    user: user,
-    extraInfo: data
-  }
-}
-
-
 export const signup = (userData) => async (dispatch) => {
   try {
     dispatch(signUpStart())
@@ -164,6 +153,7 @@ export const authCheckState = () => {
         const uid = user.uid;
         firebase.database().ref(`users/${uid}`).on('value', snapshot => {
           const userData = snapshot.val();
+          userData.userId = uid;
           dispatch(authSuccess(user.refreshToken,user,{...userData}))
         }).catch(e => {
           console.log(e);

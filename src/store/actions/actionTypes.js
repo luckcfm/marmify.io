@@ -2,7 +2,10 @@
 export const SIGNUP_START         = 'REGISTRAR_USER_START';
 export const SIGNUP_ERROR         = 'SIGNUP_ERROR';
 export const SIGNUP_SUCCESS       = 'SIGNUP_SUCCESS';
-export const ADD_USER_INFO        = 'ADD_USER_INFO'
+export const ADD_USER_INFO        = 'ADD_USER_INFO';
+//PRATOS RESTAURANTE
+export const FETCH_PRATOS_SUCCESS = 'FETCH_PRATOS_SUCCESS';
+export const FETCH_PRATOS_FAIL = 'FETCH_PRATOS_FAIL';
 //LOGIN
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNIN_ERROR   = 'SIGNIN_ERROR';

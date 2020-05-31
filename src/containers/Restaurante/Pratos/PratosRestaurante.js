@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { connect } from "react-redux";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import Prato from "../../../components/Marmify/Pratos/Prato/Prato";
 import NovoPrato from './NovoPrato';
+import * as actions from '../../../store/actions/index'
 /*
     Aqui devera conter o registro de pratos
     exibir os pratos mais pedidos
@@ -54,7 +55,12 @@ const pratos = pratosMaisPedidos.map((prato) => {
   );
 });
 
-export const PratosRestaurante = () => {
+export const PratosRestaurante = (props) => {
+  useEffect(()=>{
+    console.log('called');
+    props.onFetchPratos();
+  },[])
+  console.log(props.pratos.pratos);
   return (
     <>
       <div className="p-grid">
@@ -74,8 +80,8 @@ export const PratosRestaurante = () => {
         <div className="p-col-3"></div>
         <div className="p-col-6">
           <Card title="Todos os pratos" subTitle="Clique para editar">
-            <DataTable value={cars}>
-              <Column field="nome" header="Nome do prato" />
+            <DataTable value={props.pratos}>
+              <Column field="nome_prato" header="Nome do prato" />
               <Column field="ingredientes" header="Ingredientes" />
               <Column field="disponivel" header="Disponivel" />
               <Column field="preco" header="Preco (R$)" />
@@ -92,6 +98,8 @@ const mapStateToProps = (state) => ({
   pratos: state.pratos,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => {
+  return {onFetchPratos: () => {dispatch(actions.fetchPratos())}}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PratosRestaurante);

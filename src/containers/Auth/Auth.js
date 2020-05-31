@@ -48,6 +48,7 @@ class Auth extends Component {
   componentDidMount() {
     this.props.onHideToolbar();
     if (this.props.authRedirectPath !== "/") {
+      console.log('her')
       this.props.setAuthRedirectPath();
     }
   }
@@ -110,7 +111,7 @@ class Auth extends Component {
   };
   render() {
     if (this.props.isAuthenticated) {
-      this.props.history.push("/restaurante");
+      this.props.history.push("/pratos");
     }
     const formElementsArray = [];
     for (let key in this.state.controls) {

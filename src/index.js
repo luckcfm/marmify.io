@@ -2,26 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
-import authReducer from './store/reducers/auth'
-import pratosReducer from './store/reducers/pratosRestaurante'
-import layoutReducer from './store/reducers/layout'
-
-const rootReducer = combineReducers({
-  auth: authReducer,
-  pratos: pratosReducer,
-  layout: layoutReducer
-});
-
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer,composeEnhancer(
-    applyMiddleware(thunk)
-));
-
+import store from './store/store';
 const app = (
   <Provider store={store}>
       <BrowserRouter>

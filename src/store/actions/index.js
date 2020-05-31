@@ -12,3 +12,6 @@ export {
   showSidebar,
   showToolbar
 } from './layout'
+export {
+  fetchPratos
+} from './pratosRestaurante'

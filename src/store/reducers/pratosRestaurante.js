@@ -3,10 +3,15 @@ import { updateObject } from '../../helpers/utility'
 
 const initialState = {
     pratos: [],
+    loading: false,
+    error: null
 }
 
 const registrarPrato = (state,prato) => {
     return  updateObject(state, {pratos: state.pratos.concat(prato)});
+}
+const fetchPratos = (state,pratos) => {
+    return updateObject(state, {pratos: pratos})
 }
 const deletaPrato = (state,prato) => {
     let pratos = state.pratos;
@@ -22,6 +27,8 @@ export default (state = initialState, { type, payload }) => {
         return deletaPrato(state, payload);
     case actionTypes.REGISTRAR_PRATO_SUCCESS:
         return registrarPrato(state,payload);
+    case actionTypes.FETCH_PRATOS_SUCCESS:
+        return fetchPratos(state,payload)
     default:
         return state
     }
