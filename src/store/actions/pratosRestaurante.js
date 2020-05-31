@@ -1,7 +1,7 @@
 
 import * as actionTypes from "./actionTypes";
-import firebase from "../firebase";
-
+import firebase,{db} from "../firebase";
+import store from '../store';
 
 const registrarPratoSuccess = (prato) => {
     return {
@@ -19,6 +19,12 @@ const fetchPratosSuccess = (pratos) => {
 export const deletaPrato = (prato) => {
     return dispatch => {
         dispatch(deletaPratoSuccess(prato))
+    }
+}
+const deletaPratoSuccess = (prato) => {
+    return {
+        type: actionTypes.DELETA_PRATO_SUCCESS,
+        payload: prato
     }
 }
 

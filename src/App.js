@@ -13,7 +13,6 @@ import Logout from "./containers/Auth/Logout/Logout";
 import {
   PublicRoute,
   PrivateRoute,
-  PrivateRouteUser,
   PrivateRouteRestaurante,
 } from "./hoc/PrivateRoute/PrivateRoute";
 import "primereact/resources/themes/nova-light/theme.css";

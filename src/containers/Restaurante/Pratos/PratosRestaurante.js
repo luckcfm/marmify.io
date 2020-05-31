@@ -60,7 +60,13 @@ export const PratosRestaurante = (props) => {
     console.log('called');
     props.onFetchPratos();
   },[])
-  console.log(props.pratos.pratos);
+  const pratosArr = Object.keys(props.pratos.pratos).map(pid => {
+    return ({
+      id: pid,
+      ...props.pratos.pratos[pid]
+    })
+  });
+  console.log(pratosArr);
   return (
     <>
       <div className="p-grid">
@@ -80,11 +86,11 @@ export const PratosRestaurante = (props) => {
         <div className="p-col-3"></div>
         <div className="p-col-6">
           <Card title="Todos os pratos" subTitle="Clique para editar">
-            <DataTable value={props.pratos}>
+            <DataTable value={pratosArr}>
               <Column field="nome_prato" header="Nome do prato" />
               <Column field="ingredientes" header="Ingredientes" />
               <Column field="disponivel" header="Disponivel" />
-              <Column field="preco" header="Preco (R$)" />
+              <Column field="totalItem" header="Preco (R$)" />
             </DataTable>
           </Card>
         </div>
