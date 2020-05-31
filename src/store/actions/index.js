@@ -16,5 +16,6 @@ export {
 
 export {
   registrarPrato,
-  fetchPratos
+  fetchPratos,
+  toggleDisponivel
 } from './pratosRestaurante'

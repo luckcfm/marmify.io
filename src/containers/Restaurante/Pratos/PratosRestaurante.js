@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { InputSwitch } from "primereact/inputswitch";
 import Prato from "../../../components/Marmify/Pratos/Prato/Prato";
-import NovoPrato from './NovoPrato';
-import * as actions from '../../../store/actions/index'
+import NovoPrato from "./NovoPrato";
+import * as actions from "../../../store/actions/index";
 /*
     Aqui devera conter o registro de pratos
     exibir os pratos mais pedidos
@@ -42,16 +43,64 @@ const pratos = pratosMaisPedidos.map((prato) => {
   );
 });
 
+const columns = [
+  { field: "id", header: "ID" },
+  { field: "nome_prato", header: "Nome do Prato" },
+  { field: "itens", header: "Ingredientes" },
+  { field: "totalItem", header: "Preco (R$)" },
+  { field: "disponivel", header: "Disponivel" },
+];
+
 export const PratosRestaurante = (props) => {
-  useEffect(()=>{
-    console.log('called');
+  useEffect(() => {
+    console.log("called");
     props.onFetchPratos();
-  },[])
-  const pratosArr = Object.keys(props.pratos.pratos).map(pid => {
-    return ({
+  }, []);
+  const pratosArr = Object.keys(props.pratos.pratos).map((pid) => {
+    return {
       id: pid,
-      ...props.pratos.pratos[pid]
-    })
+      ...props.pratos.pratos[pid],
+    };
+  });
+  const toggleDisponivel = (id,value) => {
+    props.onToggleDisponivel(id,!value);
+  };
+  const templateDisponivel = (rowData, Column) => {
+    return (
+      <InputSwitch
+        checked={rowData.disponivel === true ? true : false}
+        onChange={() => toggleDisponivel(rowData.id, rowData.disponivel ? rowData.disponivel : false)}
+      />
+    );
+  };
+  const templateIngredientes = (rowData, Column) => {
+    return rowData.itens.map((item) => {
+      return item.nome_item + ",";
+    });
+  };
+  const dynamicColumns = columns.map((col, i) => {
+    switch (col.field) {
+      case "itens":
+        return (
+          <Column
+            key={col.field}
+            field={col.field}
+            body={templateIngredientes}
+            header={col.header}
+          />
+        );
+      case "disponivel":
+        return (
+          <Column
+            key={col.field}
+            field={col.field}
+            body={templateDisponivel}
+            header={col.header}
+          />
+        );
+      default:
+        return <Column key={col.field} field={col.field} header={col.header} />;
+    }
   });
   console.log(pratosArr);
   return (
@@ -73,12 +122,8 @@ export const PratosRestaurante = (props) => {
         <div className="p-col-3"></div>
         <div className="p-col-6">
           <Card title="Todos os pratos" subTitle="Clique para editar">
-            <DataTable value={pratosArr}>
-              <Column field="nome_prato" header="Nome do prato" />
-              <Column field="ingredientes" header="Ingredientes" />
-              <Column field="disponivel" header="Disponivel" />
-              <Column field="totalItem" header="Preco (R$)" />
-              <Column field="disponivel" header="Disponivel" />
+            <DataTable value={pratosArr} selectionMode="single">
+              {dynamicColumns}
             </DataTable>
           </Card>
         </div>
@@ -92,8 +137,15 @@ const mapStateToProps = (state) => ({
   pratos: state.pratos,
 });
 
-const mapDispatchToProps = dispatch => {
-  return {onFetchPratos: () => {dispatch(actions.fetchPratos())}}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchPratos: () => {
+      dispatch(actions.fetchPratos());
+    },
+    onToggleDisponivel: (id,value) => {
+      dispatch(actions.toggleDisponivel(id,value));
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PratosRestaurante);
