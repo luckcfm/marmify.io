@@ -6,8 +6,8 @@ const initialState = {
   userId: null,
   user: {},
   error: null,
-  authRedirectPath: '/pratos',
-  loading: false,
+  authRedirectPath: '/home',
+  loading: true,
   loadingSignUp: false,
   loadingSignUpErr: null,
   loadingSignUpMsg: null
@@ -23,9 +23,9 @@ const authSuccess = (state, action) => {
   console.log(action);
   return updateObject(state, {
     token: action.token,
-    user: action.user,
+    user: {...action.user, ...action.extra},
     error: null,
-    user: {...action.extra},
+    // user: {...action.extra},
     // authRedirectPath: '/home',
     loading: false
   })

@@ -1,16 +1,8 @@
 
 import * as actionTypes from "./actionTypes";
-import {db} from "../firebase";
-import store from '../store';
+import firebase from "../firebase";
 
 
-
-const deletaPratoSuccess = (prato) => {
-    return {
-        type: actionTypes.DELETA_PRATO_SUCCESS,
-        payload: prato
-    }
-}
 const registrarPratoSuccess = (prato) => {
     return {
         type: actionTypes.REGISTRAR_PRATO_SUCCESS,
@@ -30,9 +22,15 @@ export const deletaPrato = (prato) => {
     }
 }
 
-export const registrarPrato = (prato) => {
+export const registrarPrato = (prato,user) => {
     return dispatch => {
-        dispatch(registrarPratoSuccess(prato));
+        // dispatch(registrarPratoSuccess(prato));
+        firebase.database().ref(`pratos/${user.uid}`)
+        .push(prato)
+        .then(res => {
+            console.log(res);
+        })
+
     }
 }
 
