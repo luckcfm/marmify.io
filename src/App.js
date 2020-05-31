@@ -54,7 +54,9 @@ class App extends Component {
     return (
       <div>
           <Layout>
-            <Container fluid>{enabledRoutes}</Container>
+            <Container fluid>
+              {enabledRoutes}
+              </Container>
           </Layout>
         </div>
     );
