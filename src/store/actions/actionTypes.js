@@ -7,14 +7,19 @@ export const ADD_USER_INFO        = 'ADD_USER_INFO';
 export const FETCH_PRATOS_SUCCESS = 'FETCH_PRATOS_SUCCESS';
 export const FETCH_PRATOS_FAIL = 'FETCH_PRATOS_FAIL';
 //LOGIN
-export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
-export const SIGNIN_ERROR   = 'SIGNIN_ERROR';
-export const AUTH_START     = 'AUTH_START'
-export const AUTH_SUCCESS   = 'AUTH_SUCCESS'
-export const AUTH_FAIL      = 'AUTH_FAIL'
-export const LOADING        = 'LOADING'
-export const ERROR          = 'ERROR'
-export const AUTH_LOGOUT    = 'AUTH_LOGOUT';
+export const SIGNIN_SUCCESS           = 'SIGNIN_SUCCESS';
+export const SIGNIN_ERROR             = 'SIGNIN_ERROR';
+export const AUTH_START               = 'AUTH_START'
+export const AUTH_SUCCESS             = 'AUTH_SUCCESS'
+export const AUTH_FAIL                = 'AUTH_FAIL'
+export const LOADING                  = 'LOADING'
+export const ERROR                    = 'ERROR'
+export const AUTH_LOGOUT              = 'AUTH_LOGOUT';
+
+//USER
+export const FETCH_RESTAURANTE_START     = 'FETCH_RESTAURANTE_START';
+export const FETCH_RESTAURANTE_SUCCESS   = 'FETCH_RESTAURANTE_SUCCESS'
+
 
 //
 export const HIDE_TOOLBAR   = 'HIDE_TOOLBAR';

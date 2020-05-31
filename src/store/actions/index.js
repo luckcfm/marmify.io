@@ -19,3 +19,7 @@ export {
   fetchPratos,
   toggleDisponivel
 } from './pratosRestaurante'
+
+export {
+  fetchRestaurantes
+} from './user'

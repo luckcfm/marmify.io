@@ -4,14 +4,13 @@ import * as actions from '../actions/index';
 export const signup = (userData) => async (dispatch) => {
   try {
     delete userData.formIsValid;
-    delete userData.password;
-    delete userData.secondPassword;
-    
     dispatch(signUpStart())
     firebase
       .auth()
       .createUserWithEmailAndPassword(userData.email, userData.password)
       .then((dataBeforeEmail) => {
+        delete userData.password;
+        delete userData.secondPassword;
         firebase.auth().onAuthStateChanged((user) => {
           firebase.database().ref('users/' + user.uid)
           .set( {
