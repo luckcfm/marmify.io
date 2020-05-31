@@ -68,14 +68,6 @@ class App extends Component {
 
     return (
       <div>
-<<<<<<< HEAD
-          <Layout>
-            <Container fluid>
-              {enabledRoutes}
-              </Container>
-          </Layout>
-        </div>
-=======
         <Layout>
           {this.props.loading ? (
             <Spinner></Spinner>
@@ -84,7 +76,6 @@ class App extends Component {
           )}
         </Layout>
       </div>
->>>>>>> origin/definindo_menu_para_pratos
     );
   }
 }
