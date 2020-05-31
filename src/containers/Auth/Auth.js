@@ -48,7 +48,6 @@ class Auth extends Component {
   componentDidMount() {
     this.props.onHideToolbar();
     if (this.props.authRedirectPath !== "/") {
-      console.log('her')
       this.props.setAuthRedirectPath();
     }
   }

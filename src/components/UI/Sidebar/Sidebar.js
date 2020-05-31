@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
+
 import classes from "./Sidebar.module.css";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { withRouter } from "react-router";
+
 
 const Side = function (props) {
   const [state, setState] = useState({ visible: false });
@@ -17,7 +20,11 @@ const Side = function (props) {
         setState({visible: false});
         props.history.push("/restaurante");
         break;
-
+      case "logout":
+        setState({visible: false});
+        console.log("loggin out")
+        props.history.push("/logout");
+        break;
       default:
         setState({visible: false});
         props.history.push("/home");
@@ -59,6 +66,14 @@ const Side = function (props) {
             <h3>Pratos</h3>
           </div>
         </div>
+        <div className="p-grid">
+          <div
+            onClick={() => clickHandler("logout")}
+            className={classNames.join(" ")}
+          >
+            <h3>Logout</h3>
+          </div>
+        </div>
       </Sidebar>
       <Button
         style={{ zIndex: 99 }}
@@ -69,4 +84,10 @@ const Side = function (props) {
   );
 };
 
-export default withRouter(Side);
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default withRouter(connect(mapStateToProps,null)(Side));

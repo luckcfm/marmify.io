@@ -10,6 +10,7 @@ import Restaurante from "./containers/Restaurante/Restaurante";
 import PratosRestaurante from "./containers/Restaurante/Pratos/PratosRestaurante";
 import Registro from "./containers/Auth/Register/Register";
 import Logout from "./containers/Auth/Logout/Logout";
+import HomePage from './containers/Homepage/Homepage'
 import {
   PublicRoute,
   PrivateRoute,
@@ -28,7 +29,7 @@ class App extends Component {
   render() {
     let enabledRoutes = (
       <Switch>
-        <Route exact path="/" component={Auth}></Route>
+        
         <PrivateRouteRestaurante
           path="/restaurante"
           role={this.props.user.role}
@@ -57,6 +58,7 @@ class App extends Component {
           authenticated={this.props.isAuthenticated}
           component={Registro}
         ></PublicRoute>
+        <Route exact path="/" component={HomePage}></Route>
         {/* <Route path="/auth" component={Auth}></Route>
         <Route path="/home" component={Homepage}></Route>
         <Route path="/restaurante" component={Restaurante}></Route>

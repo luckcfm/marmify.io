@@ -80,6 +80,15 @@ export const PratosRestaurante = (props) => {
   };
   const dynamicColumns = columns.map((col, i) => {
     switch (col.field) {
+      case "id":
+        return (
+          <Column
+            key={col.field}
+            field={col.field}
+            style={{display: "none"}}
+          >
+          </Column>
+        )
       case "itens":
         return (
           <Column

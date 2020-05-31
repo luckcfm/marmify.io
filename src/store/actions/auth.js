@@ -1,8 +1,10 @@
 import * as actionTypes from "./actionTypes";
 import firebase from "../firebase";
-
+import * as actions from '../actions/index';
 export const signup = (userData) => async (dispatch) => {
   try {
+    delete userData.formIsValid;
+    
     dispatch(signUpStart())
     firebase
       .auth()
@@ -11,10 +13,7 @@ export const signup = (userData) => async (dispatch) => {
         firebase.auth().onAuthStateChanged((user) => {
           firebase.database().ref('users/' + user.uid)
           .set( {
-            address: userData.street,
-            city: userData.country,
-            zipCode: userData.zipCode,
-            role: userData.role
+          ...userData
           })
           .then(res => {
             user.sendEmailVerification();
@@ -54,6 +53,7 @@ export const signin = (email, password, callback) => {
           const userData = snapshot.val();
           // dispatch(addUserInfo(userData,user))
           dispatch(authSuccess(user.user.refreshToken,user.user,{...userData}))
+          dispatch(actions.showSidebar())
         })
       })
       .catch((e) => {
@@ -91,6 +91,11 @@ export const authStart = () => {
     type: actionTypes.AUTH_START,
   };
 };
+export const authLogout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  }
+}
 
 export const authSuccess = (token, user,extra) => {
   return {
@@ -113,9 +118,7 @@ export const logout = () => {
         .then(() => {
           console.log('loggin out!')
           setAuthRedirectPath("/login");
-          return {
-            type: actionTypes.AUTH_LOGOUT,
-          };
+          dispatch(authLogout())
         })
         .catch((e) => {
           console.log(e);
@@ -150,18 +153,22 @@ export const authCheckState = () => {
     dispatch(authStart());
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        
         const uid = user.uid;
         firebase.database().ref(`users/${uid}`).on('value', snapshot => {
-          const userData = snapshot.val();
-          userData.userId = uid;
-          dispatch(authSuccess(user.refreshToken,user,{...userData}))
+          if(snapshot.exists()){
+            const userData = snapshot.val();
+            userData.userId = uid;
+            dispatch(actions.showSidebar())
+            dispatch(authSuccess(user.refreshToken,user,{...userData}))
+          }else{
+            dispatch(logout())
+            dispatch(authFail({ error: "Doesnt exists" }));
+          }
+          
         }).catch(e => {
           console.log(e);
         })
-        
       } else {
-        console.log('hey')
         dispatch(logout())
         dispatch(authFail({ error: "Not authorrized" }));
       }
