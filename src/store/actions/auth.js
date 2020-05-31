@@ -4,6 +4,8 @@ import * as actions from '../actions/index';
 export const signup = (userData) => async (dispatch) => {
   try {
     delete userData.formIsValid;
+    delete userData.password;
+    delete userData.secondPassword;
     
     dispatch(signUpStart())
     firebase

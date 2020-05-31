@@ -5,33 +5,73 @@ import classes from "./Sidebar.module.css";
 import { Sidebar } from "primereact/sidebar";
 import { Button } from "primereact/button";
 import { withRouter } from "react-router";
+import SidebarItem from './SidebarItem/SidebarItem';
 
+const capitalize = (s) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 const Side = function (props) {
   const [state, setState] = useState({ visible: false });
   const classNames = [classes.menuItem, "p-col"];
   const clickHandler = (menuClicked) => {
-    switch (menuClicked) {
-      case "pratos":
-        props.history.push("/pratos");
-        setState({visible: false});
-        break;
-      case "pedidos":
-        setState({visible: false});
-        props.history.push("/restaurante");
-        break;
-      case "logout":
-        setState({visible: false});
-        console.log("loggin out")
-        props.history.push("/logout");
-        break;
-      default:
-        setState({visible: false});
-        props.history.push("/home");
-    }
+    props.history.push(`/${menuClicked}`);
+    setState({visible: false});
   };
+  let menuToShow = null;
+  if(props.auth.user.role === "restaurante"){
+    console.log('Sou restaurante!');
+    menuToShow = <>
+      <SidebarItem 
+          name="Pedidos"
+          mode="pedidos" 
+          classNames={classNames} 
+          clickHandler={clickHandler} />
+        <SidebarItem 
+          name="Pratos"
+          mode="pratos" 
+          classNames={classNames} 
+          clickHandler={clickHandler} />
+        <SidebarItem 
+          name="Sair"
+          mode="logout" 
+          classNames={classNames} 
+          clickHandler={clickHandler} />
+    </>
+  }else{
+    console.log('Sou usuario normal!');
+    menuToShow = <>
+        <SidebarItem 
+          name="Restaurantes"
+          mode="restaurantes" 
+          classNames={classNames} 
+          clickHandler={clickHandler} />
+        <SidebarItem 
+          name="Meus pedidos"
+          mode="meus_pedidos" 
+          classNames={classNames} 
+          clickHandler={clickHandler} />
+        <SidebarItem 
+          name="Sair"
+          mode="logout" 
+          classNames={classNames} 
+          clickHandler={clickHandler} />
+    </>
+  }
+  let nome = ""
+  if(props.auth.token){
+    try{
+      nome = capitalize(props.auth.user.name.split(' ')[0]);
+    }catch(e) {
+      console.log(e);
+    }
+    
+  }
+    
+
   return (
-    props.showSidebar  ? <>
+    props.showSidebar && props.auth.token !== null  ? <>
       <Sidebar
         style={{ backgroundColor: "#594994", color: "white", border: "0px" }}
         visible={state.visible}
@@ -47,33 +87,10 @@ const Side = function (props) {
         </div>
         <div className="p-grid">
           <div className="p-col">
-            <h2>Bem vindo, Restaurante</h2>
+            <h2>Bem vindo, {nome}</h2>
           </div>
         </div>
-        <div className="p-grid">
-          <div
-            onClick={() => clickHandler("pedidos")}
-            className={classNames.join(" ")}
-          >
-            <h3>Pedidos</h3>
-          </div>
-        </div>
-        <div className="p-grid">
-          <div
-            onClick={() => clickHandler("pratos")}
-            className={classNames.join(" ")}
-          >
-            <h3>Pratos</h3>
-          </div>
-        </div>
-        <div className="p-grid">
-          <div
-            onClick={() => clickHandler("logout")}
-            className={classNames.join(" ")}
-          >
-            <h3>Logout</h3>
-          </div>
-        </div>
+        {menuToShow}
       </Sidebar>
       <Button
         style={{ zIndex: 99 }}

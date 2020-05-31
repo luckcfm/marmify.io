@@ -23,13 +23,13 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <Sidebar showSidebar={this.props.layout.showSidebar}></Sidebar>
+        {this.props.loading === false ? <><Sidebar showSidebar={this.props.layout.showSidebar}></Sidebar>
         <Toolbar showToolbar={this.props.layout.showToolbar} user={this.props.user} isAuth={this.props.isAuth} drawerToggleClicked={this.sideDrawerToggleHandler} />
         <SideDrawer
           open={this.state.showSideDrawer}
           closed={this.sideDrawerClosedHandler}
         />
-        <main className={classes.Content}>{this.props.children}</main>
+    <main className={classes.Content}>{this.props.children}</main></> : <p>Loading</p> }
       </Aux>
     );
   }
@@ -39,6 +39,7 @@ const mapStateToProps = (state) => {
   return {
     isAuth: state.auth.token !== null,
     user: state.auth.user,
+    loading: state.auth.loading,
     layout: state.layout
   }
 }
