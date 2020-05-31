@@ -68,8 +68,6 @@ const Side = function (props) {
     }
     
   }
-    
-
   return (
     props.showSidebar && props.auth.token !== null  ? <>
       <Sidebar
