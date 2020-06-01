@@ -40,6 +40,18 @@ export const registrarPrato = (prato, user) => {
   };
 };
 
+
+export const fetchPratosRestaurante = (rid) => {
+  return dispatch => {
+    db.ref(`pratos/${rid}`).on("value", (snapshot) => {
+      if (snapshot && snapshot.exists()) {
+        //Set values in state which can be extracted in jsx in render.
+        dispatch(fetchPratosSuccess(snapshot.val()));
+      }
+    });
+  }
+}
+
 export const fetchPratos = () => {
   return (dispatch) => {
     const uid = store.getState().auth.user.userId;

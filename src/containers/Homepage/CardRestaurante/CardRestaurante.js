@@ -29,9 +29,15 @@ export const CardRestaurante = (props) => {
   }catch(e){
     console.log(e)
   }
-  const header = <img alt="Card" src="https://iguatemiflorianopolis.com.br/wp-content/uploads/2020/04/Logo-Coco-Bambu-Si%CC%81mbolo-Acima-1-1024x714.png" />;
+  //TODO: Favoritar restaurante!
+  const header = <>
+    <div>
+      <img alt="Card" src="https://iguatemiflorianopolis.com.br/wp-content/uploads/2020/04/Logo-Coco-Bambu-Si%CC%81mbolo-Acima-1-1024x714.png" />
+    </div>
+  </>;
   const footer = (
     <span>
+      <p><b>De a sua opiniao!</b></p>
       <Rating value={index} onChange={(e) =>
       props.onAddRating(props.restaurante.id, e.value, props.user.uid)
       } />
@@ -41,7 +47,7 @@ export const CardRestaurante = (props) => {
  
   
   return (
-    <div className={classes.Card}>
+    <div className={classes.Card} onClick={() => props.goToRestaurant(props.restaurante.id)}>
       <Card className={classes["p-card"]} footer={footer} title={props.restaurante.name} header={header}>
         Um restaurante com boa comida, a deliciosa comida da vo.
         Entre para conhecer.

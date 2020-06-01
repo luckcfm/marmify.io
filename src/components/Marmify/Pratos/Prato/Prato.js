@@ -3,7 +3,6 @@ import { Card } from "primereact/card";
 import { Rating } from "primereact/rating";
 
 export default function Prato(props) {
-  console.log(props);
   const header = <img style={{height: '200px'}} alt="Card" src={props.prato.img} />;
   const footer = (
     <span>
