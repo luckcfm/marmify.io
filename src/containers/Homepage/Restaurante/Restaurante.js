@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../../store/actions/index'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import {ScrollPanel} from 'primereact/scrollpanel';
-import Prato from "../../../components/Marmify/Pratos/Prato/Prato";
+import Prato, {PratoList} from "../../../components/Marmify/Pratos/Prato/Prato";
 export const Restaurante = (props) => {
   const pratosMaisPedidos = [
     {
@@ -68,9 +68,11 @@ export const Restaurante = (props) => {
       {props.pratos.loading ? <Spinner></Spinner> : 
       <>
       <h1>Fazem sucesso </h1>
-      <ScrollPanel style={{whiteSpace: "nowrap"}}>
+      <ScrollPanel style={{whiteSpace: "nowrap", overflowX:"none"}}>
         {componentPratos}
       </ScrollPanel>
+      <h3>Demais Pratos deliciosos</h3>
+      <PratoList></PratoList>
       </>
       }
     </div>
