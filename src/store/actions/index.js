@@ -21,5 +21,6 @@ export {
 } from './pratosRestaurante'
 
 export {
-  fetchRestaurantes
+  fetchRestaurantes,
+  addRating
 } from './user'
