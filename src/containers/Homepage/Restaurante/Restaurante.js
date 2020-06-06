@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import * as actions from '../../../store/actions/index'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import {ScrollPanel} from 'primereact/scrollpanel';
-import Prato, {PratoList} from "../../../components/Marmify/Pratos/Prato/Prato";
+import Prato from "../../../components/Marmify/Pratos/Prato/Prato";
+import List from '../../../components/Marmify/Pratos/Prato/List/List';
 export const Restaurante = (props) => {
   const pratosMaisPedidos = [
     {
@@ -72,7 +73,7 @@ export const Restaurante = (props) => {
         {componentPratos}
       </ScrollPanel>
       <h3>Demais Pratos deliciosos</h3>
-      <PratoList></PratoList>
+      <List pratos={props.pratos}></List>
       </>
       }
     </div>

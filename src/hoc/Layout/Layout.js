@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Aux from "../Aux/Aux";
 import classes from "./Layout.module.css";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
@@ -21,15 +21,21 @@ class Layout extends Component {
   };
 
   render() {
+    let classToShow = null;
+    if (this.props.showToolbar) {
+      classToShow = classes.Content;
+    } else {
+      classToShow = classes.Content_sem_top;
+    }
     return (
       <Aux>
         {this.props.loading === false ? <><Sidebar showSidebar={this.props.layout.showSidebar}></Sidebar>
-        <Toolbar showToolbar={this.props.layout.showToolbar} user={this.props.user} isAuth={this.props.isAuth} drawerToggleClicked={this.sideDrawerToggleHandler} />
-        <SideDrawer
-          open={this.state.showSideDrawer}
-          closed={this.sideDrawerClosedHandler}
-        />
-    <main className={classes.Content}>{this.props.children}</main></> : <p>Loading</p> }
+          <Toolbar showToolbar={this.props.layout.showToolbar} user={this.props.user} isAuth={this.props.isAuth} drawerToggleClicked={this.sideDrawerToggleHandler} />
+          <SideDrawer
+            open={this.state.showSideDrawer}
+            closed={this.sideDrawerClosedHandler}
+          />
+          <main className={classToShow}>{this.props.children}</main></> : <p>Loading</p>}
       </Aux>
     );
   }

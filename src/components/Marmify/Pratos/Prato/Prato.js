@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "primereact/card";
 import { Rating } from "primereact/rating";
+import {DataTable} from 'primereact/datatable';
 import classes from './Prato.module.css'
 export function PratoList(props) {
   return (
