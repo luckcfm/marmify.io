@@ -64,8 +64,8 @@ export const Restaurante = (props) => {
 
   return (
     <div className="p-grid">
-    <div className="p-col-3"></div>
-    <div className="p-col-6">
+    <div className="p-col-3 p-md-1"></div>
+    <div className="p-col-6 p-md-10">
       {props.pratos.loading ? <Spinner></Spinner> : 
       <>
       <h1>Fazem sucesso </h1>
