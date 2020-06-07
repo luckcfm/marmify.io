@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
-
+import Carrinho from '../../Marmify/Carrinho/Carrinho'
 const navigationItems = (props) => {
   let itemsToShow = (
     <ul className={classes.NavigationItems}>
@@ -18,6 +18,7 @@ const navigationItems = (props) => {
         <NavigationItem link="/restaurante">Restaurante</NavigationItem>
         <NavigationItem link="/decoders">My Decoders</NavigationItem>
         <NavigationItem link="/logout">Logout</NavigationItem>
+        <Carrinho></Carrinho>
       </ul>
     );
   }

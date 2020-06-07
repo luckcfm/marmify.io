@@ -21,8 +21,9 @@ class Layout extends Component {
   };
 
   render() {
+    console.log(this.props);
     let classToShow = null;
-    if (this.props.showToolbar) {
+    if (this.props.layout.showToolbar) {
       classToShow = classes.Content;
     } else {
       classToShow = classes.Content_sem_top;
