@@ -7,12 +7,11 @@ const initialState = {
 }
 
 const addCarrinho = (state,action) => {
-  console.log(action);
-  // const newState = {...state};
-  // const newArray = [...newState.pratos];
-  // newArray.concat([...action.prato]);
-  return state;
-  // return updateObject(newState, {pratos: newArray});
+  const newState = {...state};
+  const newArray = [...newState.pratos];
+  newArray.push(action.prato);
+  // return state;
+  return updateObject(newState, {pratos: newArray});
 }
 
 const reducer = (state = initialState, action) => {

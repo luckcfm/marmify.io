@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card } from "primereact/card";
 import { connect } from 'react-redux';
 import { Button } from 'primereact/button';
@@ -7,6 +7,7 @@ import Modal from '../../../../UI/Modal/Modal';
 import comida_padrao from '../../../../../assets/comida_padrao.jpg'
 
 function CheckoutPrato(props) {
+  console.log(props);
   const prato = props.prato;
   const [checkoutPrato, setCheckoutPrato] = useState({});
   let img_prato = null;
@@ -15,15 +16,20 @@ function CheckoutPrato(props) {
   } else {
     img_prato = <div className="p-col-12"><img alt="Foto prato" src={prato.foto}></img></div>
   }
-
+  if(Object.keys(checkoutPrato).length === 0 && Object.keys(props.prato).length > 0){
+    //inicializamos o prato caso o mesmo nao exista.
+    console.log('CREATING NEW PRATO ', prato)
+    const newPrato = {...prato}
+    newPrato.itens_escolhidos = [];
+    setCheckoutPrato(newPrato);
+  }
+  
   const addItem = (item) => {
+    console.log('adding item ', item);
     const newCheckoutPrato = {...checkoutPrato};
-    console.log('List size', Object.keys(newCheckoutPrato).length);
     if(Object.keys(newCheckoutPrato).length === 0){
       //inicializamos o prato caso o mesmo nao exista.
-      console.log('Im here!');
       const newPrato = {...prato}
-      console.log(newPrato);
       newPrato.itens_escolhidos = [];
       newPrato.itens_escolhidos.push(item);
       setCheckoutPrato(newPrato);
@@ -90,22 +96,23 @@ function CheckoutPrato(props) {
         <span style={{ float: 'right' }}>Total: <b>R$ {totalItem()}</b></span>
         <br></br>
         <div style={{ float: 'right' }}>
-          <Button 
+        
+        </div>
+        <br></br>
+        <br></br>
+      </Card>
+      <Button 
+            onClick={() => {console.log('cancelando.')}}
             className="p-button-danger" 
             label="Cancelar"></Button>
 
           <Button 
             label="Adicionar ao carrinho" 
             onClick={()=> {
-              console.log("hello")
-              // addCarrinho(checkoutPrato)
+              addCarrinho(checkoutPrato)
               }}>
 
             </Button>
-        </div>
-        <br></br>
-        <br></br>
-      </Card>
     </Modal>
   )
 }
