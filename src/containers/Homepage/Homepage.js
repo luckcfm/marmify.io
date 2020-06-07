@@ -24,7 +24,7 @@ const Homepage = (props) => {
 
   const restaurantesToShow = restaurantes.map(restaurante => {
     if(restaurante.name !== undefined){
-      return <CardRestaurante restaurante={restaurante} goToRestaurant={goToRestaurant} user={props.auth.user}></CardRestaurante>
+      return <CardRestaurante key={restaurante.id} restaurante={restaurante} goToRestaurant={goToRestaurant} user={props.auth.user}></CardRestaurante>
     }
   });
   

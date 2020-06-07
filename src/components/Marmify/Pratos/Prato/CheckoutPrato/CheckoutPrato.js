@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { Card } from "primereact/card";
+import { connect } from 'react-redux';
+import { Button } from 'primereact/button';
+import * as actions from '../../../../../store/actions/index'
 import Modal from '../../../../UI/Modal/Modal';
 import comida_padrao from '../../../../../assets/comida_padrao.jpg'
-import { Button } from 'primereact/button';
-export default function CheckoutPrato(props) {
+
+function CheckoutPrato(props) {
   const prato = props.prato;
   const [checkoutPrato, setCheckoutPrato] = useState({});
   let img_prato = null;
@@ -15,21 +18,32 @@ export default function CheckoutPrato(props) {
 
   const addItem = (item) => {
     const newCheckoutPrato = {...checkoutPrato};
-    if(!Object.keys(newCheckoutPrato).length > -1){
+    console.log('List size', Object.keys(newCheckoutPrato).length);
+    if(Object.keys(newCheckoutPrato).length === 0){
       //inicializamos o prato caso o mesmo nao exista.
+      console.log('Im here!');
       const newPrato = {...prato}
+      console.log(newPrato);
       newPrato.itens_escolhidos = [];
+      newPrato.itens_escolhidos.push(item);
+      setCheckoutPrato(newPrato);
+    }else{
+      const newPrato = {...checkoutPrato};
+      if(!newPrato.itens_escolhidos){
+        newPrato.itens_escolhidos = [];
+      }
+      newPrato.itens_escolhidos.push(item);
       setCheckoutPrato(newPrato);
     }
-    const newPrato = {...checkoutPrato};
-    if(!newPrato.itens_escolhidos){
-      newPrato.itens_escolhidos = [];
-    }
-    newPrato.itens_escolhidos.push(item);
-    setCheckoutPrato(newPrato);
+   
+    
   }
   const removeItem = (item) => {
     console.log('removing item ', item);
+  }
+  const addCarrinho = (prato) => {
+    console.log('Adding: ', prato);
+    props.onAddCarrinho(prato);
   }
   const totalItem = () => {
     
@@ -76,9 +90,18 @@ export default function CheckoutPrato(props) {
         <span style={{ float: 'right' }}>Total: <b>R$ {totalItem()}</b></span>
         <br></br>
         <div style={{ float: 'right' }}>
-          <Button className="p-button-danger" label="Cancelar"></Button>
+          <Button 
+            className="p-button-danger" 
+            label="Cancelar"></Button>
 
-          <Button label="Adicionar ao carrinho"></Button>
+          <Button 
+            label="Adicionar ao carrinho" 
+            onClick={()=> {
+              console.log("hello")
+              // addCarrinho(checkoutPrato)
+              }}>
+
+            </Button>
         </div>
         <br></br>
         <br></br>
@@ -86,3 +109,17 @@ export default function CheckoutPrato(props) {
     </Modal>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddCarrinho: (prato) => {dispatch(actions.addCarrinho(prato))}
+  }
+}
+
+export default connect(null,mapDispatchToProps)(CheckoutPrato);

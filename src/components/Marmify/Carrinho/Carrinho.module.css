@@ -1,9 +1,8 @@
 .Carrinho {
-  width: '16px';
-  /* display: inline-block; */
-  box-sizing: content-box;
-  flex-shrink: 0;
-  inline-size: 20px;
+
+  margin: 0 auto;
+  /* flex-shrink: 0; */
+  /* inline-size: 20px; */
 }
 .Badge {
   position: absolute;

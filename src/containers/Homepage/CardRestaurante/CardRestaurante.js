@@ -38,7 +38,7 @@ export const CardRestaurante = (props) => {
   const footer = (
     <span>
       <p><b>De a sua opiniao!</b></p>
-      <Rating value={index} onChange={(e) =>
+      <Rating value={parseInt(index)} onChange={(e) =>
       props.onAddRating(props.restaurante.id, e.value, props.user.uid)
       } />
       ({totalStars} Avaliacoes.)
