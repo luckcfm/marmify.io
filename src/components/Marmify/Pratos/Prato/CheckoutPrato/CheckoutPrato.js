@@ -7,7 +7,6 @@ import Modal from '../../../../UI/Modal/Modal';
 import comida_padrao from '../../../../../assets/comida_padrao.jpg'
 
 function CheckoutPrato(props) {
-  console.log(props);
   const prato = props.prato;
   const [checkoutPrato, setCheckoutPrato] = useState({});
   let img_prato = null;
@@ -18,14 +17,12 @@ function CheckoutPrato(props) {
   }
   if(Object.keys(checkoutPrato).length === 0 && Object.keys(props.prato).length > 0){
     //inicializamos o prato caso o mesmo nao exista.
-    console.log('CREATING NEW PRATO ', prato)
     const newPrato = {...prato}
     newPrato.itens_escolhidos = [];
     setCheckoutPrato(newPrato);
   }
-  
+
   const addItem = (item) => {
-    console.log('adding item ', item);
     const newCheckoutPrato = {...checkoutPrato};
     if(Object.keys(newCheckoutPrato).length === 0){
       //inicializamos o prato caso o mesmo nao exista.
@@ -48,8 +45,8 @@ function CheckoutPrato(props) {
     console.log('removing item ', item);
   }
   const addCarrinho = (prato) => {
-    console.log('Adding: ', prato);
     props.onAddCarrinho(prato);
+    props.modalClosed();
   }
   const totalItem = () => {
     

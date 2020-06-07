@@ -25,7 +25,7 @@ export const FETCH_STARS_SUCCESS         = 'FETCH_STARS_SUCCESS';
 export const ADD_CARRINHO = 'ADD_CARRINHO';
 export const REMOVE_CARRINHO = 'REMOVE_CARRINHO';
 export const FECHAR_CARRINHO = 'FECHAR_CARRINHO';
-
+export const LIMPAR_CARRINHO = 'LIMPAR_CARRINHO';
 //
 export const HIDE_TOOLBAR   = 'HIDE_TOOLBAR';
 export const SHOW_TOOLBAR   = 'SHOW_TOOLBAR';

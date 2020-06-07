@@ -8,7 +8,11 @@ const addCarrinhoSuccess = (prato) => {
   }
 }
 
-
+export const limparCarrinho = () => {
+  return {
+    type: actionTypes.LIMPAR_CARRINHO
+  }
+}
 export const addCarrinho = (prato) => {
   return dispatch => {
     console.log('here', prato);

@@ -27,5 +27,6 @@ export {
 } from './user'
 
 export {
-  addCarrinho
+  addCarrinho,
+  limparCarrinho
 } from './carrinho'
