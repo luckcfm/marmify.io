@@ -9,10 +9,9 @@ const initialState = {
 
 const addCarrinho = (state,action) => {
   const newState = {...state};
-  const newArray = [...newState.pratos];
-  newArray.push(action.prato);
+ 
   // return state;
-  return updateObject(newState, {pratos: newArray});
+  return updateObject(newState, {pratos: newState.pratos.concat(action.prato)});
 }
 
 const limparCarrinho = (state,action) => {

@@ -45,8 +45,10 @@ function CheckoutPrato(props) {
     console.log('removing item ', item);
   }
   const addCarrinho = (prato) => {
+    console.log('[CHECKOUT]', prato);
     props.onAddCarrinho(prato);
     props.modalClosed();
+    setCheckoutPrato({});
   }
   const totalItem = () => {
     

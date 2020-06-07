@@ -34,7 +34,7 @@ export const ResumoCompra = (props) => {
   return (
     <div>
       <Modal show={props.showModal} modalClosed={props.hideModal}>
-        <h1>Fechar pedod</h1>
+        <h1>Fechar Pedido</h1>
           {fechamentoElement}
         <Button onClick={limparCarrinho} label="Limpar Carrinho"></Button>
         <Button style={{float: 'right'}} label="Finalizar Compra"></Button>
