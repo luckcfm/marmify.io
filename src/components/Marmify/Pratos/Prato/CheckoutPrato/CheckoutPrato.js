@@ -7,6 +7,7 @@ import Modal from '../../../../UI/Modal/Modal';
 import comida_padrao from '../../../../../assets/comida_padrao.jpg'
 
 function CheckoutPrato(props) {
+  const rid = props.rid;
   const prato = props.prato;
   const [checkoutPrato, setCheckoutPrato] = useState({});
   let img_prato = null;
@@ -50,7 +51,7 @@ function CheckoutPrato(props) {
   }
   const addCarrinho = (prato) => {
     console.log('[CHECKOUT]', prato);
-    props.onAddCarrinho(prato);
+    props.onAddCarrinho(prato,rid);
     props.modalClosed();
     setCheckoutPrato({});
   }

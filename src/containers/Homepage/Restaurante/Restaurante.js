@@ -59,9 +59,6 @@ export const Restaurante = (props) => {
       </div>
     );
   });
-
-
-
   return (
     <div className="p-grid">
     <div className="p-col-3 p-md-1"></div>
@@ -73,7 +70,7 @@ export const Restaurante = (props) => {
         {componentPratos}
       </ScrollPanel>
       <h3>Demais Pratos deliciosos</h3>
-      <List pratos={props.pratos}></List>
+      <List pratos={props.pratos} rid={props.location.data}></List>
       </>
       }
     </div>

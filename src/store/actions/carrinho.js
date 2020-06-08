@@ -2,10 +2,11 @@ import * as actionTypes from "./actionTypes";
 import store from "../store";
 import firebase, { db } from "../firebase";
 
-const addCarrinhoSuccess = (prato) => {
+const addCarrinhoSuccess = (prato,rid) => {
   return {
     type: actionTypes.ADD_CARRINHO,
-    prato: prato
+    prato: prato,
+    rid: rid
   }
 }
 
@@ -17,9 +18,9 @@ export const limparCarrinho = () => {
 export const fecharCarrinho = () => {
 
 }
-export const addCarrinho = (prato) => {
+export const addCarrinho = (prato, rid) => {
   return dispatch => {
     console.log('here', prato);
-    dispatch(addCarrinhoSuccess(prato))
+    dispatch(addCarrinhoSuccess(prato,rid))
   }
 }

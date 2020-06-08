@@ -4,14 +4,14 @@ import { updateObject } from "../../helpers/utility";
 
 const initialState = {
   pratos: [],
-  totalCarrinho: 0
+  totalCarrinho: 0,
+  rid: 0
 }
 
 const addCarrinho = (state,action) => {
   const newState = {...state};
- 
   // return state;
-  return updateObject(newState, {pratos: newState.pratos.concat(action.prato)});
+  return updateObject(newState, {pratos: newState.pratos.concat(action.prato), rid: action.rid});
 }
 
 const limparCarrinho = (state,action) => {

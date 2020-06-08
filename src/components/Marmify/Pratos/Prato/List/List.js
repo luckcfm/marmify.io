@@ -61,7 +61,6 @@ export default function List(props) {
     //abrir modal com o prato para o usuario escolher o que deseja.
   }
   const handleClick = (line) => {
-    console.log('Clicked', line);
     const pratoSelecionado = line.data;
     setSelectedPrato(pratoSelecionado);
     setShowModal(true);
@@ -76,6 +75,7 @@ export default function List(props) {
         showModal={showModal} 
         prato={selectedPrato} 
         modalClosed={closeModal}
+        rid={props.rid}
       ></CheckoutPrato>
       <DataTable
         value={pratosArray}
