@@ -5,26 +5,54 @@ import { Card } from "primereact/card";
 import { DataTable } from "primereact/datatable";
 import * as actions from '../../store/actions/index'
 import "primeflex/primeflex.css";
-
+import Aceite from './Aceite/Aceite';
 export class Restaurante extends Component {
+  state = {
+    showModal: false,
+    pedido: null
+  }
   componentDidMount() {
     this.props.onShowSideBar();
+    this.props.onShowToolbar();
+    this.props.onFetchPedidos();
+  }
+  templateItens = (rowData, column) => {
+    let itens = null;
+    itens = rowData.itens.map(item => {
+      return item.nome_item
+    })
+    console.log(itens);
+    return <>{itens.join(',')}</>
+  }
+  templateAceite = (rowData, column) => {
+
+    if(!rowData.status){
+      return <p style={{color: 'red'}}><b>Item ainda não foi aceito</b></p>
+    }
+
+  }
+  closeModal = () => {
+    this.setState({showModal: false, pedido: null})
+  }
+  handleClick = (line) => {
+    this.setState({showModal: true, pedido: line.data});
   }
   render() {
-    const cars = [
-      { brand: "VW", year: 2012, color: "Orange", vin: "dsad231ff" },
-      { brand: "Audi", year: 2011, color: "Black", vin: "gwregre345" },
-      { brand: "Renault", year: 2005, color: "Gray", vin: "h354htr" },
-      { brand: "BMW", year: 2003, color: "Blue", vin: "j6w54qgh" },
-      { brand: "Mercedes", year: 1995, color: "Orange", vin: "hrtwy34" },
-      { brand: "Volvo", year: 2005, color: "Black", vin: "jejtyj" },
-      { brand: "Honda", year: 2012, color: "Yellow", vin: "g43gr" },
-      { brand: "Jaguar", year: 2013, color: "Orange", vin: "greg34" },
-      { brand: "Ford", year: 2000, color: "Black", vin: "h54hw5" },
-      { brand: "Fiat", year: 2013, color: "Red", vin: "245t2s" },
-    ];
+    const pedidos = this.props.pedidos.pedidos;
+    const rows = [];
+    let pedidosRestaurante = null;
+    pedidosRestaurante = pedidos.map(pedido => {
+      return pedido[this.props.uid];
+    })
+    pedidosRestaurante.map(ped => {
+      const pedidoLimpo = ped[Object.keys(ped)[0]][0];
+      pedidoLimpo.userId = ped[Object.keys(ped)[1]];
+      rows.push(pedidoLimpo);
+    })
+    console.log(rows);
     return (
       <>
+      <Aceite showModal={this.state.showModal} pedido={this.state.pedido} modalClosed={this.closeModal}></Aceite>
         <div className="p-grid" style={{ height: "130px" }}>
           <div className="p-col-3">
             <Card
@@ -64,11 +92,16 @@ export class Restaurante extends Component {
           </div>
         </div>
         <Card title="Novos pedidos">
-          <DataTable value={cars}>
-            <Column field="vin" header="Prato" />
+          <DataTable value={rows}
+           selectionMode="single"
+           rowHover={true}
+           onRowClick={this.handleClick}
+          >
+            <Column field="nome_prato" header="Prato" />
             <Column field="year" header="Endereco" />
-            <Column field="brand" header="Aceitar" />
-            <Column field="color" header="Negar" />
+            <Column field="itens" body={this.templateItens} header="itens" />
+            <Column field="totalItem" header="Total pedido" />
+            <Column field="aceite" body={this.templateAceite} header="Aceite" />
           </DataTable>
         </Card>
         {/* <Card title="Pratos Cadastrados">
@@ -79,12 +112,16 @@ export class Restaurante extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  pedidos: state.pedidos,
+  uid: state.auth.user.uid
+});
 
 const mapDispatchToProps = dispatch => {
   return {
     onShowToolbar: () => {dispatch(actions.showToolbar())},
-    onShowSideBar: () => {dispatch(actions.showSidebar())}
+    onShowSideBar: () => {dispatch(actions.showSidebar())},
+    onFetchPedidos: () => {dispatch(actions.fetchPedidos())}
   }
 };
 

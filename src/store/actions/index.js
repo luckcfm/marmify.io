@@ -31,3 +31,7 @@ export {
   limparCarrinho,
   fecharCarrinho
 } from './carrinho'
+
+export {
+  fetchPedidos
+} from './pedidos'

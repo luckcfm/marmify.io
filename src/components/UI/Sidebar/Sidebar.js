@@ -25,7 +25,7 @@ const Side = function (props) {
     menuToShow = <>
       <SidebarItem 
           name="Pedidos"
-          mode="pedidos" 
+          mode="pedidos_restaurante" 
           classNames={classNames} 
           clickHandler={clickHandler} />
         <SidebarItem 
