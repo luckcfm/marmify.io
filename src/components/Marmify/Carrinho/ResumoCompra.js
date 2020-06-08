@@ -5,39 +5,53 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import * as actions from '../../../store/actions/index'
 export const ResumoCompra = (props) => {
-  
-  const pratos = props.carrinho.pratos;
-  const limparCarrinho = () => {
-    console.log("Limpando carrinho")
-    props.onLimparCarrinho();
-  }
+  let totalPedido = 0;
   let fechamentoElement = null;
-  if(pratos.length === 0) {
-    fechamentoElement = <p>Por favor, selecione um pedido para prosseguir</p>
-  }else{
+  const pratos = props.carrinho.pratos;
+
+  const limparCarrinho = () => {
+    props.onLimparCarrinho();
+    props.hideModal();
+  }
+  if (pratos.length === 0) {
+    fechamentoElement = <p>Por favor, realize um pedido para prosseguir</p>
+  } else {
     fechamentoElement = pratos.map(prato => {
-      
-      return <><Card title={prato.nome_prato} subTitle={"R$ "+ parseFloat(prato.preco_base).toFixed(2)}>
-      <b>Adicionais</b>
+      totalPedido += parseFloat(prato.preco_base) + parseFloat(prato.preco_items)
+      return <><Card title={prato.nome_prato} subTitle={"R$ " + parseFloat(prato.preco_base).toFixed(2)}>
+        <b>Adicionais</b>
         <ul>
           {prato.itens_escolhidos.map(item => {
             return <li key={item.nome_item}>{item.nome_item} - {item.preco_item}</li>
           })}
         </ul>
         <hr></hr>
-        <h4 style={{float: 'right'}}>Total: R$ {parseFloat(prato.preco_base)}</h4>
+        <h4 style={{ float: 'right' }}>Total: R$ {parseFloat(prato.preco_base) + parseFloat(prato.preco_items)}</h4>
         <br></br>
         <br></br>
-      </Card><br></br></>
+      </Card></>
     })
   }
   return (
     <div>
       <Modal show={props.showModal} modalClosed={props.hideModal}>
         <h1>Fechar Pedido</h1>
-          {fechamentoElement}
-        <Button onClick={limparCarrinho} label="Limpar Carrinho"></Button>
-        <Button style={{float: 'right'}} label="Finalizar Compra"></Button>
+        {fechamentoElement}
+        <h1></h1>
+        {pratos.length > 0 ? 
+        <span style={{ float: 'right' }}>
+          Total Pedido:  <b>R$ {totalPedido}</b>
+        </span> : null}
+        <br></br>
+        {pratos.length > 0 ? <span style={{ float: 'right' }} >
+          <Button 
+            style={{ padding: '2px', margin: '2px' }} 
+            onClick={limparCarrinho} 
+            label="Limpar Carrinho"></Button>
+          <Button 
+            style={{ padding: '2px', margin: '2px' }} 
+            label="Finalizar Compra"></Button>
+        </span> : null}
       </Modal>
     </div>
   )
@@ -49,7 +63,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLimparCarrinho: () => {dispatch(actions.limparCarrinho())}
+    onLimparCarrinho: () => { dispatch(actions.limparCarrinho()) }
   }
 }
 

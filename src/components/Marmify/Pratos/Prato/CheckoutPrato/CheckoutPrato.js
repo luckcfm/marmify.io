@@ -19,6 +19,7 @@ function CheckoutPrato(props) {
     //inicializamos o prato caso o mesmo nao exista.
     const newPrato = {...prato}
     newPrato.itens_escolhidos = [];
+    newPrato.preco_items = 0;
     setCheckoutPrato(newPrato);
   }
 
@@ -29,12 +30,15 @@ function CheckoutPrato(props) {
       const newPrato = {...prato}
       newPrato.itens_escolhidos = [];
       newPrato.itens_escolhidos.push(item);
+      newPrato.preco_items = 0;
+      newPrato.preco_items += parseFloat(item.preco_item);
       setCheckoutPrato(newPrato);
     }else{
       const newPrato = {...checkoutPrato};
       if(!newPrato.itens_escolhidos){
         newPrato.itens_escolhidos = [];
       }
+      newPrato.preco_items += parseFloat(item.preco_item);
       newPrato.itens_escolhidos.push(item);
       setCheckoutPrato(newPrato);
     }
