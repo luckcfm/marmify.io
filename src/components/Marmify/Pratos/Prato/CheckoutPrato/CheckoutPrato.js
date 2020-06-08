@@ -129,7 +129,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddCarrinho: (prato) => {dispatch(actions.addCarrinho(prato))}
+    onAddCarrinho: (prato,rid) => {dispatch(actions.addCarrinho(prato,rid))}
   }
 }
 

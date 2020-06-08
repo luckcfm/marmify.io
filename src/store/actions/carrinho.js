@@ -16,13 +16,15 @@ export const limparCarrinho = () => {
   }
 }
 export const fecharCarrinho = () => {
+  
   const state = store.getState();
   const carrinho = state.carrinho;
-  const uid = store.getState().auth.user.userId;
+  const uid = state.auth.user.uid;
+  
   return dispatch => {
     firebase
     .database()
-    .ref(`pedidos/${uid}/${state.rid}`)
+    .ref(`pedidos/${uid}/${carrinho.rid}`)
     .push(carrinho.pratos)
     .then((res) => {
       console.log(res);

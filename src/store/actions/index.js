@@ -28,5 +28,6 @@ export {
 
 export {
   addCarrinho,
-  limparCarrinho
+  limparCarrinho,
+  fecharCarrinho
 } from './carrinho'

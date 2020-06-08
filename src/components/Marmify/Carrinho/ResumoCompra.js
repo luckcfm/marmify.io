@@ -13,6 +13,9 @@ export const ResumoCompra = (props) => {
     props.onLimparCarrinho();
     props.hideModal();
   }
+  const finalizarPedido = () => {
+    props.onFinalizarPedido();
+  }
   if (pratos.length === 0) {
     fechamentoElement = <p>Por favor, realize um pedido para prosseguir</p>
   } else {
@@ -50,6 +53,7 @@ export const ResumoCompra = (props) => {
             label="Limpar Carrinho"></Button>
           <Button 
             style={{ padding: '2px', margin: '2px' }} 
+            onClick={finalizarPedido}
             label="Finalizar Compra"></Button>
         </span> : null}
       </Modal>
@@ -63,7 +67,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLimparCarrinho: () => { dispatch(actions.limparCarrinho()) }
+    onLimparCarrinho: () => { dispatch(actions.limparCarrinho())},
+    onFinalizarPedido: () => {dispatch(actions.fecharCarrinho())}
   }
 }
 
