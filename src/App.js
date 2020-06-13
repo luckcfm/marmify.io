@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";

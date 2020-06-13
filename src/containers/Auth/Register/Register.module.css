@@ -51,7 +51,7 @@
   /* vertically align icon and text inside the div*/
   display: flex;
   align-items: center;
-  padding-left: 20px;
+  padding-left: 0px;
 }
 .input_field {
   /* customize the input tag with lighter font and some padding*/
@@ -60,8 +60,8 @@
   width: 90%;
   border: none;
   font-size: 1.3rem;
-  font-weight: 400;
-  padding-left: 30px;
+  font-weight: 200;
+  padding-left: 10px;
 }
 
 .input_field:hover,

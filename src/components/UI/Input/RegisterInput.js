@@ -1,6 +1,6 @@
 import React from "react";
 import {Form} from 'react-bootstrap'
-import classes from "./Input.module.css";
+import classes from "./RegisterInput.module.css";
 
 const input = (props) => {
   let inputElement = null;
