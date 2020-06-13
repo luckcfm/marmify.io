@@ -156,7 +156,6 @@ class Auth extends Component {
             <div className={classes.FormRight}>
               {errorMessage}
             <h1>Bem vindo ao <i style={{color: '#BE63FF'}}>Marmify.io</i></h1>
-            Hello Nardy
                 {form}
                 <input 
                   type="submit" 
