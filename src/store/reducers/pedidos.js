@@ -4,6 +4,7 @@ const initialState = {
   pedidos_aceitos: [],
   pedidos_negados: [],
   pedidos_esperando_aprovacao: [],
+  pedidos: []
 };
 
 const registrarPedido = (state, action) => {
@@ -29,6 +30,10 @@ const aprovarPedido = (state,action) => {
         return state;
     }
 }
+const fetchPedidosSuccess = (state, action) => {
+  console.log('[REDUX_PEDIDOS]', [...action.pedidos])
+  return updateObject(state, {pedidos: [...action.pedidos]})
+}
 const mudarStatusPedido = (state, action) => {
 //   const pedido = action.pedido;
 //   const pedidos = state.pedidos_aceitos;
@@ -40,6 +45,8 @@ const reducer = (state = initialState, action) => {
       return registrarPedido(state, action);
     case actionTypes.MUDAR_STATUS_PEDIDO:
       return mudarStatusPedido(state, action);
+    case actionTypes.FETCH_PEDIDOS_SUCCESS:
+      return fetchPedidosSuccess(state,action);
     default:
       return state;
   }

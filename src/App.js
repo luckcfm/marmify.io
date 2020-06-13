@@ -37,6 +37,12 @@ class App extends Component {
           authenticated={this.props.isAuthenticated}
           component={Restaurante}
         ></PrivateRouteRestaurante>
+         <PrivateRouteRestaurante
+          path="/pedidos_restaurante"
+          role={this.props.user.role}
+          authenticated={this.props.isAuthenticated}
+          component={Restaurante}
+        ></PrivateRouteRestaurante>
         <PrivateRouteRestaurante
           path="/pratos"
           role={this.props.user.role}

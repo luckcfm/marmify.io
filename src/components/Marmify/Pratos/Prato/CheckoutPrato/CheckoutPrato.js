@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import * as actions from '../../../../../store/actions/index'
 import Modal from '../../../../UI/Modal/Modal';
 import comida_padrao from '../../../../../assets/comida_padrao.jpg'
-
+//TODO: ADICIONAR INFORMACOES DO USUARIO AO PEDIDO FINAL.
 function CheckoutPrato(props) {
   const rid = props.rid;
   const prato = props.prato;
