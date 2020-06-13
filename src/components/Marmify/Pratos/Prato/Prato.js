@@ -1,26 +1,6 @@
 import React from "react";
 import { Card } from "primereact/card";
 import { Rating } from "primereact/rating";
-import classes from './Prato.module.css'
-export function PratoList(props) {
-  return (
-    <div className={classes.PratosList}>
-     <div className={classes.ListItem}>
-       <img className={classes.Image}>
-       </img>
-     </div>
-      <div className={classes.ListItem}>
-          <span className={classes.Title}>
-            Teste
-          </span>
-          <span>
-            Teste 2
-          </span>
-      </div>
-    </div>
-  );
-}
-
 
 export default function Prato(props) {
   const header = <img style={{height: '200px'}} alt="Card" src={props.prato.img} />;

@@ -6,14 +6,12 @@ import * as actions from '../../../store/actions/index'
 import classes from './CardRestaurante.module.css';
 
 export const CardRestaurante = (props) => {
-  console.log(props.restaurante.id);
-  console.log(props.stars[props.restaurante.id].stars)
+
   let totalStars = 0;
   let maiorMedia = 0;
   let index = 0;
   try{
     Object.keys(props.stars[props.restaurante.id].stars).map(star => {
-      console.log(star)
       totalStars += props.stars[props.restaurante.id].stars[star];
     });
   }catch(e){
@@ -32,13 +30,15 @@ export const CardRestaurante = (props) => {
   //TODO: Favoritar restaurante!
   const header = <>
     <div>
-      <img alt="Card" src="https://iguatemiflorianopolis.com.br/wp-content/uploads/2020/04/Logo-Coco-Bambu-Si%CC%81mbolo-Acima-1-1024x714.png" />
+      <img 
+      alt="Card" 
+      src="https://iguatemiflorianopolis.com.br/wp-content/uploads/2020/04/Logo-Coco-Bambu-Si%CC%81mbolo-Acima-1-1024x714.png" />
     </div>
   </>;
   const footer = (
     <span>
       <p><b>De a sua opiniao!</b></p>
-      <Rating value={index} onChange={(e) =>
+      <Rating value={parseInt(index)} onChange={(e) =>
       props.onAddRating(props.restaurante.id, e.value, props.user.uid)
       } />
       ({totalStars} Avaliacoes.)
@@ -47,7 +47,9 @@ export const CardRestaurante = (props) => {
  
   
   return (
-    <div className={classes.Card} onClick={() => props.goToRestaurant(props.restaurante.id)}>
+    <div 
+      className={classes.Card} 
+      onClick={() => props.goToRestaurant(props.restaurante.id)}>
       <Card className={classes["p-card"]} footer={footer} title={props.restaurante.name} header={header}>
         Um restaurante com boa comida, a deliciosa comida da vo.
         Entre para conhecer.

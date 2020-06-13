@@ -8,6 +8,7 @@ import {withRouter} from 'react-router-dom'
 const Homepage = (props) => {
   useEffect(() => {
     props.onFechRestaurantes();
+    props.onShowToolBar();
   },[])
   const restaurantes = Object.keys(props.user.restaurantes).map(id => {
     const rest = props.user.restaurantes[id];
@@ -15,8 +16,6 @@ const Homepage = (props) => {
     return rest;
   })
   const goToRestaurant = (rid) => {
-    console.log('Indo para ', rid);
-    console.log('props ', props)
     props.history.push({
       pathname: "/restaurante_user",
       data: rid
@@ -25,7 +24,7 @@ const Homepage = (props) => {
 
   const restaurantesToShow = restaurantes.map(restaurante => {
     if(restaurante.name !== undefined){
-      return <CardRestaurante restaurante={restaurante} goToRestaurant={goToRestaurant} user={props.auth.user}></CardRestaurante>
+      return <CardRestaurante key={restaurante.id} restaurante={restaurante} goToRestaurant={goToRestaurant} user={props.auth.user}></CardRestaurante>
     }
   });
   
@@ -59,7 +58,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onFechRestaurantes: () => {dispatch(actions.fetchRestaurantes())}
+    onFechRestaurantes: () => {dispatch(actions.fetchRestaurantes())},
+    onShowToolBar: () => {dispatch(actions.showToolbar())}
   }
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Homepage));

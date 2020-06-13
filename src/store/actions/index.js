@@ -25,3 +25,9 @@ export {
   fetchRestaurantes,
   addRating
 } from './user'
+
+export {
+  addCarrinho,
+  limparCarrinho,
+  fecharCarrinho
+} from './carrinho'

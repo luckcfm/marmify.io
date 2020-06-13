@@ -1,3 +1,7 @@
 .Content {
   margin-top: 72px;
 }
+
+.Content_sem_top {
+  margin-top: 0px;
+}
