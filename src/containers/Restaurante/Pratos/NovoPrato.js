@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import { InputText } from "primereact/inputtext";
+import {InputTextarea} from "primereact/inputtextarea";
+import {FileUpload} from 'primereact/fileupload';
 const pratoInicial = { 
   nome_prato: "",
   descricao: "", 
@@ -9,6 +11,7 @@ const pratoInicial = {
   preco_base: 0.0, 
   totalItem: 0.0,
   rating: 0,
+  image: null,
   pedidos: 0,
   totalVendido: 0.0
 }
@@ -39,6 +42,12 @@ const NovoPrato = function (props) {
     evt.preventDefault();
     props.onSavePrato(state, props.user);
   }
+  const uploadHandler = (e) => {
+    const newState = {...state}
+    newState.image = e.files[0];
+    setState(newState);
+  }
+
   return (
     <div>
       <InputText
@@ -49,7 +58,7 @@ const NovoPrato = function (props) {
       />
       <br></br>
       <br></br>
-      <InputText
+      <InputTextarea
         value={state.descricao}
         placeholder="Descricao"
         name="descricao"
@@ -66,6 +75,15 @@ const NovoPrato = function (props) {
       />
       <br></br>
       <br></br>
+        <FileUpload 
+          name="demo" 
+          chooseLabel="Enviar foto do prato" 
+          url="./upload" 
+          mode="basic"
+          customUpload={true}
+          auto={true}
+          uploadHandler={uploadHandler}
+          />
       <hr></hr>
       <h3>Itens</h3>
       {itens.map(itemL => {

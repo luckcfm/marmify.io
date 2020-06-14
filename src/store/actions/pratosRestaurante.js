@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import firebase, { db } from "../firebase";
+import firebase, { db, storage } from "../firebase";
 import store from "../store";
 
 const registrarPratoSuccess = (prato) => {
@@ -30,12 +30,31 @@ const deletaPratoSuccess = (prato) => {
 export const registrarPrato = (prato, user) => {
   return (dispatch) => {
     // dispatch(registrarPratoSuccess(prato));
+    const {image} = prato;
+    delete prato.image;
+   
     firebase
       .database()
       .ref(`pratos/${user.uid}`)
       .push(prato)
       .then((res) => {
-        console.log(res);
+        if(image !== null) {
+          const pratoId = res.key;
+          const uploadTask = storage.ref(`/images/${res.key}`).put(image);
+          uploadTask.on('state_changed', snapshot => {
+            console.log(snapshot)
+          }, err => {
+            console.log(err)
+          }, () => {
+            storage.ref('images').child(res.key).getDownloadURL()
+            .then(firebaseUrl => {
+              db.ref(`pratos/${user.uid}/${pratoId}`).update({image: firebaseUrl})
+              .then(res => {
+                console.log(res);
+              })
+            })
+          })
+        }
       });
   };
 };

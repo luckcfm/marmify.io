@@ -41,14 +41,19 @@ export class Restaurante extends Component {
     const pedidos = this.props.pedidos.pedidos;
     const rows = [];
     let pedidosRestaurante = null;
-    pedidosRestaurante = pedidos.map(pedido => {
-      return pedido[this.props.uid];
-    })
-    pedidosRestaurante.map(ped => {
-      const pedidoLimpo = ped[Object.keys(ped)[0]][0];
-      pedidoLimpo.userId = ped[Object.keys(ped)[1]];
-      rows.push(pedidoLimpo);
-    })
+    try{
+      pedidosRestaurante = pedidos.map(pedido => {
+        return pedido[this.props.uid];
+      })
+      pedidosRestaurante.map(ped => {
+        const pedidoLimpo = ped[Object.keys(ped)[0]][0];
+        pedidoLimpo.userId = ped[Object.keys(ped)[1]];
+        rows.push(pedidoLimpo);
+      })
+    }catch(e) {
+      console.log(e);
+    }
+    
     console.log(rows);
     return (
       <>

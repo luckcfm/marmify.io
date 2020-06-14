@@ -37,7 +37,7 @@ const pratosMaisPedidos = [
 
 const pratos = pratosMaisPedidos.map((prato) => {
   return (
-    <div className="p-col-3">
+    <div style={{width: '300px', paddingRight: '10px'}}>
       <Prato prato={prato}></Prato>
     </div>
   );
