@@ -190,7 +190,7 @@ export const PratosRestaurante = (props) => {
           </Card>
         </div>
         <div className="p-col-4">
-            <NovoPrato pratoSelecionado={pratoSelecionado}></NovoPrato>
+            <NovoPrato pratoSelecionado={pratoSelecionado} setPratoSelecionado={setPratoSelecionado}></NovoPrato>
         </div>
       </div>
     </>

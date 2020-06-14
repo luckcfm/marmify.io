@@ -31,6 +31,7 @@ const NovoPrato = function (props) {
     (Object.keys(props.pratoSelecionado).length > 1 &&
       state.id !== props.pratoSelecionado.id)
   ) {
+    console.log('here');
     setTitle("Edite o seu Prato!");
     setState(props.pratoSelecionado);
   }
@@ -66,6 +67,11 @@ const NovoPrato = function (props) {
     evt.preventDefault();
     props.onSavePrato(state, props.user);
   };
+  const handleCancel = () => {
+    console.log('clicked', pratoInicial);
+    setState(pratoInicial);
+    props.setPratoSelecionado({});
+  }
   const uploadHandler = (e) => {
     const newState = { ...state };
     newState.image = e.files[0];
@@ -124,8 +130,8 @@ const NovoPrato = function (props) {
       <br></br>
       <FileUpload
         name="demo"
+        style={{width: '100%'}}
         chooseLabel="Enviar foto do prato"
-        url="./upload"
         mode="basic"
         customUpload={true}
         auto={true}
@@ -159,6 +165,7 @@ const NovoPrato = function (props) {
       <button onClick={handlerAddItem}>Adicionar</button>
       <br></br>
       <br></br>
+      
       {state.id !== undefined ? (
         <button
           onClick={() => {
@@ -169,6 +176,15 @@ const NovoPrato = function (props) {
         </button>
       ) : null}{" "}
       {buttonToShow}
+
+      <Button 
+        label="Cancelar" 
+        style={{width: '100%'}}
+        className="p-button-warning" 
+        onClick={handleCancel} 
+        >
+        
+        </Button>
       <Dialog
         header="Remover Prato"
         visible={showAlerta}
