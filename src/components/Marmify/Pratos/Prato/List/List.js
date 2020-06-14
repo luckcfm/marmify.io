@@ -19,8 +19,8 @@ export default function List(props) {
     })
   }
   const fotoTemplate = (rowData, column) => {
-    if (rowData.foto) {
-      return <img alt="Foto do prato">{rowData.foto}</img>
+    if (rowData.image) {
+      return <img style={{width: '64px', height: '64px'}} alt="Foto do prato" src={rowData.image}></img>
     } else {
       return <img
         alt="Foto do prato"

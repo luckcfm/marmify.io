@@ -21,13 +21,18 @@ export class Restaurante extends Component {
     itens = rowData.itens.map(item => {
       return item.nome_item
     })
-    console.log(itens);
     return <>{itens.join(',')}</>
   }
   templateAceite = (rowData, column) => {
-
     if(!rowData.status){
       return <p style={{color: 'red'}}><b>Item ainda não foi aceito</b></p>
+    }else{
+      const status = rowData.status;
+      if(!status.preparando && !status.entregue){
+        return <p style={{color: 'orange'}}>
+          Pedido aceito em: {status.hora}
+        </p>
+      }
     }
 
   }
@@ -48,13 +53,12 @@ export class Restaurante extends Component {
       pedidosRestaurante.map(ped => {
         const pedidoLimpo = ped[Object.keys(ped)[0]][0];
         pedidoLimpo.userId = ped[Object.keys(ped)[1]];
+        pedidoLimpo.pid = Object.keys(ped)[0];
         rows.push(pedidoLimpo);
       })
     }catch(e) {
       console.log(e);
     }
-    
-    console.log(rows);
     return (
       <>
       <Aceite showModal={this.state.showModal} pedido={this.state.pedido} modalClosed={this.closeModal}></Aceite>

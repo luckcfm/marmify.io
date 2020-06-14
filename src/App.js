@@ -12,6 +12,7 @@ import Registro from "./containers/Auth/Register/Register";
 import Logout from "./containers/Auth/Logout/Logout";
 import HomePage from './containers/Homepage/Homepage';
 import RestauranteUser from './containers/Homepage/Restaurante/Restaurante'
+import PedidosUser from './containers/Homepage/Pedidos/Pedidos';
 import {
   PublicRoute,
   PrivateRoute,
@@ -54,6 +55,11 @@ class App extends Component {
           path="/restaurante_user"
           authenticated={this.props.isAuthenticated}
           component={RestauranteUser}
+        ></PrivateRoute>
+         <PrivateRoute
+          path="/meus_pedidos"
+          authenticated={this.props.isAuthenticated}
+          component={PedidosUser}
         ></PrivateRoute>
         <PrivateRoute
           path="/logout"

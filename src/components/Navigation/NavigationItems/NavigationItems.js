@@ -15,8 +15,9 @@ const navigationItems = (props) => {
   ) {
     itemsToShow = (
       <ul className={classes.NavigationItems}>
-        <NavigationItem link="/logout">Logout</NavigationItem>
         <Carrinho></Carrinho>
+        <NavigationItem link="/logout">Logout</NavigationItem>
+        
       </ul>
     );
   }

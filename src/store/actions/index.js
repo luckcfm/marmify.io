@@ -20,7 +20,8 @@ export {
   fetchPratosRestaurante,
   toggleDisponivel,
   removerPrato,
-  updatePrato
+  updatePrato,
+
 } from './pratosRestaurante'
 
 export {
@@ -35,5 +36,7 @@ export {
 } from './carrinho'
 
 export {
-  fetchPedidos
+  fetchPedidos,
+  aceitaPedido,
+  getPedidosUser
 } from './pedidos'

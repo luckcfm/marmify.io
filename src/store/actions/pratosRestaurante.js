@@ -87,6 +87,7 @@ export const fetchPratosRestaurante = (rid) => {
   }
 }
 
+
 export const fetchPratos = () => {
   return (dispatch) => {
     const uid = store.getState().auth.user.userId;

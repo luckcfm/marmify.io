@@ -7,6 +7,7 @@ import { FileUpload } from "primereact/fileupload";
 import { Card } from "primereact/card";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
+import classes from './NovoPrato.module.css'
 const pratoInicial = {
   nome_prato: "",
   descricao: "",
@@ -138,31 +139,35 @@ const NovoPrato = function (props) {
         uploadHandler={uploadHandler}
       />
       <hr></hr>
-      <h3>Itens</h3>
-      {itens.map((itemL) => {
-        return (
-          <li key={itemL.nome_item}>
-            {itemL.nome_item} - {itemL.preco_item}
-          </li>
-        );
-      })}
-      <b>Total do item: </b> {state.totalItem + parseFloat(state.preco_base)}{" "}
-      <br></br>
-      <input
-        type="text"
-        name="nome_item"
-        value={item.nome_item}
-        placeholder="Nome item"
-        onChange={handleChangeItem}
-      />
-      <input
-        type="text"
-        name="preco_item"
-        value={item.preco_item}
-        placeholder="Preco item"
-        onChange={handleChangeItem}
-      />
-      <button onClick={handlerAddItem}>Adicionar</button>
+      <div className={classes.Items}>
+        <h3>Itens</h3>
+        {itens.map((itemL) => {
+          return (
+            <li key={itemL.nome_item}>
+              {itemL.nome_item} - {itemL.preco_item}
+            </li>
+          );
+        })}
+        <div className={classes.Bottom}>
+          <b>Total do item: </b> {state.totalItem + parseFloat(state.preco_base)}{" "}
+          <br></br>
+          <input
+            type="text"
+            name="nome_item"
+            value={item.nome_item}
+            placeholder="Nome item"
+            onChange={handleChangeItem}
+          />
+          <input
+            type="text"
+            name="preco_item"
+            value={item.preco_item}
+            placeholder="Preco item"
+            onChange={handleChangeItem}
+          />
+          <button onClick={handlerAddItem}>Adicionar</button>
+        </div>
+      </div>
       <br></br>
       <br></br>
       
