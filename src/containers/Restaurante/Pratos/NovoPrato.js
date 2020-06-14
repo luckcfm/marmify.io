@@ -93,9 +93,9 @@ const NovoPrato = function (props) {
   }
   let buttonToShow = <></>
   if(state.id){
-    buttonToShow = <button onClick={handleEditar}>Editar Prato</button>
+    buttonToShow = <Button label="Editar Prato" onClick={handleEditar}></Button>
   }else{
-    buttonToShow = <button onClick={handleSave}>Salvar Prato</button>
+    buttonToShow = <Button label="Salvar Prato" onClick={handleSave}></Button>
   }
   return (
     <Card title={title}>
@@ -167,13 +167,14 @@ const NovoPrato = function (props) {
       <br></br>
       
       {state.id !== undefined ? (
-        <button
+        <Button
+          label="Remover prato"
+          className="p-button-danger" 
           onClick={() => {
             setShowAlerta(true);
           }}
         >
-          Remover Prato
-        </button>
+        </Button>
       ) : null}{" "}
       {buttonToShow}
 

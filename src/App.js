@@ -28,6 +28,7 @@ class App extends Component {
     this.props.onTryAutoSignUp();
   }
   render() {
+    console.log(this.props.isAuthenticated);
     let enabledRoutes = (
       <Switch>
         

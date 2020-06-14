@@ -15,8 +15,6 @@ const navigationItems = (props) => {
   ) {
     itemsToShow = (
       <ul className={classes.NavigationItems}>
-        <NavigationItem link="/restaurante">Restaurante</NavigationItem>
-        <NavigationItem link="/decoders">My Decoders</NavigationItem>
         <NavigationItem link="/logout">Logout</NavigationItem>
         <Carrinho></Carrinho>
       </ul>
