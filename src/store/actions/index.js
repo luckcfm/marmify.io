@@ -19,7 +19,8 @@ export {
   fetchPratos,
   fetchPratosRestaurante,
   toggleDisponivel,
-  removerPrato
+  removerPrato,
+  updatePrato
 } from './pratosRestaurante'
 
 export {

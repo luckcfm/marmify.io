@@ -41,11 +41,13 @@ const NovoPrato = function (props) {
   };
   const handleRemove = () => {
     const id = state.id;
-    console.log("Removendo", id);
     setShowAlerta(false);
     setState(pratoInicial);
     props.onRemovePrato(id, props.user);
   };
+  const handleEditar = () => {
+    console.log('Editando prato', state);
+  }
   const handleChangeItem = (evt) => {
     const newItem = { ...item };
     newItem[evt.target.name] = evt.target.value;
@@ -75,10 +77,19 @@ const NovoPrato = function (props) {
       <Button label="Cancelar" icon="pi pi-times" onClick={() => {setShowAlerta(false)}} />
     </div>
   );
+
   let imageElement = <></>
-  console.log(state.image);
   if(state.image) {
-    imageElement = <img src={state.image} style={{width: '300px'}} alt="Imagem do prato"></img>
+    imageElement = <img 
+      src={state.image} 
+      style={{width: '300px', height: '150px'}} 
+      alt="Imagem do prato"></img>
+  }
+  let buttonToShow = <></>
+  if(state.id){
+    buttonToShow = <button onClick={handleEditar}>Editar Prato</button>
+  }else{
+    buttonToShow = <button onClick={handleSave}>Salvar Prato</button>
   }
   return (
     <Card title={title}>
@@ -86,6 +97,7 @@ const NovoPrato = function (props) {
       <InputText
         value={state.name}
         placeholder="Nome do prato"
+        style={{width: '100%'}}
         name="nome_prato"
         value={state.nome_prato}
         onChange={handleChange}
@@ -94,6 +106,7 @@ const NovoPrato = function (props) {
       <br></br>
       <InputTextarea
         value={state.descricao}
+        style={{width: '100%'}}
         placeholder="Descricao"
         name="descricao"
         onChange={handleChange}
@@ -103,6 +116,7 @@ const NovoPrato = function (props) {
       <InputText
         value={state.preco_base}
         name="preco_base"
+        style={{width: '100%'}}
         placeholder="Preco base"
         onChange={handleChange}
       />
@@ -154,7 +168,7 @@ const NovoPrato = function (props) {
           Remover Prato
         </button>
       ) : null}{" "}
-      <button onClick={handleSave}>Salvar Prato</button>
+      {buttonToShow}
       <Dialog
         header="Remover Prato"
         visible={showAlerta}
@@ -181,6 +195,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onRemovePrato: (id,user) => {
       dispatch(actions.removerPrato(id,user));
+    },
+    onUpdatePrato: (prato,user) => {
+      dispatch(actions.updatePrato(prato,user))
     }
   };
 };

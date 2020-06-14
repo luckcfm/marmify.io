@@ -40,6 +40,9 @@ export const removerPrato = (id,user) => {
       })
   }
 }
+export const updatePrato = (prato, user) => {
+  
+}
 export const registrarPrato = (prato, user) => {
   return (dispatch) => {
     // dispatch(registrarPratoSuccess(prato));

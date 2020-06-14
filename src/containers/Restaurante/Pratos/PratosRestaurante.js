@@ -170,32 +170,28 @@ export const PratosRestaurante = (props) => {
   return (
     <>
       <div className="p-grid">
-        <div className="p-col-2"></div>
+        <div className="p-col-1"></div>
         <div className="p-col-7">
           <Card title="Pratos mais pedidos">
             <div className="p-grid">{pratos}</div>
+            
           </Card>
-        </div>
-        <div className="p-col-3">
-            <NovoPrato pratoSelecionado={pratoSelecionado}></NovoPrato>
-        </div>
-      </div>
-      <div className="p-grid">
-        <div className="p-col-2"></div>
-        <div className="p-col-7">
+          <br></br>
           <Card title="Todos os pratos" subTitle="Clique para editar">
             <DataTable
               selectionMode="single"
               rowHover={true}
               onRowClick={handleClick}
-              style={{ height: "500px", overflow: "auto" }}
+              style={{ height: "300px", overflow: "auto" }}
               value={pratosArr}
             >
               {dynamicColumns}
             </DataTable>
           </Card>
         </div>
-        <div className="p-col-2"></div>
+        <div className="p-col-4">
+            <NovoPrato pratoSelecionado={pratoSelecionado}></NovoPrato>
+        </div>
       </div>
     </>
   );
