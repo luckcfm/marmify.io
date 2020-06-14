@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Card } from "primereact/card";
 import { Column } from "primereact/column";
@@ -37,7 +37,7 @@ const pratosMaisPedidos = [
 
 const pratos = pratosMaisPedidos.map((prato) => {
   return (
-    <div style={{width: '300px', paddingRight: '10px'}}>
+    <div style={{ width: "300px", paddingRight: "10px" }}>
       <Prato prato={prato}></Prato>
     </div>
   );
@@ -45,6 +45,7 @@ const pratos = pratosMaisPedidos.map((prato) => {
 
 const columns = [
   { field: "id", header: "ID" },
+  { field: "image", header: "Foto" },
   { field: "nome_prato", header: "Nome do Prato" },
   { field: "itens", header: "Ingredientes" },
   { field: "totalItem", header: "Preco (R$)" },
@@ -52,6 +53,7 @@ const columns = [
 ];
 
 export const PratosRestaurante = (props) => {
+  const [pratoSelecionado, setPratoSelecionado] = useState({});
   useEffect(() => {
     console.log("called");
     props.onFetchPratos();
@@ -62,14 +64,56 @@ export const PratosRestaurante = (props) => {
       ...props.pratos.pratos[pid],
     };
   });
-  const toggleDisponivel = (id,value) => {
-    props.onToggleDisponivel(id,!value);
+  const toggleDisponivel = (id, value) => {
+    props.onToggleDisponivel(id, !value);
+  };
+  const templateImage = (rowData, Column) => {
+    let retVal = null;
+    if (rowData.image) {
+      retVal = (
+        <span style={{ width: "64px", height: "64px", margin: "0 auto" }}>
+          <img
+            style={{
+              width: "64px",
+              height: "64px",
+              margin: "0 auto",
+              display: "block",
+            }}
+            src={rowData.image}
+            alt={rowData.nome_prato}
+          ></img>
+        </span>
+      );
+    } else {
+      retVal = (
+        <span style={{ width: "64px", height: "64px", margin: "0 auto" }}>
+          <img
+            style={{
+              width: "64px",
+              height: "64px",
+              margin: "0 auto",
+              display: "block",
+            }}
+            src={
+              "https://blog.livup.com.br/wp-content/uploads/2018/09/descubra-comida-de-verdade-e-adote-a-sua-dieta.jpg"
+            }
+            alt={rowData.nome_prato}
+          ></img>
+        </span>
+      );
+    }
+    return retVal;
   };
   const templateDisponivel = (rowData, Column) => {
     return (
       <InputSwitch
         checked={rowData.disponivel === true ? true : false}
-        onChange={() => toggleDisponivel(rowData.id, rowData.disponivel ? rowData.disponivel : false)}
+        onChange={() =>
+          toggleDisponivel(
+            rowData.id,
+            rowData.disponivel ? rowData.disponivel : false
+          )
+        }
       />
     );
   };
@@ -80,15 +124,23 @@ export const PratosRestaurante = (props) => {
   };
   const dynamicColumns = columns.map((col, i) => {
     switch (col.field) {
+      case "image":
+        return (
+          <Column
+            key={col.field}
+            field={col.field}
+            body={templateImage}
+            // style={{display: "none"}}
+          ></Column>
+        );
       case "id":
         return (
           <Column
             key={col.field}
             field={col.field}
-            style={{display: "none"}}
-          >
-          </Column>
-        )
+            style={{ display: "none" }}
+          ></Column>
+        );
       case "itens":
         return (
           <Column
@@ -111,32 +163,39 @@ export const PratosRestaurante = (props) => {
         return <Column key={col.field} field={col.field} header={col.header} />;
     }
   });
-  console.log(pratosArr);
+  const handleClick = (line) => {
+    const pratoSelecionado = line.data;
+    setPratoSelecionado(pratoSelecionado);
+  }
   return (
     <>
       <div className="p-grid">
-        <div className="p-col-3"></div>
-        <div className="p-col-6">
+        <div className="p-col-2"></div>
+        <div className="p-col-7">
           <Card title="Pratos mais pedidos">
             <div className="p-grid">{pratos}</div>
           </Card>
         </div>
         <div className="p-col-3">
-          <Card title="Novo prato">
-            <NovoPrato></NovoPrato>
-          </Card>
+            <NovoPrato pratoSelecionado={pratoSelecionado}></NovoPrato>
         </div>
       </div>
       <div className="p-grid">
-        <div className="p-col-3"></div>
-        <div className="p-col-6">
+        <div className="p-col-2"></div>
+        <div className="p-col-7">
           <Card title="Todos os pratos" subTitle="Clique para editar">
-            <DataTable value={pratosArr} selectionMode="single">
+            <DataTable
+              selectionMode="single"
+              rowHover={true}
+              onRowClick={handleClick}
+              style={{ height: "500px", overflow: "auto" }}
+              value={pratosArr}
+            >
               {dynamicColumns}
             </DataTable>
           </Card>
         </div>
-        <div className="p-col-3"></div>
+        <div className="p-col-2"></div>
       </div>
     </>
   );
@@ -151,8 +210,8 @@ const mapDispatchToProps = (dispatch) => {
     onFetchPratos: () => {
       dispatch(actions.fetchPratos());
     },
-    onToggleDisponivel: (id,value) => {
-      dispatch(actions.toggleDisponivel(id,value));
+    onToggleDisponivel: (id, value) => {
+      dispatch(actions.toggleDisponivel(id, value));
     },
   };
 };

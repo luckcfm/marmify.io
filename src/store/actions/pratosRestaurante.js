@@ -26,7 +26,20 @@ const deletaPratoSuccess = (prato) => {
     payload: prato,
   };
 };
-
+export const removerPrato = (id,user) => {
+  console.log('Removendo ', user, id);
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`pratos/${user.uid}`).child(id).remove()
+      .then(res => {
+        console.log(res)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
 export const registrarPrato = (prato, user) => {
   return (dispatch) => {
     // dispatch(registrarPratoSuccess(prato));
