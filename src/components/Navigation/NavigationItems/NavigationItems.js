@@ -14,9 +14,10 @@ const navigationItems = (props) => {
     props.user !== "undefined" &&
     props.isAuth
   ) {
+    console.log(props.user.role)
     itemsToShow = (
       <ul className={classes.NavigationItems}>
-        <Carrinho></Carrinho>
+        {props.user && props.user.role === 'fastest' ? <Carrinho></Carrinho> : null }
         <Notificacao></Notificacao>
         <NavigationItem link="/logout">Logout</NavigationItem>
         
