@@ -33,7 +33,7 @@ export const removerPrato = (id,user) => {
       .database()
       .ref(`pratos/${user.uid}`).child(id).remove()
       .then(res => {
-        console.log(res)
+        dispatch(fetchPratosRestaurante());
       })
       .catch(e => {
         console.log(e)

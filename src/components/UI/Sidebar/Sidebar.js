@@ -68,6 +68,12 @@ const Side = function (props) {
     }
     
   }
+  let imagePadrao = null;
+  if(props.auth.user.image) {
+    imagePadrao = props.auth.user.image;
+  }else{
+    imagePadrao = "https://www.w3schools.com/howto/img_avatar.png"
+  }
   return (
     props.showSidebar && props.auth.token !== null  ? <>
       <Sidebar
@@ -79,7 +85,7 @@ const Side = function (props) {
           <div className="p-col">
             <img
               className={classes.Avatar}
-              src="https://www.w3schools.com/howto/img_avatar.png"
+              src={imagePadrao}
             ></img>
           </div>
         </div>

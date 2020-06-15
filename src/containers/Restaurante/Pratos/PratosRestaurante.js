@@ -35,13 +35,7 @@ const pratosMaisPedidos = [
   },
 ];
 
-const pratos = pratosMaisPedidos.map((prato) => {
-  return (
-    <div style={{ width: "300px", paddingRight: "10px" }}>
-      <Prato prato={prato}></Prato>
-    </div>
-  );
-});
+
 
 const columns = [
   { field: "id", header: "ID" },
@@ -54,6 +48,7 @@ const columns = [
 
 export const PratosRestaurante = (props) => {
   const [pratoSelecionado, setPratoSelecionado] = useState({});
+  let highlightedPratos = [];
   useEffect(() => {
     console.log("called");
     props.onFetchPratos();
@@ -118,10 +113,27 @@ export const PratosRestaurante = (props) => {
     );
   };
   const templateIngredientes = (rowData, Column) => {
-    return rowData.itens.map((item) => {
-      return item.nome_item + ",";
-    });
+    try{
+      return rowData.itens.map((item) => {
+        return item.nome_item + ",";
+      });
+    }catch(e){
+
+    }
+   
   };
+  if(props.pratos && props.pratos.pratos){
+    highlightedPratos = Object.keys(props.pratos.pratos).map(key => {
+      return props.pratos.pratos[key]
+    })
+  }
+  const pratos = highlightedPratos.map((prato) => {
+    return (
+      <div style={{ width: "300px", paddingRight: "10px" }}>
+        <Prato prato={prato}></Prato>
+      </div>
+    );
+  });
   const dynamicColumns = columns.map((col, i) => {
     switch (col.field) {
       case "image":

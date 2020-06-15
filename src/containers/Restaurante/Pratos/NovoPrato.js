@@ -7,7 +7,8 @@ import { FileUpload } from "primereact/fileupload";
 import { Card } from "primereact/card";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import classes from './NovoPrato.module.css'
+
+import classes from "./NovoPrato.module.css";
 const pratoInicial = {
   nome_prato: "",
   descricao: "",
@@ -32,7 +33,7 @@ const NovoPrato = function (props) {
     (Object.keys(props.pratoSelecionado).length > 1 &&
       state.id !== props.pratoSelecionado.id)
   ) {
-    console.log('here');
+    console.log("here");
     setTitle("Edite o seu Prato!");
     setState(props.pratoSelecionado);
   }
@@ -48,8 +49,8 @@ const NovoPrato = function (props) {
     props.onRemovePrato(id, props.user);
   };
   const handleEditar = () => {
-    console.log('Editando prato', state);
-  }
+    console.log("Editando prato", state);
+  };
   const handleChangeItem = (evt) => {
     const newItem = { ...item };
     newItem[evt.target.name] = evt.target.value;
@@ -57,6 +58,10 @@ const NovoPrato = function (props) {
   };
   const handlerAddItem = (evt) => {
     evt.preventDefault();
+    if(item.nome_item === '' || item.preco_item === 0)
+    {
+      return;
+    }
     const newState = { ...state };
     itens.push(item);
     newState.itens = itens;
@@ -69,10 +74,10 @@ const NovoPrato = function (props) {
     props.onSavePrato(state, props.user);
   };
   const handleCancel = () => {
-    console.log('clicked', pratoInicial);
+    console.log("clicked", pratoInicial);
     setState(pratoInicial);
     props.setPratoSelecionado({});
-  }
+  };
   const uploadHandler = (e) => {
     const newState = { ...state };
     newState.image = e.files[0];
@@ -80,58 +85,87 @@ const NovoPrato = function (props) {
   };
   const footer = (
     <div>
-      <Button label="Sim" icon="pi pi-check" className="p-button-danger"  onClick={handleRemove} />
-      <Button label="Cancelar" icon="pi pi-times" onClick={() => {setShowAlerta(false)}} />
+      <Button
+        label="Sim"
+        icon="pi pi-check"
+        className="p-button-danger"
+        onClick={handleRemove}
+      />
+      <Button
+        label="Cancelar"
+        icon="pi pi-times"
+        onClick={() => {
+          setShowAlerta(false);
+        }}
+      />
     </div>
   );
 
-  let imageElement = <></>
-  if(state.image) {
-    imageElement = <img 
-      src={state.image} 
-      style={{width: '300px', height: '150px'}} 
-      alt="Imagem do prato"></img>
+  let imageElement = <></>;
+  if (state.image) {
+    imageElement = (
+      <span style={{textAlign: 'center', float: 'center', margin: '0 auto'}}>
+      <img
+        src={state.image}
+        style={{ width: "300px", height: "150px", textAlign: 'center', float: 'center' }}
+        alt="Imagem do prato"
+      ></img>
+      <br></br>
+      <br></br>
+      </span>
+    );
   }
-  let buttonToShow = <></>
-  if(state.id){
-    buttonToShow = <Button label="Editar Prato" onClick={handleEditar}></Button>
-  }else{
-    buttonToShow = <Button label="Salvar Prato" onClick={handleSave}></Button>
+  let buttonToShow = <></>;
+  if (state.id) {
+    buttonToShow = (
+      <Button label="Editar Prato" onClick={handleEditar}></Button>
+    );
+  } else {
+    buttonToShow = <Button label="Salvar Prato" style={{width: '100%'}} onClick={handleSave}></Button>;
   }
   return (
     <Card title={title}>
       {imageElement}
-      <InputText
-        value={state.name}
-        placeholder="Nome do prato"
-        style={{width: '100%'}}
-        name="nome_prato"
-        value={state.nome_prato}
-        onChange={handleChange}
-      />
+      
+      <span className="p-float-label">
+        <InputText
+          id="name"
+          value={state.name}
+          // placeholder="Nome do prato"
+          style={{ width: "100%" }}
+          name="nome_prato"
+          value={state.nome_prato}
+          onChange={handleChange}
+        />
+        <label htmlFor="name">Nome do prato</label>
+      </span>
       <br></br>
       <br></br>
-      <InputTextarea
-        value={state.descricao}
-        style={{width: '100%'}}
-        placeholder="Descricao"
-        name="descricao"
-        onChange={handleChange}
-      />
+      <span className="p-float-label">
+        <InputTextarea
+          value={state.descricao}
+          style={{ width: "100%" }}
+          name="descricao"
+          onChange={handleChange}
+        />
+        <label htmlForm="descricao">Descrição</label>
+      </span>
       <br></br>
       <br></br>
-      <InputText
-        value={state.preco_base}
-        name="preco_base"
-        style={{width: '100%'}}
-        placeholder="Preco base"
-        onChange={handleChange}
-      />
+      <span className="p-float-label">
+        <InputText
+          value={state.preco_base}
+          name="preco_base"
+          style={{ width: "100%" }}
+          onChange={handleChange}
+        />
+        <label htmlForm="preco_base">Preço base</label>
+      </span>
       <br></br>
       <br></br>
       <FileUpload
         name="demo"
-        style={{width: '100%'}}
+        style={{ width: "100%" }}
         chooseLabel="Enviar foto do prato"
         mode="basic"
         customUpload={true}
@@ -141,7 +175,7 @@ const NovoPrato = function (props) {
       <hr></hr>
       <div className={classes.Items}>
         <h3>Itens</h3>
-        {itens.map((itemL) => {
+        {itens && itens.map((itemL) => {
           return (
             <li key={itemL.nome_item}>
               {itemL.nome_item} - {itemL.preco_item}
@@ -149,48 +183,60 @@ const NovoPrato = function (props) {
           );
         })}
         <div className={classes.Bottom}>
-          <b>Total do item: </b> {state.totalItem + parseFloat(state.preco_base)}{" "}
+          <hr></hr>
+          <span style={{ float: "right" }}>
+            <b>Total do prato: </b> R$ {" "}
+            {(state.totalItem + parseFloat(state.preco_base)).toFixed(2)}{" "}
+          </span>
           <br></br>
-          <input
-            type="text"
-            name="nome_item"
-            value={item.nome_item}
-            placeholder="Nome item"
-            onChange={handleChangeItem}
-          />
-          <input
-            type="text"
-            name="preco_item"
-            value={item.preco_item}
-            placeholder="Preco item"
-            onChange={handleChangeItem}
-          />
+          <hr></hr>
+          
+          <br></br>
+          <div></div>
+          <span
+            className="p-float-label"
+            style={{ float: "left", width: "50%" }}
+          >
+            <InputText
+              value={item.nome_item}
+              name="nome_item"
+              // style={{width: '50%'}}
+              onChange={handleChangeItem}
+            />
+            <label htmlForm="nome_item">Nome do Item</label>
+          </span>
+          <span
+            className="p-float-label"
+            style={{ float: "left", width: "50%" }}
+          >
+            <InputText
+              value={item.preco_item}
+              name="preco_item"
+              onChange={handleChangeItem}
+            />
+            <label htmlForm="preco_item">Preço do Item</label>
+          </span>
           <button onClick={handlerAddItem}>Adicionar</button>
         </div>
       </div>
       <br></br>
       <br></br>
-      
       {state.id !== undefined ? (
         <Button
           label="Remover prato"
-          className="p-button-danger" 
+          className="p-button-danger"
           onClick={() => {
             setShowAlerta(true);
           }}
-        >
-        </Button>
+        ></Button>
       ) : null}{" "}
       {buttonToShow}
-
-      <Button 
-        label="Cancelar" 
-        style={{width: '100%'}}
-        className="p-button-warning" 
-        onClick={handleCancel} 
-        >
-        
-        </Button>
+      <Button
+        label="Cancelar"
+        style={{ width: "100%" }}
+        className="p-button-warning"
+        onClick={handleCancel}
+      ></Button>
       <Dialog
         header="Remover Prato"
         visible={showAlerta}
@@ -215,12 +261,12 @@ const mapDispatchToProps = (dispatch) => {
     onSavePrato: (prato, user) => {
       dispatch(actions.registrarPrato(prato, user));
     },
-    onRemovePrato: (id,user) => {
-      dispatch(actions.removerPrato(id,user));
+    onRemovePrato: (id, user) => {
+      dispatch(actions.removerPrato(id, user));
     },
-    onUpdatePrato: (prato,user) => {
-      dispatch(actions.updatePrato(prato,user))
-    }
+    onUpdatePrato: (prato, user) => {
+      dispatch(actions.updatePrato(prato, user));
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NovoPrato);

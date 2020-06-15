@@ -10,11 +10,15 @@
 }
 .Avatar {
   vertical-align: middle;
-  width: 50%;
-  height: 50%;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   margin-left: auto;
   margin-right: auto;
+}
+.Avatar img {
+  width: 200px;
+  height: 200px;
 }
 .menuItem {
   cursor: pointer;

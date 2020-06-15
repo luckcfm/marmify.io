@@ -58,7 +58,7 @@ class App extends Component {
           O email <b>{this.props.user.email}</b> ainda não foi verificardo <br></br>
           Por favor, verifique a sua caixa de email e tente novamente. <br></br>
           Caso necessário, 
-          clique <a>aqui</a> para reenviar o código para o seu email e tente novamente.
+          clique <a onClick={() => {this.props.onSendConfirmation(this.props.user)}}>aqui</a> para reenviar o código para o seu email e tente novamente.
          
         </Dialog>
       );
@@ -146,6 +146,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onTryAutoSignUp: () => dispatch(actions.authCheckState()),
     onLogout: () => dispatch(actions.logout()),
+    onSendConfirmation: (user) => {dispatch(actions.sendConfirmation(user))}
   };
 };
 

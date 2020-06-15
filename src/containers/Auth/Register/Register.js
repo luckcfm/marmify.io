@@ -154,6 +154,7 @@ const Register = function (props) {
       formData[formElementIdentifier] =
         registro.controls[formElementIdentifier].value;
     }
+    formData.image = registro.image;
     props.onRegister(formData);
   };
   const checkValidity = (value, rules) => {

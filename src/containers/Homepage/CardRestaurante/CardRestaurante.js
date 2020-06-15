@@ -6,7 +6,12 @@ import * as actions from '../../../store/actions/index'
 import classes from './CardRestaurante.module.css';
 
 export const CardRestaurante = (props) => {
-
+  let imageToShow = null;
+  if(props.restaurante && props.restaurante.image){
+    imageToShow = props.restaurante.image;
+  }else{
+    imageToShow = "https://iguatemiflorianopolis.com.br/wp-content/uploads/2020/04/Logo-Coco-Bambu-Si%CC%81mbolo-Acima-1-1024x714.png";
+  }
   let totalStars = 0;
   let maiorMedia = 0;
   let index = 0;
@@ -15,7 +20,7 @@ export const CardRestaurante = (props) => {
       totalStars += props.stars[props.restaurante.id].stars[star];
     });
   }catch(e){
-    console.log(e);
+    // console.log(e);
   }
   try{
     Object.keys(props.stars[props.restaurante.id].stars).map((star) => {
@@ -25,14 +30,14 @@ export const CardRestaurante = (props) => {
       }
     });
   }catch(e){
-    console.log(e)
+    // console.log(e)
   }
   //TODO: Favoritar restaurante!
   const header = <>
     <div>
       <img 
       alt="Card" 
-      src="https://iguatemiflorianopolis.com.br/wp-content/uploads/2020/04/Logo-Coco-Bambu-Si%CC%81mbolo-Acima-1-1024x714.png" />
+      src={imageToShow} />
     </div>
   </>;
   const footer = (

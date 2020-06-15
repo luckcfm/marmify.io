@@ -3,7 +3,7 @@ import { Card } from "primereact/card";
 import { Rating } from "primereact/rating";
 
 export default function Prato(props) {
-  const header = <img style={{height: '200px'}} alt="Card" src={props.prato.img} />;
+  const header = <img style={{height: '200px'}} alt="Card" src={props.prato.image} />;
   const footer = (
     <span>
       <span style={{ float: "right", color: "#7CF87C" }}>{props.prato.preco === undefined ? "Vendidos: " + props.prato.qtd : props.prato.preco}</span>

@@ -1,8 +1,15 @@
 import * as actionTypes from "./actionTypes";
 import firebase, {storage} from "../firebase";
 import * as actions from '../actions/index';
+export const sendConfirmation = (user) => {
+  return dispatch => {
+    console.log(user);
+    firebase.auth().currentUser.sendEmailVerification();
+  }
+}
 export const signup = (userData) => async (dispatch) => {
   const {image} = userData;
+  console.log(image);
   delete userData.image;
   try {
     delete userData.formIsValid;
@@ -20,13 +27,13 @@ export const signup = (userData) => async (dispatch) => {
           })
           .then(res => {
             user.sendEmailVerification();
-            const uploadTask = storage.ref(`/images/${res.key}`).put(image);
+            const uploadTask = storage.ref(`/images/${user.uid}`).put(image);
             uploadTask.on('state_changed', snapshot => {
               console.log(snapshot)
             }, err => {
               console.log(err)
             }, () => {
-              storage.ref('images').child(res.key).getDownloadURL()
+              storage.ref('images').child(user.uid).getDownloadURL()
               .then(firebaseUrl => {
                 firebase.database().ref('users/' + user.uid).update({image: firebaseUrl})
                 .then(res => {
