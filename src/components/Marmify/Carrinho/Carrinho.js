@@ -6,6 +6,12 @@ import ResumoCompra from './ResumoCompra';
 export const Carrinho = (props) => {
   const totalCarrinho = props.carrinho.pratos.length;
   const [showCheckout, setShowCheckout] = useState(false);
+  const pratos = props.carrinho.pratos;
+  console.log(props.user);
+  pratos.user = {
+    id: props.user.name,
+    address: props.user.street
+  }
   let showNotify = null;
   if(totalCarrinho > 0) {
     showNotify = true;
@@ -29,14 +35,19 @@ export const Carrinho = (props) => {
       </i>
       
     </span>
-    <ResumoCompra showModal={showCheckout} pratos={props.carrinho.pratos} hideModal={hideCheckout}></ResumoCompra>
+    <ResumoCompra 
+      showModal={showCheckout} 
+      pratos={pratos} 
+      hideModal={hideCheckout}>
+    </ResumoCompra>
     </>
   )
 }
 
 const mapStateToProps = (state) =>{
   return {
-    carrinho: state.carrinho
+    carrinho: state.carrinho,
+    user: state.auth.user
   }
 }
 

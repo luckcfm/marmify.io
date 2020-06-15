@@ -22,13 +22,17 @@ export const fecharCarrinho = () => {
   const uid = state.auth.user.uid;
   
   return dispatch => {
-    firebase
+    carrinho.pratos.map(prato => {
+      console.log(prato);
+      firebase
     .database()
     .ref(`pedidos/${uid}/${carrinho.rid}`)
-    .push(carrinho.pratos)
+    .push(prato)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
     });
+    })
+    
   }
  
 }

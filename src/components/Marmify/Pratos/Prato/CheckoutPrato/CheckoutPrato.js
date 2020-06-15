@@ -51,6 +51,8 @@ function CheckoutPrato(props) {
   }
   const addCarrinho = (prato) => {
     console.log('[CHECKOUT]', prato);
+    console.log('[USER]', props.user)
+    prato.user = {address: props.user.street, name: props.user.name}
     props.onAddCarrinho(prato,rid);
     props.modalClosed();
     setCheckoutPrato({});
@@ -123,7 +125,7 @@ function CheckoutPrato(props) {
 
 const mapStateToProps = state => {
   return {
-
+    user: state.auth.user
   }
 }
 
@@ -133,4 +135,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null,mapDispatchToProps)(CheckoutPrato);
+export default connect(mapStateToProps,mapDispatchToProps)(CheckoutPrato);

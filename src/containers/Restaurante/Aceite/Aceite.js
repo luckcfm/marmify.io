@@ -62,7 +62,12 @@ const Aceite = function (props) {
           <br></br>
           <hr></hr>
           <span style={{ float: "right" }}>
-            <Button className="p-button-danger" label="Negar Pedido"></Button>
+            <Button 
+              onClick={() => {
+                props.onNegarPedido(props.pedido);
+              }}
+              className="p-button-danger" 
+              label="Negar Pedido"></Button>
             <Button
               label="Aceitar Pedido"
               onClick={() => {
@@ -90,6 +95,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAceitaPedido: (pedido) => {
       dispatch(actions.aceitaPedido(pedido));
+    },
+    onNegarPedido: (pedido) => {
+      dispatch(actions.negarPedido(pedido));
     },
     onFinalizarEntrega: (pedido) => {
       dispatch(actions.finalizarEntrega(pedido));

@@ -11,15 +11,16 @@ export const Pedidos = (props) => {
   if(props.pedidos){
     props.pedidos.map(pedido => {
       const key = Object.keys(pedido)[0];
-      const key_item = Object.keys(pedido[key])[0];
-      const pedido_obj = pedido[key][key_item][0];
-      const {status, nome_prato} = pedido_obj;
-      console.log(status);
-      if(status && status.aceito && !status.entregue){
-      pedidosEmEspera.push(<li>{nome_prato} - {status.hora}</li>)
-      }else{
-        pedidosConcluidos.push(<li>{nome_prato}</li>)
-      }
+      Object.keys(pedido[key]).map(key2 => {
+        const key_item = key2;
+        const pedido_obj = pedido[key][key2];
+        const {status, nome_prato} = pedido_obj;
+        if(status && status.aceito && !status.entregue){
+          pedidosEmEspera.push(<li>{nome_prato} - {status.hora}</li>)
+          }else{
+            pedidosConcluidos.push(<li>{nome_prato}</li>)
+          }
+      })
     })
   }
   return (

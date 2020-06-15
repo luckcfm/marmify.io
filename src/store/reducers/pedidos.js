@@ -3,9 +3,11 @@ import { updateObject } from "../../helpers/utility";
 const initialState = {
   pedidos_aceitos: [],
   pedidos_negados: [],
+  pedidos_entregues: [],
   pedidos_esperando_aprovacao: [],
   pedidos: [],
-  novos_pedidos: []
+  novos_pedidos: [],
+  faturamento: 0
 };
 
 const registrarPedido = (state, action) => {
@@ -16,6 +18,24 @@ const registrarPedido = (state, action) => {
   });
 };
 
+const fetchPedidosEngregues = (state,action) => {
+  return updateObject(state,{
+    pedidos_entregues: action.pedidos
+  })
+}
+const fetchPedidosVendidos = (state,action) => {
+  const pedidos = action.pedidos;
+  let faturamento = 0;
+  
+  Object.keys(pedidos).map(pedido => {
+    console.log(pedidos[pedido]);
+    const {totalItem, preco_base} = pedidos[pedido];
+    faturamento += totalItem + parseFloat(preco_base);
+    console.log(faturamento);
+  });
+  
+  return updateObject(state, {faturamento: faturamento});
+}
 const aprovarPedido = (state,action) => {
     const novo_pedido = action.pedido;
     const arr_pedido = state.pedidos_esperando_aprovacao;
@@ -48,6 +68,10 @@ const reducer = (state = initialState, action) => {
       return mudarStatusPedido(state, action);
     case actionTypes.FETCH_PEDIDOS_SUCCESS:
       return fetchPedidosSuccess(state,action);
+    case actionTypes.FETCH_PEDIDOS_ENTREGUES:
+      return fetchPedidosEngregues(state,action);
+    case actionTypes.FETCH_PEDIDOS_VENDIDOS:
+      return fetchPedidosVendidos(state,action);
     default:
       return state;
   }
