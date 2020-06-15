@@ -15,7 +15,7 @@ export const Pedidos = (props) => {
       const pedido_obj = pedido[key][key_item][0];
       const {status, nome_prato} = pedido_obj;
       console.log(status);
-      if(status.aceito && !status.entregue){
+      if(status && status.aceito && !status.entregue){
       pedidosEmEspera.push(<li>{nome_prato} - {status.hora}</li>)
       }else{
         pedidosConcluidos.push(<li>{nome_prato}</li>)

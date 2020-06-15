@@ -4,7 +4,8 @@ const initialState = {
   pedidos_aceitos: [],
   pedidos_negados: [],
   pedidos_esperando_aprovacao: [],
-  pedidos: []
+  pedidos: [],
+  novos_pedidos: []
 };
 
 const registrarPedido = (state, action) => {
