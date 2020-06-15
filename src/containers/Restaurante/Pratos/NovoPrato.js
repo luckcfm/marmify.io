@@ -51,6 +51,14 @@ const NovoPrato = function (props) {
   const handleEditar = () => {
     console.log("Editando prato", state);
   };
+  const removeItem = item => {
+    console.log('Removendo ', item);
+    const oldState = {...state};
+    const oldPrice = parseFloat(item.preco_item);
+    oldState.itens.splice(oldState.itens.indexOf(item),1);
+    oldState.totalItem -= oldPrice;
+    setState(oldState)
+  }
   const handleChangeItem = (evt) => {
     const newItem = { ...item };
     newItem[evt.target.name] = evt.target.value;
@@ -175,10 +183,15 @@ const NovoPrato = function (props) {
       <hr></hr>
       <div className={classes.Items}>
         <h3>Itens</h3>
-        {itens && itens.map((itemL) => {
+        {itens && itens.map((itemL,i) => {
           return (
             <li key={itemL.nome_item}>
-              {itemL.nome_item} - {itemL.preco_item}
+              {itemL.nome_item} - {itemL.preco_item} 
+              <span 
+                onClick={() => {removeItem(itemL)}} 
+                style={{float:'right', cursor: 'pointer'}}>
+                  Remover
+              </span>
             </li>
           );
         })}
@@ -216,8 +229,9 @@ const NovoPrato = function (props) {
             />
             <label htmlForm="preco_item">Preço do Item</label>
           </span>
-          <button onClick={handlerAddItem}>Adicionar</button>
+          
         </div>
+        <Button label="Adicionar Item" className="p-button-secondary" onClick={handlerAddItem}></Button>
       </div>
       <br></br>
       <br></br>
