@@ -16,26 +16,6 @@ import * as actions from "../../../store/actions/index";
     desabilitar pratos
 
 */
-const pratosMaisPedidos = [
-  {
-    nome: "Lasanha",
-    qtd: 20,
-    descricao: "Delicioso prato com camadas de macarrao, queijo e presunto",
-    rating: 5,
-    img:
-      "https://img.itdg.com.br/tdg/images/recipes/000/138/558/325115/325115_original.jpg?mode=crop&width=710&height=400",
-  },
-  {
-    nome: "Estrogonoff",
-    qtd: 55,
-    descricao: "Misturado com queijo, carnes e leite em po",
-    rating: 4,
-    img:
-      "https://portal-amb-imgs.clubedaana.com.br/2018/07/estrogonofe-de-frango-2-600x400.jpg",
-  },
-];
-
-
 
 const columns = [
   { field: "id", header: "ID" },
@@ -122,6 +102,10 @@ export const PratosRestaurante = (props) => {
     }
    
   };
+  const templateTotal = (rowData, column) => {
+    const base = parseFloat(rowData.preco_base) + rowData.totalItem;
+    return <p>Rs$ {base} </p>
+  }
   if(props.pratos && props.pratos.pratos){
     highlightedPratos = Object.keys(props.pratos.pratos).map(key => {
       return props.pratos.pratos[key]
@@ -129,12 +113,13 @@ export const PratosRestaurante = (props) => {
   }
   const pratos = highlightedPratos.map((prato) => {
     return (
-      <div style={{ width: "300px", paddingRight: "10px" }}>
+      <div style={{ width: "300px", height: "300px", paddingRight: "10px" }}>
         <Prato prato={prato}></Prato>
       </div>
     );
   });
   const dynamicColumns = columns.map((col, i) => {
+    console.log(col);
     switch (col.field) {
       case "image":
         return (
@@ -153,6 +138,15 @@ export const PratosRestaurante = (props) => {
             style={{ display: "none" }}
           ></Column>
         );
+      case "totalItem":
+        return(
+          <Column
+          key={col.field}
+          field={col.field}
+          body={templateTotal}
+          header={col.header}
+        />
+        )
       case "itens":
         return (
           <Column
@@ -202,7 +196,10 @@ export const PratosRestaurante = (props) => {
           </Card>
         </div>
         <div className="p-col-4">
-            <NovoPrato pratoSelecionado={pratoSelecionado} setPratoSelecionado={setPratoSelecionado}></NovoPrato>
+            <NovoPrato 
+              pratoSelecionado={pratoSelecionado} 
+              setPratoSelecionado={setPratoSelecionado}>
+            </NovoPrato>
         </div>
       </div>
     </>

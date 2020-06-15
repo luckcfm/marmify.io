@@ -7,7 +7,6 @@ import classes from './CardRestaurante.module.css';
 
 export const CardRestaurante = (props) => {
   let imageToShow = null;
-  console.log(props.restaurante);
   if(props.restaurante && props.restaurante.image){
     imageToShow = props.restaurante.image;
   }else{
@@ -56,7 +55,11 @@ export const CardRestaurante = (props) => {
     <div 
       className={classes.Card} 
       onClick={() => props.goToRestaurant(props.restaurante.id)}>
-      <Card className={classes["p-card"]} footer={footer} title={props.restaurante.name} header={header}>
+      <Card 
+        className={classes["p-card"]} 
+        footer={footer} 
+        title={props.restaurante.name} 
+        header={header}>
         {props.restaurante.descricao}
       </Card>
     </div>

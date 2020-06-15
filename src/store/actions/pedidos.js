@@ -68,6 +68,15 @@ export const aceitaPedido = (pedido) => {
       entregue: false,
       hora: new Date(),
     };
+    //Vamos atualziar a quantidade de vendas.
+    console.log(`pratos/${rid}/${pedido.id}`);
+    db.ref(`pratos/${rid}/${pedido.id}`).once('value', pratos => {
+      if(pratos && pratos.exists()){
+        const dbPrato = pratos.val();
+        dbPrato.totalVendido += 1;
+        db.ref(`pratos/${rid}/${pedido.id}`).update(dbPrato);
+      }
+    })
     db.ref(`pedidos/${uid}/${rid}/${pid}`).update(pedido);
     db.ref(`vendidos/${rid}/${month}`).push(pedido);
   };

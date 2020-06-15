@@ -6,16 +6,21 @@ export default function Prato(props) {
   const header = <img style={{height: '200px'}} alt="Card" src={props.prato.image ? props.prato.image : props.prato.img} />;
   const footer = (
     <span>
-      <span style={{ float: "right", color: "#7CF87C" }}>{props.prato.preco === undefined ? "Vendidos: " + props.prato.qtd : props.prato.preco}</span>
+      <span 
+       style={{ float: "right", color: "#594994" }}>
+         <b>{props.prato.preco === undefined ? 
+          "Vendidos: " + props.prato.totalVendido : props.prato.preco}</b>
+       </span>
       <br></br>
     </span>
   );
-
+    console.log(props.prato);
   const titulo = (
     <>
       {" "}
       {props.prato.nome}{" "}
-      <span style={{ float: "right" }}>
+      <div style={{position: 'relative' }}>
+        <span style={{position: 'absolute', top: '-22px'}}>
         <Rating
           value={props.prato.rating}
           onChange={() => {
@@ -24,13 +29,15 @@ export default function Prato(props) {
           cancel={false}
           stars={5}
         />{" "}
-      </span>
+        </span>
+       
+      </div>
     </>
   );
 
   return <div>
-  <Card title={titulo} footer={footer} header={header}>
-    {props.prato.descricao}
+  <Card title={titulo} style={{height: '300px'}} footer={footer} header={header}>
+    <div style={{height: '30px', fontSize: '12px'}}>{props.prato.descricao}</div>
   </Card>
 </div>;
 }
