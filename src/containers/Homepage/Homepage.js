@@ -56,13 +56,14 @@ const Homepage = (props) => {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    user: state.user
+    user: state.user,
+    notifications: state.notifications
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     onFechRestaurantes: () => {dispatch(actions.fetchRestaurantes())},
-    onShowToolBar: () => {dispatch(actions.showToolbar())}
+    onShowToolBar: () => {dispatch(actions.showToolbar())},
   }
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Homepage));

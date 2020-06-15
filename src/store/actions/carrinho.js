@@ -1,7 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import store from "../store";
 import firebase, { db } from "../firebase";
-
+import * as actions from './index';
 const addCarrinhoSuccess = (prato,rid) => {
   return {
     type: actionTypes.ADD_CARRINHO,
@@ -30,6 +30,7 @@ export const fecharCarrinho = () => {
     .push(prato)
     .then((res) => {
       // console.log(res);
+      dispatch(actions.setNotification(carrinho.rid, {msg: 'Voce tem um novo pedido!'}));
     });
     })
     

@@ -51,14 +51,24 @@ export const Restaurante = (props) => {
     props.onFetchPratos(rid)
   },[])
   let componentPratos = 'Carreguei aeee';
-  
-  componentPratos = pratosMaisPedidos.map((prato) => {
-    return (
-      <div style={{width: '300px', display: 'inline-block', padding: '5px'}}>
-        <Prato prato={prato}></Prato>
-      </div>
-    );
-  });
+  if(props.pratos){
+    const keys = Object.keys(props.pratos.pratos);
+    componentPratos = keys.map(key => {
+      
+      return (
+        <div style={{width: '300px', display: 'inline-block', padding: '5px'}}>
+          <Prato prato={props.pratos.pratos[key]}></Prato>
+        </div>
+      );
+    })
+  }
+  // componentPratos = props.pratos.pratos.map((prato) => {
+    // return (
+    //   <div style={{width: '300px', display: 'inline-block', padding: '5px'}}>
+    //     <Prato prato={prato}></Prato>
+    //   </div>
+    // );
+  // });
   return (
     <div className="p-grid">
     <div className="p-col-3 p-md-1"></div>

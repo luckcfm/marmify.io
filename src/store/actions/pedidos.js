@@ -1,6 +1,6 @@
 import * as actionTypes from "./actionTypes";
-import axios from "../../axios-marmify";
-import firebase, { db } from "../firebase";
+import * as actions from './index';
+import { db } from "../firebase";
 import store from "../store";
 
 const fetchPedidosSuccess = (pedidos) => {
@@ -35,6 +35,7 @@ export const finalizarEntrega = (pedido) => {
       entregue: true,
       hora_entrega: new Date(),
     };
+    dispatch(actions.setNotification(uid, {msg: 'Seu pedido foi entregue!'}));
     db.ref(`pedidos_restaurantes/${rid}/entregues/${uid}`).push(pedido);
     db.ref(`pedidos/${uid}/${rid}/${pid}`).remove();
   };
@@ -70,6 +71,7 @@ export const aceitaPedido = (pedido) => {
     };
     //Vamos atualziar a quantidade de vendas.
     console.log(`pratos/${rid}/${pedido.id}`);
+    dispatch(actions.setNotification(uid, {msg: 'Seu pedido foi aceito!'}));
     db.ref(`pratos/${rid}/${pedido.id}`).once('value', pratos => {
       if(pratos && pratos.exists()){
         const dbPrato = pratos.val();

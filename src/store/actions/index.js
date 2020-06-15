@@ -14,6 +14,11 @@ export {
   showToolbar
 } from './layout'
 
+export {
+  fetchNotifications,
+  setNotification,
+  clearNotifications
+} from './notification'
 
 export {
   registrarPrato,

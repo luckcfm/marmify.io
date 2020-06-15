@@ -32,6 +32,8 @@ export const PratosRestaurante = (props) => {
   useEffect(() => {
     console.log("called");
     props.onFetchPratos();
+    props.onShowSideBar();
+    props.onShowToolbar();
   }, []);
   const pratosArr = Object.keys(props.pratos.pratos).map((pid) => {
     return {
@@ -218,6 +220,8 @@ const mapDispatchToProps = (dispatch) => {
     onToggleDisponivel: (id, value) => {
       dispatch(actions.toggleDisponivel(id, value));
     },
+    onShowToolbar: () => {dispatch(actions.showToolbar())},
+    onShowSideBar: () => {dispatch(actions.showSidebar())},
   };
 };
 

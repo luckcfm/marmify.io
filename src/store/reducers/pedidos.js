@@ -28,10 +28,8 @@ const fetchPedidosVendidos = (state,action) => {
   let faturamento = 0;
   
   Object.keys(pedidos).map(pedido => {
-    console.log(pedidos[pedido]);
     const {totalItem, preco_base} = pedidos[pedido];
     faturamento += totalItem + parseFloat(preco_base);
-    console.log(faturamento);
   });
   
   return updateObject(state, {faturamento: faturamento});

@@ -21,7 +21,6 @@ class Layout extends Component {
   };
 
   render() {
-    console.log(this.props);
     let classToShow = null;
     if (this.props.layout.showToolbar) {
       classToShow = classes.Content;

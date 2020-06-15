@@ -5,12 +5,48 @@
   /* inline-size: 20px; */
 }
 .Badge {
-  position: absolute;
-  top: 30px;
+  position: relative;
+  top: 8px;
+  left: 40px;
   font-size: 0.8em;
   right: 2px;
   padding: 2px 8px;
   border-radius: 50%;
   background: red;
   color: white;
+}
+
+.Notice div {
+  display: none;
+  background-color: #999999;
+    width: 130px;
+    padding: 10px;
+    font-size: .75em;
+    text-align: left;
+    background-color: inherit;
+    border-radius: 10px;
+    position: absolute;
+    top: 100%;
+    /* left: 50%; */
+    margin-left: -20px;
+    margin-top: 10px;    
+}
+
+.Notice div:before {
+  content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 11px solid #999999;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    margin-left: -10px;
+}
+
+.Notice:hover div {
+  display: block;
+  background-color: #999999;
 }
