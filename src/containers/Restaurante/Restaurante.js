@@ -28,9 +28,14 @@ export class Restaurante extends Component {
       return <p style={{color: 'red'}}><b>Item ainda não foi aceito</b></p>
     }else{
       const status = rowData.status;
+      console.log(status);
       if(!status.preparando && !status.entregue){
         return <p style={{color: 'orange'}}>
           Pedido aceito em: {status.hora}
+        </p>
+      }else{
+        return <p style={{color: 'green'}}>
+          Pedido entregue!
         </p>
       }
     }
@@ -45,16 +50,27 @@ export class Restaurante extends Component {
   render() {
     const pedidos = this.props.pedidos.pedidos;
     const rows = [];
+    const rows_entregues = [];
     let pedidosRestaurante = null;
     try{
       pedidosRestaurante = pedidos.map(pedido => {
         return pedido[this.props.uid];
-      })
+      });
       pedidosRestaurante.map(ped => {
-        const pedidoLimpo = ped[Object.keys(ped)[0]][0];
-        pedidoLimpo.userId = ped[Object.keys(ped)[1]];
-        pedidoLimpo.pid = Object.keys(ped)[0];
-        rows.push(pedidoLimpo);
+        const uid = ped.uid;
+        Object.keys(ped).map(newPedido => {
+          if(newPedido !== 'uid')
+          {
+            const pedidoLimpo = ped[newPedido][0];
+            pedidoLimpo.userId = uid;
+            pedidoLimpo.pid = newPedido;
+            if(pedidoLimpo.status && pedidoLimpo.status.entregue === true)
+              rows_entregues.push(pedidoLimpo);
+            else
+              rows.push(pedidoLimpo);
+          }
+
+        })        
       })
     }catch(e) {
       console.log(e);
@@ -103,7 +119,22 @@ export class Restaurante extends Component {
         <Card title="Novos pedidos">
           <DataTable value={rows}
            selectionMode="single"
+           style={{height: '300px', overflow: 'auto'}}
            rowHover={true}
+           onRowClick={this.handleClick}
+          >
+            <Column field="nome_prato" header="Prato" />
+            <Column field="year" header="Endereco" />
+            <Column field="itens" body={this.templateItens} header="itens" />
+            <Column field="totalItem" header="Total pedido" />
+            <Column field="aceite" body={this.templateAceite} header="Aceite" />
+          </DataTable>
+        </Card>
+        <Card title="Pedidos Entregues">
+        <DataTable value={rows_entregues}
+           selectionMode="single"
+           rowHover={true}
+           emptyMessage="Você ainda não entregou nenhum pedido, tente mais tarde."
            onRowClick={this.handleClick}
           >
             <Column field="nome_prato" header="Prato" />

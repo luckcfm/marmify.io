@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import ResumoCompra from './ResumoCompra';
 
 export const Carrinho = (props) => {
-  console.log('Im here!!');
   const totalCarrinho = props.carrinho.pratos.length;
   const [showCheckout, setShowCheckout] = useState(false);
   let showNotify = null;

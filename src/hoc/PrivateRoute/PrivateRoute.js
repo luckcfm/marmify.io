@@ -7,7 +7,6 @@ export const PrivateRouteUser = ({
   authenticated,
   ...rest
 }) => {
-  console.log("here");
   return (
     <Route
       {...rest}
@@ -29,8 +28,6 @@ export const PrivateRouteRestaurante = ({
   authenticated,
   ...rest
 }) => {
-  console.log("here", authenticated);
-  console.log("role", role);
   return (
     <Route
       {...rest}
@@ -71,8 +68,6 @@ export const PrivateRoute = ({
   authenticated,
   ...rest
 }) => {
-  console.log(authenticated);
-  console.log("here");
   return (
     <Route
       {...rest}

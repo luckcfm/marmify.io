@@ -38,5 +38,6 @@ export {
 export {
   fetchPedidos,
   aceitaPedido,
-  getPedidosUser
+  getPedidosUser,
+  finalizarEntrega
 } from './pedidos'
