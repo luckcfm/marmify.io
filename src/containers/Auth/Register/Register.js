@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
+import { FileUpload } from "primereact/fileupload";
 import RegisterIcon from "../../../assets/RegisterIcon.svg";
 import * as classes from "./Register.module.css";
 import * as actions from "../../../store/actions/index";
@@ -23,6 +24,21 @@ const Register = function (props) {
         },
         valid: false,
         touched: false,
+      },
+      phone: {
+        elementType: 'input',
+        elementConfig: {
+          type: "text",
+          name: "phone",
+          placeholder: "Número de telefone"
+        },
+        value: "",
+        validation: {
+          required: true,
+          isNumeric: true
+        },
+        valid: false,
+        touched: false
       },
       street: {
         elementType: "input",
@@ -49,8 +65,8 @@ const Register = function (props) {
         value: "",
         validation: {
           required: true,
-          minLength: 5,
-          maxLength: 5,
+          minLength: 8,
+          maxLength: 9,
           isNumeric: true,
         },
         valid: false,
@@ -126,15 +142,18 @@ const Register = function (props) {
     },
   };
   const [registro, setRegistro] = useState(initialState);
+  const uploadHandler = (e) => {
+    const newState = { ...registro };
+    newState.image = e.files[0];
+    setRegistro(newState);
+  };
   const submitHandler = (event) => {
     event.preventDefault();
-
     const formData = {};
     for (let formElementIdentifier in registro.controls) {
       formData[formElementIdentifier] =
         registro.controls[formElementIdentifier].value;
     }
-
     props.onRegister(formData);
   };
   const checkValidity = (value, rules) => {
@@ -208,6 +227,7 @@ const Register = function (props) {
           invalid={!formElement.config.valid}
           shouldValidate={formElement.config.validation}
           touched={formElement.config.touched}
+
           changed={(event) => inputChangedHandler(event, formElement.id)}
         ></Input>
       );
@@ -226,10 +246,22 @@ const Register = function (props) {
     {msg}
       <div className={classes.LoginForm}>
         <div className={classes.FormRight}>
-          {/* <h1>
+          <h1>
             Bem vindo ao <i style={{ color: "#BE63FF" }}>Marmify.io</i>
-          </h1> */}
-          <Form>{form}</Form>
+          </h1>
+          <b>Insira seus dados para se registrar.</b>
+          <Form>{form}
+          <div style={{float:'center', textAlign: 'center'}}>
+           <FileUpload
+              name="demo"
+              chooseLabel="Enviar foto do usuário/restaurante"
+              mode="basic"
+              customUpload={true}
+              auto={true}
+              uploadHandler={uploadHandler}
+            />
+            </div>
+          </Form>
           <input
             type="submit"
             value="Registrar"

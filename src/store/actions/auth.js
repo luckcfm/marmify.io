@@ -1,7 +1,9 @@
 import * as actionTypes from "./actionTypes";
-import firebase from "../firebase";
+import firebase, {storage} from "../firebase";
 import * as actions from '../actions/index';
 export const signup = (userData) => async (dispatch) => {
+  const {image} = userData;
+  delete userData.image;
   try {
     delete userData.formIsValid;
     dispatch(signUpStart())
@@ -18,7 +20,20 @@ export const signup = (userData) => async (dispatch) => {
           })
           .then(res => {
             user.sendEmailVerification();
-            dispatch(signUpSuccess());
+            const uploadTask = storage.ref(`/images/${res.key}`).put(image);
+            uploadTask.on('state_changed', snapshot => {
+              console.log(snapshot)
+            }, err => {
+              console.log(err)
+            }, () => {
+              storage.ref('images').child(res.key).getDownloadURL()
+              .then(firebaseUrl => {
+                firebase.database().ref('users/' + user.uid).update({image: firebaseUrl})
+                .then(res => {
+                  dispatch(signUpSuccess());
+                })
+              })
+            })
           })
           .catch(e => {
             console.log(e);
