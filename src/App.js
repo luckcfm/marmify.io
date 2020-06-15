@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { connect } from "react-redux";
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import * as actions from "./store/actions/index";
 import Layout from "./hoc/Layout/Layout";
 import Spinner from "./components/UI/Spinner/Spinner";
@@ -10,9 +12,9 @@ import Restaurante from "./containers/Restaurante/Restaurante";
 import PratosRestaurante from "./containers/Restaurante/Pratos/PratosRestaurante";
 import Registro from "./containers/Auth/Register/Register";
 import Logout from "./containers/Auth/Logout/Logout";
-import HomePage from './containers/Homepage/Homepage';
-import RestauranteUser from './containers/Homepage/Restaurante/Restaurante'
-import PedidosUser from './containers/Homepage/Pedidos/Pedidos';
+import HomePage from "./containers/Homepage/Homepage";
+import RestauranteUser from "./containers/Homepage/Restaurante/Restaurante";
+import PedidosUser from "./containers/Homepage/Pedidos/Pedidos";
 import {
   PublicRoute,
   PrivateRoute,
@@ -23,23 +25,53 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
 class App extends Component {
+  state = {
+    showAlerta: false
+  }
   componentDidMount() {
     // this.props.onLogout();
     console.log("[MOUNTING] APP");
     this.props.onTryAutoSignUp();
   }
   render() {
-    console.log(this.props.isAuthenticated);
+    let modal = null;
+    const footer = (
+      <div>
+         <Button label="Ok" onClick={() => {
+           this.setState({showAlerta: false})
+           this.props.history.push("/logout");
+           }}></Button>
+      </div>
+    );
+    if (this.props.isAuthenticated && !this.props.user.emailVerified) {
+      if(this.state.showAlerta === false){
+        this.setState({showAlerta: true})
+      }
+      modal = (
+        <Dialog
+          header="Email ainda não foi verificado"
+          visible={this.state.showAlerta}
+          footer={footer}
+          modal={true}
+          onHide={() => this.setState({showAlerta: false})}
+        >
+          O email <b>{this.props.user.email}</b> ainda não foi verificardo <br></br>
+          Por favor, verifique a sua caixa de email e tente novamente. <br></br>
+          Caso necessário, 
+          clique <a>aqui</a> para reenviar o código para o seu email e tente novamente.
+         
+        </Dialog>
+      );
+    }
     let enabledRoutes = (
       <Switch>
-        
         <PrivateRouteRestaurante
           path="/restaurante"
           role={this.props.user.role}
           authenticated={this.props.isAuthenticated}
           component={Restaurante}
         ></PrivateRouteRestaurante>
-         <PrivateRouteRestaurante
+        <PrivateRouteRestaurante
           path="/pedidos_restaurante"
           role={this.props.user.role}
           authenticated={this.props.isAuthenticated}
@@ -51,12 +83,12 @@ class App extends Component {
           authenticated={this.props.isAuthenticated}
           component={PratosRestaurante}
         ></PrivateRouteRestaurante>
-         <PrivateRoute
+        <PrivateRoute
           path="/restaurante_user"
           authenticated={this.props.isAuthenticated}
           component={RestauranteUser}
         ></PrivateRoute>
-         <PrivateRoute
+        <PrivateRoute
           path="/meus_pedidos"
           authenticated={this.props.isAuthenticated}
           component={PedidosUser}
@@ -89,6 +121,7 @@ class App extends Component {
     return (
       <div>
         <Layout>
+          {modal}
           {this.props.loading ? (
             <Spinner></Spinner>
           ) : (

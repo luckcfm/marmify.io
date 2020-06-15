@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux'
 import {ScrollPanel} from 'primereact/scrollpanel';
-import {Row,Col} from 'react-bootstrap'
 import * as actions from '../../store/actions/index';
 import CardRestaurante from './CardRestaurante/CardRestaurante'
 import {withRouter} from 'react-router-dom'
